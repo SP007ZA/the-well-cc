@@ -185,7 +185,7 @@ export default function Home() {
 
         {/* Call to Action */}
         <div className="text-center mt-16">
-          <h4 className="text-lg font-semibold mb-2">Don't miss out!</h4>
+          <h4 className="text-lg font-semibold mb-2">Dont miss out!</h4>
           <p className="mb-4">Premium and Platinum members enjoy exclusive access and discounts to all our events.</p>
           <Button className="bg-rose-700 text-white hover:bg-rose-800 px-6 py-2 rounded-full">Upgrade Membership</Button>
         </div>

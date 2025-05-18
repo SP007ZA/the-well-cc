@@ -98,7 +98,7 @@ const handleLogin = async (e: React.FormEvent) => {
 
 
         <p className="text-sm text-center mt-6">
-          Don't have an account? <Link href="/signup" className="text-rose-700 underline">Sign up here</Link>
+          Dont have an account? <Link href="/signup" className="text-rose-700 underline">Sign up here</Link>
         </p>
       </div>
     </div>
