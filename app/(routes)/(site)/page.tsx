@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import { Heart, Users, Calendar, MessageCircle, Church, MapPin, CalendarCheck, Star, HeartHandshake } from "lucide-react";
 export default function Home() {
   return (
@@ -62,7 +61,7 @@ export default function Home() {
           <div className="p-6 bg-rose-50 rounded-xl shadow text-center">
             <Users className="mx-auto text-rose-700 mb-4" size={36} />
             <h3 className="text-xl font-semibold mb-2">1. Create Your Profile</h3>
-            <p>Share your story, values, interests, and what you're looking for in a Christ-centered relationship.</p>
+            <p>Share your story, values, interests, and what youre looking for in a Christ-centered relationship.</p>
           </div>
 
           <div className="p-6 bg-rose-50 rounded-xl shadow text-center">
@@ -80,7 +79,7 @@ export default function Home() {
           <div className="p-6 bg-rose-50 rounded-xl shadow text-center">
             <Star className="mx-auto text-rose-700 mb-4" size={36} />
             <h3 className="text-xl font-semibold mb-2">4. Build Lasting Love</h3>
-            <p>Whether it's friendship or forever, we guide you to build strong, faith-driven relationships that glorify God.</p>
+            <p>Whether its friendship or forever, we guide you to build strong, faith-driven relationships that glorify God.</p>
           </div>
         </div>
 

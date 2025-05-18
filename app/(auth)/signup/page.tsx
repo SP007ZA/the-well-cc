@@ -1,12 +1,11 @@
 "use client"
-import { getProviders, signIn } from "next-auth/react";
-import { useState } from "react";
+import {  signIn } from "next-auth/react";import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FcGoogle } from "react-icons/fc";
 import Image from 'next/image';
-import { StringDecoder } from "string_decoder";
+
 
 export default function SignUpPage() {
     const [email, setEmail] = useState("");
