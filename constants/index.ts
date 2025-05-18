@@ -1,10 +1,5 @@
-type RouteProps = {
-    id: number,
-    href: string,
-    title: string
-}
 
-export const routes: RouteProps=[
+export const routes=[
     {
         id: 1,
         href:"/catalog",
