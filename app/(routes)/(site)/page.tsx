@@ -118,7 +118,7 @@ export default function Home() {
           <p className="text-xl font-semibold mb-2">R80 / month</p>
           <ul className="text-sm mb-6 space-y-2">
             <li>✓ Access to all member profiles</li>
-            <li>✓ Access to events with 25% discount</li>
+            <li>✓ Access to events with discount</li>
             <li>✓ Exclusive WhatsApp group access</li>
           </ul>
           <Button className="bg-rose-700 text-white hover:bg-rose-800">Subscribe</Button>
@@ -130,7 +130,7 @@ export default function Home() {
           <p className="text-xl font-semibold mb-2">R550 / year</p>
           <ul className="text-sm mb-6 space-y-2">
             <li>✓ Full access to member profiles</li>
-            <li>✓ 50% discount on events</li>
+            <li>✓ discount on events</li>
             <li>✓ WhatsApp group access</li>
             <li>✓ Save 57% compared to monthly</li>
           </ul>

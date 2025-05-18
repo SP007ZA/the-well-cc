@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 const Footer = () => {
@@ -17,12 +18,12 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-bold mb-2 text-rose-700">Quick Links</h3>
           <ul className="space-y-1">
-            <li><a href="/" className="hover:underline">Home</a></li>
-            <li><a href="/about" className="hover:underline">About Us</a></li>
-            <li><a href="/how-it-works" className="hover:underline">How It Works</a></li>
-            <li><a href="/membership" className="hover:underline">Membership Plans</a></li>
-            <li><a href="/events" className="hover:underline">Events</a></li>
-            <li><a href="/login" className="hover:underline">Sign In</a></li>
+            <li><Link href="/" className="hover:underline">Home</Link></li>
+            <li><Link href="/about" className="hover:underline">About Us</Link></li>
+            <li><Link href="/how-it-works" className="hover:underline">How It Works</Link></li>
+            <li><Link href="/membership" className="hover:underline">Membership Plans</Link></li>
+            <li><Link href="/events" className="hover:underline">Events</Link></li>
+            <li><Link href="/login" className="hover:underline">Sign In</Link></li>
           </ul>
         </div>
 

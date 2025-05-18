@@ -22,7 +22,7 @@ export default function SignupForm() {
 
  const [errors, setErrors] = useState<Record<string, string>>({});
 
- const requiredFieldsFilled = Object.values(form).every((value) => value.trim() !== "");
+ /*const requiredFieldsFilled = Object.values(form).every((value) => value.trim() !== ""); */
 /*const hasErrors = Object.values(errors).some((e) => e !== "") || !requiredFieldsFilled; */
 
   const handleChange = (field: string, value: string) => {
