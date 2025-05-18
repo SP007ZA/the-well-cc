@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react";
-import { CalendarCheck, Video, Users } from "lucide-react";
+import { CalendarCheck, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -14,6 +14,7 @@ export default function EventsPage() {
     if (newComment.trim()) {
       setComments([...comments, newComment]);
       setNewComment("");
+      setIsSubscribed(true)
     }
   };
 

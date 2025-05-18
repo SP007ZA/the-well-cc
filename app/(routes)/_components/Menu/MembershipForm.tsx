@@ -23,7 +23,7 @@ export default function SignupForm() {
  const [errors, setErrors] = useState<Record<string, string>>({});
 
  const requiredFieldsFilled = Object.values(form).every((value) => value.trim() !== "");
-const hasErrors = Object.values(errors).some((e) => e !== "") || !requiredFieldsFilled;
+/*const hasErrors = Object.values(errors).some((e) => e !== "") || !requiredFieldsFilled; */
 
   const handleChange = (field: string, value: string) => {
     setForm({ ...form, [field]: value });
@@ -59,7 +59,7 @@ const hasErrors = Object.values(errors).some((e) => e !== "") || !requiredFields
     setErrors((prev) => ({ ...prev, [field]: error }));
   };
 
-  const validateAll = () => {
+  /*  const validateAll = () => {
     const newErrors: Record<string, string> = {};
     for (const key in form) {
       const error = validateField(key, form[key as keyof typeof form]);
@@ -69,12 +69,12 @@ const hasErrors = Object.values(errors).some((e) => e !== "") || !requiredFields
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateAll()) {
       console.log("Submitted:", form);
     }
-  };
+  }; */
   const next = () => setSection((prev) => prev + 1);
   const prev = () => setSection((prev) => prev - 1);
 
@@ -205,7 +205,7 @@ const hasErrors = Object.values(errors).some((e) => e !== "") || !requiredFields
               <label><input type="radio" name="publish" value="yes" /> Yes</label>
               <label><input type="radio" name="publish" value="no" /> No</label>
             </div>
-            <label className="block mt-4">Would you like your name, profile, or special interest to be include in the Well's Directory?</label>
+            <label className="block mt-4">Would you like your name, profile, or special interest to be include in the Well&#39s Directory?</label>
             <div className="flex gap-4">
               <label><input type="radio" name="directory" value="yes" /> Yes</label>
               <label><input type="radio" name="directory" value="no" /> No</label>
