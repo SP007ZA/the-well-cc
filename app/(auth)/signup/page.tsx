@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FcGoogle } from "react-icons/fc";
 import Image from 'next/image';
+import { useMutation } from "@apollo/client";
+import { CreateUserDocument, CreateUserMutation, CreateUserMutationVariables } from "@/data/gql/graphql";
 
 
 export default function SignUpPage() {
@@ -12,6 +14,8 @@ export default function SignUpPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState<{ email?: string; password?: string; confirm?: string }>({});
+
+  const [signUp, {loading, error}] = useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument)
 
    const handleEmailSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +29,9 @@ export default function SignUpPage() {
 
     if (Object.keys(newErrors).length === 0) {
       // Proceed with signup or call backend API
-      await signIn("email", { email, callbackUrl: "/" });
+      await signUp({variables:{ data:{name: "Peter", email:email, password:password}}}).then((item:any) => {
+       console.log("Succesfully created a User")
+      }).catch(err => console.log(err))
     }
   };
 

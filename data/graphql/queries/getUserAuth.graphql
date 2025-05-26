@@ -1,0 +1,12 @@
+query getUserAuth{
+  authenticatedItem {
+  ... on User {
+      id
+      name
+      email
+      isProfile
+      
+    
+    }
+  }
+}

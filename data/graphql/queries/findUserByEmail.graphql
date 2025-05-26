@@ -1,0 +1,6 @@
+query FindUserByEmail($email:String) {
+  user(where: {email: $email}) {
+    id
+
+  }
+}
