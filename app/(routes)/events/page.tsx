@@ -3,6 +3,7 @@ import { useState } from "react";
 import { CalendarCheck, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { EventGallery } from "./_components/EventGallery";
 
 
 export default function EventsPage() {
@@ -76,9 +77,11 @@ export default function EventsPage() {
             </div>
           </div>
         </section>
+         {/* Gallery section below events */}
+      <EventGallery />
 
         {/* Comments Section */}
-        <section className="max-w-3xl mx-auto">
+        <section className="max-w-3xl mt-10 mx-auto">
           <h2 className="text-2xl font-semibold mb-4">Comments & Reflections</h2>
 
           {isSubscribed ? (

@@ -126,12 +126,12 @@ export default function Home() {
         {/* Platinum Plan */}
         <div className="bg-white p-8 rounded-2xl shadow border-t-4 border-yellow-500">
           <h3 className="text-2xl font-bold mb-4">Platinum</h3>
-          <p className="text-xl font-semibold mb-2">R550 / year</p>
+          <p className="text-xl font-semibold mb-2">R600 / year</p>
           <ul className="text-sm mb-6 space-y-2">
             <li>✓ Full access to member profiles</li>
             <li>✓ discount on events</li>
             <li>✓ WhatsApp group access</li>
-            <li>✓ Save 57% compared to monthly</li>
+            <li>✓ Save 37% compared to monthly</li>
           </ul>
           <Button className="bg-yellow-500 text-white hover:bg-yellow-600">Get Platinum</Button>
         </div>
