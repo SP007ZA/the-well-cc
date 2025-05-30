@@ -2,29 +2,34 @@
 'use client';
 
 import { useState } from 'react';
-import { notFound } from 'next/navigation';
 import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 // Replace with your API call
-async function getEvent(id: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events/${id}`, { cache: 'no-store' });
-  if (!res.ok) return null;
-  return res.json();
+
+const event = {
+    price: 100,
+    thumbnail: '/members/praise_worship.jpg',
+    title: 'Praise & Worship',
+    startDate: new Date(),
+    endDate: new Date(),
+    location: "Kempton Park",
+    description: "Gather for an evening of worship, prayer, and community. Open to all members."
+
 }
 
-export default async function TicketCheckoutPage({ params }: { params: { id: string } }) {
-  const event = await getEvent(params.id);
-  if (!event) return notFound();
+
+export default async function TicketCheckoutPage() {
+ 
 
 
   const [quantity, setQuantity] = useState(1);
   const [guestName, setGuestName] = useState('');
   const [guestEmail, setGuestEmail] = useState('');
 
-  const ticketPrice = event.price || 100;
+  const ticketPrice =  100;
   const total = quantity * ticketPrice;
 
   const handlePurchase = () => {
