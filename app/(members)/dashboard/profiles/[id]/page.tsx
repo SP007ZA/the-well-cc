@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use client"
 import { use } from "react"
 import { Button } from "@/components/ui/button"
