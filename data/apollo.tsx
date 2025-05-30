@@ -7,10 +7,10 @@ import { PropsWithChildren } from "react";
 import { createClient } from 'graphql-ws';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { onError } from '@apollo/link-error';
-import  {createUploadLink}  from 'apollo-upload-client';
+
 import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "@/app/config";
 
-
+const { createUploadLink } = require('apollo-upload-client');
 
 // Setup a backup http link for Apollo
 const httpLink = new HttpLink({
