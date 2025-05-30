@@ -39,7 +39,7 @@ myData["merchant_id"] = "10023375";
 myData["merchant_key"] = "04afueikmam8r";
 myData["return_url"] = "https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/success";
 myData["cancel_url"] = "https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/cancel";
-myData["notify_url"] = "https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/paymentwebhook";
+myData["notify_url"] = "https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/api/paymentwebhook";
 // Buyer details
 myData["name_first"] = guestNameFirst;
 myData["name_last"] = guestNameLast;
