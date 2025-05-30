@@ -24,7 +24,7 @@ const prev = () => setSection((prev:any) => prev - 1);
               <label><input type="radio" name="publish" value="yes" /> Yes</label>
               <label><input type="radio" name="publish" value="no" /> No</label>
             </div>
-            <label className="block mt-4">Would you like your name, profile, or special interest to be include in the Well&#39s Directory?</label>
+            <label className="block mt-4">Would you like your name, profile, or special interest to be include in the Well&aposs Directory?</label>
             <div className="flex gap-4">
               <label><input type="radio" name="directory" value="yes" /> Yes</label>
               <label><input type="radio" name="directory" value="no" /> No</label>

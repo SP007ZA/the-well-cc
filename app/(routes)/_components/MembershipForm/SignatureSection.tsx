@@ -3,7 +3,7 @@ import SignatureCanvas from "react-signature-canvas"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
-import { UploadCloud, Trash, ImageIcon, Eraser } from "lucide-react"
+import {  ImageIcon, Eraser } from "lucide-react"
 import { AgreementSection } from "./AgreementSection"
 
 export function SignatureSection({form, setForm,errors, validateField, setErrors, setSection}:any) {
