@@ -1,6 +1,5 @@
 "use client"
 import { useState } from "react";
-import { CalendarCheck, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { EventGallery } from "./_components/EventGallery";

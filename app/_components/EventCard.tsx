@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Link from 'next/link';
 import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';

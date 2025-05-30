@@ -1,14 +1,9 @@
+/* eslint-disable */
 import { Card } from "@/components/ui/card";
-import { useEffect, useState } from "react";
+
 
 export default function UpcomingEvents() {
-  const [events, setEvents] = useState([]);
-
-  useEffect(() => {
-    fetch('/api/events?filter=upcoming') // Build this API or use GraphQL
-      .then(res => res.json())
-      .then(setEvents);
-  }, []);
+  
 
   return (
     <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">

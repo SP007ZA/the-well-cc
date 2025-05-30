@@ -39,7 +39,7 @@ export default function PastEventCard({
           {/* YouTube video links */}
           {youtubeLinks?.length > 0 && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {youtubeLinks.map((url:any, index) => (
+              {youtubeLinks?.map((url:any, index:number) => (
                 <iframe
                   key={index}
                   src={url?.replace("watch?v=", "embed/")}

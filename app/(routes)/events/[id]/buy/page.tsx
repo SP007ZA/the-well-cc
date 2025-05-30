@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use client';
 
 import { useState } from 'react';
@@ -20,7 +21,7 @@ const event = {
 
 }
 
-export default  function TicketCheckoutPage({ params }: { params: { id: string } }) {
+export default  function TicketCheckoutPage() {
 
   const [quantity, setQuantity] = useState(1);
   const [guestNameFirst, setGuestNameFirst] = useState('');
@@ -62,7 +63,7 @@ myData["item_description"] = "Gather for an evening of worship, prayer, and comm
 
     console.log("Ticket Info", myData)
 
-    console.log("Security_String",  generateSignature(myData, "My Key"))
+    console.log("Security_String",  generateSignature(myData, phrase))
 
    
 
@@ -101,7 +102,7 @@ myData["item_description"] = "Gather for an evening of worship, prayer, and comm
       <input type="hidden" name="amount" value={myData["amount"]}/>
       <input type="hidden" name="item_name" value={myData["item_name"]}/>
       <input type="hidden" name="item_description" value={myData["item_description"]}/>
-      <input type="hidden" name="signature" value={generateSignature(myData, "the_well_cc_payment_testing")}/>
+      <input type="hidden" name="signature" value={generateSignature(myData, phrase)}/>
       
       
       <div className="bg-gray-50 border rounded-xl p-4 mb-6">

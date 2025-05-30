@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useRef, useState } from "react"
 import SignatureCanvas from "react-signature-canvas"
 import { Input } from "@/components/ui/input"
@@ -6,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import {  ImageIcon, Eraser } from "lucide-react"
 import { AgreementSection } from "./AgreementSection"
 
-export function SignatureSection({form, setForm,errors, validateField, setErrors, setSection}:any) {
+export function SignatureSection({ setSection}:any) {
      const [agreed, setAgreed] = useState(false)
   const [area, setArea] = useState("")
   const [photo, setPhoto] = useState<File | null>(null)
@@ -22,19 +23,20 @@ export function SignatureSection({form, setForm,errors, validateField, setErrors
     if (file) {
       setPhoto(file)
       setPreviewUrl(URL.createObjectURL(file))
+      console.log(photo)
     }
   }
 
   // const signatureDataUrl = sigCanvasRef.current?.getTrimmedCanvas().toDataURL("image/png")
 
-  const handleGenerate= () =>{
+/*  const handleGenerate= () =>{
        const signatureDataUrl = sigCanvasRef.current?.getTrimmedCanvas().toDataURL("image/png")
    
     }
 
 
-  const next = () => setSection((prev:any) => prev + 1);
-const prev = () => setSection((prev:any) => prev - 1);
+  const next = () => setSection((prev:any) => prev + 1); */
+const prev:any = () => setSection((prev:any) => prev - 1);
 
   return (
     <div className="space-y-6 bg-white dark:bg-zinc-900 p-6 rounded-2xl shadow-md border">

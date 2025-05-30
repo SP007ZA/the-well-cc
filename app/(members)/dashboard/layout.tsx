@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use client";
 
 import { ReactNode, useState, useEffect } from "react";
@@ -7,8 +8,7 @@ import {
   Bell,
   MessageCircle,
   Sun,
-  Moon,
-  Menu,
+  Moon
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

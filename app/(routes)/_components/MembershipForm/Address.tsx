@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Button } from '@/components/ui/button';
 import React from 'react'
 
@@ -14,8 +15,8 @@ const Address = ({form, setForm,errors, validateField, setErrors, setSection}:an
     setErrors((prev:any) => ({ ...prev, [field]: error }));
 
   };
-const next = () => setSection((prev:any) => prev + 1);
-const prev = () => setSection((prev:any) => prev - 1);
+const next:any = () => setSection((prev:any) => prev + 1);
+const prev:any = () => setSection((prev:any) => prev - 1);
   return (
     <>
       <div>

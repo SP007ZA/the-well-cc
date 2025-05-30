@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react'
 import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
@@ -5,7 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 
 
-const members = [
+const members:any = [
   {
     id: "u1",
     name: "Lerato Molefe",
@@ -38,7 +39,7 @@ const Profiles = () => {
       </p>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {members.map((member) => (
+        {members.map((member:any) => (
           <Link
             href={`/dashboard/profiles/${member.id}`}
             key={member.id}

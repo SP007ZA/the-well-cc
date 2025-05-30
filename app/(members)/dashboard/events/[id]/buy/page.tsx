@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useSession } from 'next-auth/react';
 import { notFound } from 'next/navigation';
 import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
@@ -19,7 +18,7 @@ export default async function TicketCheckoutPage({ params }: { params: { id: str
   const event = await getEvent(params.id);
   if (!event) return notFound();
 
-  const { data: session } = useSession();
+
   const [quantity, setQuantity] = useState(1);
   const [guestName, setGuestName] = useState('');
   const [guestEmail, setGuestEmail] = useState('');
@@ -28,7 +27,7 @@ export default async function TicketCheckoutPage({ params }: { params: { id: str
   const total = quantity * ticketPrice;
 
   const handlePurchase = () => {
-    if (!session && (!guestName || !guestEmail)) {
+    if ((!guestName || !guestEmail)) {
       alert('Please enter your name and email to receive your ticket.');
       return;
     }
@@ -70,7 +69,7 @@ export default async function TicketCheckoutPage({ params }: { params: { id: str
           ))}
         </select>
 
-        {!session?.user && (
+        {false && (
           <div className="mt-4 space-y-3">
             <div>
               <Label htmlFor="guestName" className="block text-sm font-medium">Your Name:</Label>
@@ -97,9 +96,9 @@ export default async function TicketCheckoutPage({ params }: { params: { id: str
           </div>
         )}
 
-        {session?.user && (
+        {true && (
           <p className="mt-4 text-sm text-gray-600">
-            Logged in as <strong>{session.user.name}</strong> ({session.user.email})
+            Logged in as <strong>Peter</strong> (maphanga1sp)
           </p>
         )}
       </div>

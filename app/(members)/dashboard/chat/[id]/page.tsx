@@ -24,7 +24,7 @@ const mockMessages = [
 export default function ChatDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params) // unwrap the async params
   
-  const profile = mockProfiles[id] || { name: "Unknown", avatar: "" };
+  const profile:any = mockProfiles[id] || { name: "Unknown", avatar: "" };
 
   const [messages, setMessages] = useState(mockMessages);
   const [newMessage, setNewMessage] = useState("");

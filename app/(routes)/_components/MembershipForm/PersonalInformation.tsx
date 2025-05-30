@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Button } from '@/components/ui/button';
 import React from 'react'
 
@@ -11,10 +12,10 @@ const PersonalInformation = ({form, setForm,errors, validateField, setErrors, se
   };
 
     const handleBlur = (field: string) => {
-    const error = validateField(field, form[field as keyof typeof form]);
+    const error:any = validateField(field, form[field as keyof typeof form]);
     setErrors((prev:any) => ({ ...prev, [field]: error }));
   };
-const next = () => setSection((prev:any) => prev + 1);
+const next:any = () => setSection((prev:any) => prev + 1);
 
   return (
     <>

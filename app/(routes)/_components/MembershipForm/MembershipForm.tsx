@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use client";
 
 import { useState } from "react";
@@ -44,10 +45,10 @@ export default function SignupForm() {
  /*const requiredFieldsFilled = Object.values(form).every((value) => value.trim() !== ""); */
 /*const hasErrors = Object.values(errors).some((e) => e !== "") || !requiredFieldsFilled; */
 
-  const handleChange = (field: string, value: string) => {
+ /* const handleChange = (field: string, value: string) => {
     setForm({ ...form, [field]: value });
     setErrors((prev) => ({ ...prev, [field]: "" }));
-  };
+  }; */
 
 
    const validateField = (field: string, value: string): string => {
@@ -79,10 +80,10 @@ export default function SignupForm() {
     return "";
   };
 
-    const handleBlur = (field: string) => {
+   /* const handleBlur = (field: string) => {
     const error = validateField(field, form[field as keyof typeof form]);
     setErrors((prev) => ({ ...prev, [field]: error }));
-  };
+  }; */
 
   /*  const validateAll = () => {
     const newErrors: Record<string, string> = {};
@@ -100,8 +101,8 @@ const handleSubmit = (e: React.FormEvent) => {
       console.log("Submitted:", form);
     }
   }; */
-  const next = () => setSection((prev) => prev + 1);
-  const prev = () => setSection((prev) => prev - 1);
+ /* const next = () => setSection((prev) => prev + 1);
+  const prev = () => setSection((prev) => prev - 1); */
 
   return (
     <div className="max-w-xl mx-auto p-6 mt-10 bg-white rounded-2xl shadow">

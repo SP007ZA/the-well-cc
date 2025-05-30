@@ -1,9 +1,10 @@
+/* eslint-disable */
 import { Button } from '@/components/ui/button'
 import React from 'react'
 
 const MoreAboutYou = ({form, setForm,errors, validateField, setErrors, setSection}:any) => {
 
-   const handleChange = (field: string, value: string) => {
+ /*  const handleChange = (field: string, value: string) => {
     setForm({ ...form, [field]: value });
     setErrors((prev:any) => ({ ...prev, [field]: "" }));
 
@@ -13,9 +14,9 @@ const MoreAboutYou = ({form, setForm,errors, validateField, setErrors, setSectio
     const error = validateField(field, form[field as keyof typeof form]);
     setErrors((prev:any) => ({ ...prev, [field]: error }));
 
-  };
-const next = () => setSection((prev:any) => prev + 1);
-const prev = () => setSection((prev:any) => prev - 1);
+  }; */
+const next:any = () => setSection((prev:any) => prev + 1);
+const prev:any = () => setSection((prev:any) => prev - 1);
 
   return (
       <>

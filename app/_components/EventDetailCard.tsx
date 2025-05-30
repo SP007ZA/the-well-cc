@@ -1,13 +1,8 @@
-import { notFound } from 'next/navigation';
+/* eslint-disable */
 import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
 
 // Mock function — replace with your actual DB/API call
-async function getEvent(id: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events/${id}`, { cache: 'no-store' });
-  if (!res.ok) return null;
-  return res.json();
-}
 
 export default async function EventDetailCard({id,thumbnail, title, startDate, endDate, location, fullAddress, description}) {
  

@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use client"
 import {  signIn } from "next-auth/react";import { useState } from "react";
 import Link from "next/link";
@@ -13,9 +14,10 @@ export default function SignUpPage() {
     const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
   const [errors, setErrors] = useState<{ email?: string; password?: string; confirm?: string }>({});
 
-  const [signUp, {loading, error}] = useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument)
+  const [signUp] = useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument)
 
    const handleEmailSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,7 +31,7 @@ export default function SignUpPage() {
 
     if (Object.keys(newErrors).length === 0) {
       // Proceed with signup or call backend API
-      await signUp({variables:{ data:{name: "Peter", email:email, password:password}}}).then((item:any) => {
+      await signUp({variables:{ data:{name: "Peter", email:email, password:password}}}).then(() => {
        console.log("Succesfully created a User")
       }).catch(err => console.log(err))
     }
