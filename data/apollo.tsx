@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use client';
 
 import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, ApolloLink} from "@apollo/client";
