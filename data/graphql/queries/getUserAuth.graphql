@@ -2,7 +2,7 @@ query getUserAuth{
   authenticatedItem {
   ... on User {
       id
-      name
+      userName
       email
       isProfile
       

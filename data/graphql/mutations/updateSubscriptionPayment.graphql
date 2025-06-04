@@ -1,0 +1,12 @@
+mutation UpdateMembership($where: MembershipWhereUniqueInput!, $data: MembershipUpdateInput!) {
+  updateMembership(where: $where, data: $data) {
+    memberShipType
+    hasPaidSubscription
+    user {
+    email
+    profile {
+      id
+    }  
+    }
+  }
+}

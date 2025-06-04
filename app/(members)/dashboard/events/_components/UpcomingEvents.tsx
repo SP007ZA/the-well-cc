@@ -1,49 +1,73 @@
-/* eslint-disable */
+'use client';
+
+import EventCard from "@/app/_components/EventCard";
 import { Card } from "@/components/ui/card";
+import {
+  GetActiveEventsDocument,
+  GetActiveEventsQuery,
+  GetActiveEventsQueryVariables,
+} from "@/data/gql/graphql";
+import { useQuery } from "@apollo/client";
+import { useEffect, useState } from "react";
 
+interface Event {
+  id: string;
+  title: string;
+  description: string;
+  startDate: Date;
+  endDate: Date;
+  location: string;
+  thumbnail: string;
+}
 
-export default function UpcomingEvents() {
-  
+export default function UpcomingEvents({member}) {
+  const { data, loading } = useQuery<GetActiveEventsQuery, GetActiveEventsQueryVariables>(
+    GetActiveEventsDocument,
+    {
+      variables: {
+        where: {
+          isActive: {
+            equals: true,
+          },
+        },
+      },
+    }
+  );
+
+  const [events, setEvents] = useState<Event[]>([]);
+
+  useEffect(() => {
+    if (data?.events && data.events.length > 0) {
+      const mappedEvents: Event[] = data.events.map((item) => ({
+        id: item.id,
+        title: item.title,
+        description: item.description,
+        startDate: new Date(item.startDate),
+        endDate: new Date(item.endDate),
+        location: item.address?.city ?? "Unknown",
+        thumbnail: item.eventThumbnail?.image?.publicUrlTransformed ?? "",
+      }));
+
+      setEvents(mappedEvents);
+    }
+  }, [data]);
 
   return (
     <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-       <Card className="overflow-hidden border shadow-sm p-6">
-   
-              <h3 className="text-xl font-semibold">Prayer & Praise Night</h3>
-              <p className="text-sm text-gray-500 mb-2">Start  July 20, 2025 · 6:30 PM</p>
-              <p className="text-sm text-gray-500 mb-2">End  July 20, 2025 · 6:30 PM</p>
-              <p>Gather for an evening of worship, prayer, and community. Open to all members.</p>
-              <button className="mt-4 bg-rose-700 text-white hover:bg-rose-800">RSVP</button>
-           
-            </Card>
-      <div className="p-6 rounded-xl shadow bg-rose-50">
-              <h3 className="text-xl font-semibold">Prayer & Praise Night</h3>
-              <p className="text-sm text-gray-500 mb-2">Start  July 20, 2025 · 6:30 PM</p>
-              <p className="text-sm text-gray-500 mb-2">End  July 20, 2025 · 6:30 PM</p>
-              <p>Gather for an evening of worship, prayer, and community. Open to all members.</p>
-              <button className="mt-4 bg-rose-700 text-white hover:bg-rose-800">RSVP</button>
-            </div>
-      <div className="p-6 rounded-xl shadow bg-rose-50">
-              <h3 className="text-xl font-semibold">Prayer & Praise Night</h3>
-              <p className="text-sm text-gray-500 mb-2">Start  July 20, 2025 · 6:30 PM</p>
-              <p className="text-sm text-gray-500 mb-2">End  July 20, 2025 · 6:30 PM</p>
-              <p>Gather for an evening of worship, prayer, and community. Open to all members.</p>
-              <button className="mt-4 bg-rose-700 text-white hover:bg-rose-800">RSVP</button>
-            </div>
-      <div className="p-6 rounded-xl shadow bg-rose-50">
-              <h3 className="text-xl font-semibold">Prayer & Praise Night</h3>
-              <p className="text-sm text-gray-500 mb-2">Start  July 20, 2025 · 6:30 PM</p>
-              <p className="text-sm text-gray-500 mb-2">End  July 20, 2025 · 6:30 PM</p>
-              <p>Gather for an evening of worship, prayer, and community. Open to all members.</p>
-              <button className="mt-4 bg-rose-700 text-white hover:bg-rose-800">RSVP</button>
-            </div>
-      <div className="p-6 rounded-xl shadow bg-rose-50">
-              <h3 className="text-xl font-semibold">Prayer & Praise Night</h3>
-              <p className="text-sm text-gray-500 mb-2">Start  July 20, 2025 · 6:30 PM</p>
-              <p className="text-sm text-gray-500 mb-2">End  July 20, 2025 · 6:30 PM</p>
-              <p>Gather for an evening of worship, prayer, and community. Open to all members.</p>
-              <button className="mt-4 bg-rose-700 text-white hover:bg-rose-800">RSVP</button>
-            </div>
+      {events.map((event) => (
+        <div key={event.id}>
+          <EventCard
+            id={event.id}
+            title={event.title}
+            description={event.description}
+            startDate={event.startDate}
+            endDate={event.endDate}
+            location={event.location}
+            thumbnail={event.thumbnail}
+            member={member}
+          />
+        </div>
+      ))}
     </div>
   );
 }

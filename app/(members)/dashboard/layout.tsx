@@ -1,24 +1,29 @@
 /* eslint-disable */
 "use client";
 
-import { ReactNode, useState, useEffect } from "react";
+import { ReactNode, useState, useEffect, useRef } from "react";
 import {
   User,
   CalendarDays,
   Bell,
   MessageCircle,
   Sun,
-  Moon
+  Moon,
+  Monitor
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { useQuery } from "@apollo/client";
+import { GetUnreadNotificationCountDocument, GetUnreadNotificationCountQuery, GetUnreadNotificationCountQueryVariables, GetUserProfilePictureDocument, GetUserProfilePictureQuery, GetUserProfilePictureQueryVariables } from "@/data/gql/graphql";
+
 
 interface MemberDashboardLayoutProps {
   children?: ReactNode;
 }
 
 const navItems = [
+  { key: "dashboard", icon: Monitor, label: "Dashboard", href: "/dashboard" },
   { key: "profile", icon: User, label: "Profiles", href: "/dashboard/profiles" },
   { key: "events", icon: CalendarDays, label: "Events", href: "/dashboard/events" },
   { key: "notifications", icon: Bell, label: "Notifications", href: "/dashboard/notifications" },
@@ -28,11 +33,24 @@ const navItems = [
 export default function MemberDashboardLayout({ children }: MemberDashboardLayoutProps) {
   const pathname = usePathname();
   const [darkMode, setDarkMode] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [profilePicture, setProfilePicture] = useState<any>()
+const dropdownRef = useRef<HTMLDivElement>(null);
+
+const {data} = useQuery<GetUserProfilePictureQuery, GetUserProfilePictureQueryVariables>(GetUserProfilePictureDocument, {variables: {where: {id: "cmbbmfjf3000032ztrz1zyk3b"}}})
+
+const {data:count} = useQuery<GetUnreadNotificationCountQuery, GetUnreadNotificationCountQueryVariables>(GetUnreadNotificationCountDocument, {variables:{where: {isRead: {equals: false}, AND: [{user: {id: {equals:"cmbbmfjf3000032ztrz1zyk3b"}}}]}}, pollInterval:30000})
 
   useEffect(() => {
     const storedMode = localStorage.getItem("theme");
     if (storedMode === "dark") setDarkMode(true);
-  }, []);
+
+    if (data?.user) {
+      setProfilePicture(data?.user.profile.profilePicture.publicUrlTransformed)
+    }
+  }, [data, count]);
+
+
 
   const toggleDark = () => {
     const nextMode = !darkMode;
@@ -90,21 +108,45 @@ export default function MemberDashboardLayout({ children }: MemberDashboardLayou
               <button onClick={toggleDark} aria-label="Toggle Dark Mode">
                 {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </button>
-              <Bell className="w-5 h-5 cursor-pointer" />
-              <div className="relative group">
-                <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-white cursor-pointer">
-                  <Image
-                    src="/avatar-placeholder.png"
-                    alt="User Avatar"
-                    width={32}
-                    height={32}
-                  />
-                </div>
-                <div className="absolute right-0 mt-2 hidden group-hover:block bg-white dark:bg-gray-800 text-black dark:text-white rounded-md shadow-lg py-2 z-50 w-40">
-                  <Link href="/dashboard/profile" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Profile</Link>
-                  <Link href="/dashboard/settings" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Settings</Link>
-                  <button className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Logout</button>
-                </div>
+              <Link href={`/dashboard/notifications`}>
+               <button
+      className="relative p-2 hover:bg-gray-100 rounded-full transition"
+      aria-label="Notifications"
+    >
+     <Bell className="w-5 h-5 cursor-pointer" />
+      {count?.notificationsCount > 0 && (
+        <span className="absolute -top-1 -right-1 bg-rose-600 text-white text-xs font-semibold rounded-full px-1.5 py-0.5">
+          {count?.notificationsCount}
+        </span>
+      )}
+    </button>
+    </Link>
+              
+              <div className="relative group" ref={dropdownRef}>
+                <div
+                    onClick={() => setMenuOpen((prev) => !prev)}
+                   className="w-8 h-8 rounded-full overflow-hidden border-2 border-white cursor-pointer"
+                  >
+                    <Image
+                     src={profilePicture || '/default-avatar.png'}
+                      alt="User Avatar"
+                      width={32}
+                      height={32}
+                    />
+                  </div>
+                  {menuOpen && (
+                                <div className="absolute right-0 mt-2 bg-white dark:bg-gray-800 text-black dark:text-white rounded-md shadow-lg py-2 z-50 w-40">
+                                  <Link href="/dashboard/edit-profile" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                   Edit My Profile
+                                  </Link>
+                                  <Link href="/dashboard/settings" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    Settings
+                                  </Link>
+                                  <button className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    Logout
+                                  </button>
+                                </div>
+                              )}
               </div>
             </div>
           </header>

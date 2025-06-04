@@ -13,10 +13,23 @@ PopoverTrigger,
 } from "@/components/ui/popover"
 
 
-const ChurchInfomation = ({ setSection, date, setDate}:any) => {
+const ChurchInfomation = ({form, setForm,errors, validateField, setErrors, setSection, date, setDate}:any) => {
 
 
     const [month, setMonth] = useState<Date>(new Date())
+
+           const handleChange = (field: string, value: string | boolean) => {
+           
+    setForm({ ...form, [field]: value });
+    setErrors((prev:any) => ({ ...prev, [field]: "" }));
+
+  };
+
+    const handleBlur = (field: string) => {
+    const error:any = validateField(field, form[field as keyof typeof form]);
+    setErrors((prev:any) => ({ ...prev, [field]: error }));
+
+  };
 
  function CustomCaption({
   displayMonth,
@@ -65,23 +78,33 @@ const ChurchInfomation = ({ setSection, date, setDate}:any) => {
   )
 }
 
-   /*      const handleChange = (field: string, value: string) => {
-    setForm({ ...form, [field]: value });
-    setErrors((prev:any) => ({ ...prev, [field]: "" }));
-
-  }; */
-
- /*   const handleBlur = (field: string) => {
-    const error = validateField(field, form[field as keyof typeof form]);
-    setErrors((prev:any) => ({ ...prev, [field]: error }));
-
-  }; */
 const next:any = () => setSection((prev:any) => prev + 1);
-const prev:any = () => setSection((prev:any) => prev - 1);
+const prev:any = () => {setSection((prev:any) => prev - 1); setErrors({})};
 
   return (
      <>
      <label className="block font-semibold text-center mb-2">Church Information</label>
+       <label className="block font-medium mb-1">Pastor's Name</label>
+            <Input placeholder="Pastor's Name" name="pastorsName" className={errors.pastorsName ? "border-red-500" : ""} onChange={(e) => handleChange("pastorsName", e.target.value)} onBlur={() => handleBlur("pastorsName")}  />
+            <label className="block font-medium mb-1">Church Name & Address</label>
+            <Textarea placeholder="Church Name & Address" name="churchNameAddress" className={errors.churchNameAddress ? "border-red-500" : ""} onChange={(e) => handleChange("churchNameAddress", e.target.value)} onBlur={() => handleBlur("churchNameAddress")}  />
+            <label className="block font-medium mb-1">Church Contact Number</label>
+              <div className="relative">
+          <span className="absolute inset-y-0 left-3 flex items-center text-sm">🇿🇦 +27</span>
+          <input
+            type="tel"
+            placeholder="Enter 9-digit number"
+            maxLength={9}
+            value={form.churchContact}
+            onChange={(e) => handleChange("churchContact", e.target.value.replace(/\D/g, ""))}
+            onBlur={() => handleBlur("churchContact")}
+            className={`w-full pl-16 border px-3 py-2 rounded ${
+              errors.churchContact ? "border-red-500" : "border-gray-300"
+            }`}
+          />
+        </div>
+        {errors.churchContact && <p className="text-red-500 text-sm mt-1">{errors.churchContact}</p>}
+     <label className="block font-medium mb-1">Date Of Salvation</label>
             <Popover>
         <PopoverTrigger asChild>
           <Button
@@ -109,14 +132,14 @@ const prev:any = () => setSection((prev:any) => prev - 1);
           />
         </PopoverContent>
       </Popover>
-            <Input placeholder="Pastor's Name" name="pastorName" />
-            <Textarea placeholder="Church Name & Address" name="church" />
-            <Input placeholder="Church Contact Number" name="churchContact" />
+    
             <label className="block mt-4">Correspondence Preference:</label>
-            <div className="flex gap-4">
-              <label><input type="checkbox" name="correspondence" value="email" /> Email</label>
-              <label><input type="checkbox" name="correspondence" value="whatsapp" /> WhatsApp</label>
-            </div>
+           
+            <select name="correspondencePreference" onChange={(e) => handleChange("correspondencePreference", e.target.value)} className="w-full border p-2 rounded">
+              <option value="email">Email</option>
+              <option value="whatsApp">WhatsApp</option>
+              <option value="both">Both</option>
+            </select>
             <div className="flex justify-between">
               <Button className="bg-rose-700 hover:bg-rose-800 text-white" type="button" onClick={prev}>Back</Button>
               <Button className="bg-rose-700 hover:bg-rose-800 text-white" type="button" onClick={next}>Next</Button>

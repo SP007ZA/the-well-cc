@@ -16,14 +16,23 @@ const NextOfKin = ({form, setForm,errors, validateField, setErrors, setSection}:
     setErrors((prev:any) => ({ ...prev, [field]: error }));
 
   };
+
+ 
 const next:any = () => setSection((prev:any) => prev + 1);
-const prev:any = () => setSection((prev:any) => prev - 1);
+const prev:any = () => {setSection((prev:any) => prev - 1); setErrors({})};
 
   return (
      <>
             <h3 className="font-semibold">Next of Kin (for emergencies)</h3>
-            <Input placeholder="Name" name="kinName" />
-            <Input placeholder="Relationship" name="kinRelation" />
+            <label className="block font-medium mb-1">Name</label>
+            <Input placeholder="Name" className={errors.kinEmail ? "border-red-500" : ""} onChange={(e) => handleChange("kinName", e.target.value)} onBlur={() => handleBlur("kinName")} name="kinName" type='text'/>
+          {errors.kinName && <p className="text-red-500 text-xs mt-1">{errors.kinName}</p>}
+            <label className="block font-medium mb-1">Relationship</label>
+            <Input placeholder="Relationship" className={errors.kinEmail ? "border-red-500" : ""}  onChange={(e) => handleChange("kinRelation", e.target.value)}  onBlur={() => handleBlur("kinRelation")}  name="kinRelation" type='text' />
+           {errors.kinRelation && <p className="text-red-500 text-xs mt-1">{errors.kinRelation}</p>}
+             <label className="block font-medium mb-1">Email Address</label>
+             <Input placeholder="Email Address" className={errors.kinEmail ? "border-red-500" : ""} onChange={(e) => handleChange("kinEmail", e.target.value)} onBlur={() => handleBlur("kinEmail")} name="kinEmail" type="email" />
+             {errors.kinEmail && <p className="text-red-500 text-xs mt-1">{errors.kinEmail}</p>}
              <div>
         <label className="block font-medium mb-1">Cellphone Number</label>
         <div className="relative">
@@ -42,8 +51,7 @@ const prev:any = () => setSection((prev:any) => prev - 1);
         </div>
         {errors.kinCell && <p className="text-red-500 text-sm mt-1">{errors.kinCell}</p>}
       </div>
-            <Input placeholder="Email Address" className={errors.kinEmail ? "border-red-500" : ""} onBlur={() => handleBlur("kinEmail")} name="kinEmail" type="email" />
-             {errors.kinEmail && <p className="text-red-500 text-xs mt-1">{errors.kinEmail}</p>}
+           
             <div className="flex justify-between">
               <Button className="bg-rose-700 hover:bg-rose-800 text-white" type="button" onClick={prev}>Back</Button>
                <Button  className="bg-rose-700 hover:bg-rose-800 text-white" type="button" onClick={next}>Next</Button>

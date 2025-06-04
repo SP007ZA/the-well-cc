@@ -6,6 +6,7 @@ import { EventGallery } from "./_components/EventGallery";
 import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
+import UpcomingEvents from "@/app/(members)/dashboard/events/_components/UpcomingEvents";
 
 
 export default function EventsPage() {
@@ -31,118 +32,11 @@ export default function EventsPage() {
         {/* Future Events */}
         <section className="mb-16">
           <h2 className="text-2xl font-semibold mb-6">Upcoming Events</h2>
-          <div className="grid md:grid-cols-2 gap-8">
+      
 
-              <Link
-      href={`/events/sdfsd`}
-      className="block bg-rose-50 rounded-xl overflow-hidden shadow hover:shadow-md transition"
-    >
-                <div className="p-6 rounded-xl shadow bg-rose-50  w-full overflow-hidden">
-       <Image
-                    src="/members/praise_worship.jpg"
-                    alt="fasdf"
-                    width={600}
-                    height={400}
-                    className="w-full h-48 object-cover rounded-lg mb-4"
-                  />
-      <h3 className="text-xl font-semibold">Prayer & Praise Night</h3>
-
-      <p className="text-sm text-gray-500 mb-1">{formattedStart} → {formattedEnd}</p>
-      <p className="text-sm text-gray-500 mb-2">📍 Johannesburg</p>
-
-      <p>Gather for an evening of worship, prayer, and community. Open to all members.</p>
-
-      <Button
-       
-        className="mt-4 bg-rose-700 text-white hover:bg-rose-800"
-      >
-        Reserve Spot
-      </Button>
-    </div>
-    </Link>
-              <Link
-      href={`/events/sdfsd`}
-      className="block bg-rose-50 rounded-xl overflow-hidden shadow hover:shadow-md transition"
-    >
-                <div className="p-6 rounded-xl shadow bg-rose-50  w-full overflow-hidden">
-       <Image
-                    src="/members/praise_worship.jpg"
-                    alt="fasdf"
-                    width={600}
-                    height={400}
-                    className="w-full h-48 object-cover rounded-lg mb-4"
-                  />
-      <h3 className="text-xl font-semibold">Prayer & Praise Night</h3>
-
-      <p className="text-sm text-gray-500 mb-1">{formattedStart} → {formattedEnd}</p>
-      <p className="text-sm text-gray-500 mb-2">📍 Johannesburg</p>
-
-      <p>Gather for an evening of worship, prayer, and community. Open to all members.</p>
-
-      <Button
-       
-        className="mt-4 bg-rose-700 text-white hover:bg-rose-800"
-      >
-        Reserve Spot
-      </Button>
-    </div>
-    </Link>
-              <Link
-      href={`/events/sdfsd`}
-      className="block bg-rose-50 rounded-xl overflow-hidden shadow hover:shadow-md transition"
-    >
-                <div className="p-6 rounded-xl shadow bg-rose-50  w-full overflow-hidden">
-       <Image
-                    src="/members/praise_worship.jpg"
-                    alt="fasdf"
-                    width={600}
-                    height={400}
-                    className="w-full h-48 object-cover rounded-lg mb-4"
-                  />
-      <h3 className="text-xl font-semibold">Prayer & Praise Night</h3>
-
-      <p className="text-sm text-gray-500 mb-1">{formattedStart} → {formattedEnd}</p>
-      <p className="text-sm text-gray-500 mb-2">📍 Johannesburg</p>
-
-      <p>Gather for an evening of worship, prayer, and community. Open to all members.</p>
-
-      <Button
-       
-        className="mt-4 bg-rose-700 text-white hover:bg-rose-800"
-      >
-        Reserve Spot
-      </Button>
-    </div>
-    </Link>
-              <Link
-      href={`/events/sdfsd`}
-      className="block bg-rose-50 rounded-xl overflow-hidden shadow hover:shadow-md transition"
-    >
-                <div className="p-6 rounded-xl shadow bg-rose-50  w-full overflow-hidden">
-       <Image
-                    src="/members/praise_worship.jpg"
-                    alt="fasdf"
-                    width={600}
-                    height={400}
-                    className="w-full h-48 object-cover rounded-lg mb-4"
-                  />
-      <h3 className="text-xl font-semibold">Prayer & Praise Night</h3>
-
-      <p className="text-sm text-gray-500 mb-1">{formattedStart} → {formattedEnd}</p>
-      <p className="text-sm text-gray-500 mb-2">📍 Johannesburg</p>
-
-      <p>Gather for an evening of worship, prayer, and community. Open to all members.</p>
-
-      <Button
-       
-        className="mt-4 bg-rose-700 text-white hover:bg-rose-800"
-      >
-        Reserve Spot
-      </Button>
-    </div>
-    </Link>
+           <UpcomingEvents member={false}/>
      
-          </div>
+          
         </section>
 
         {/* Past Events */}

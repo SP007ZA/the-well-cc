@@ -1,0 +1,12 @@
+query GetUnreadNotifications($where: NotificationWhereInput!) {
+  notifications(where: $where) {
+    id
+    type
+    icon
+    title
+    content
+    createdAt
+    actionText
+    actionHref
+  }
+}

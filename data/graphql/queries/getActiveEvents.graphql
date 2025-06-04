@@ -1,0 +1,22 @@
+query GetActiveEvents($where: EventWhereInput!) {
+  events(where: $where) {
+    id,
+    title,
+    description,
+    price,
+    startDate,
+    endDate,
+    eventThumbnail {
+      image {
+        publicUrlTransformed
+      }
+    },
+    address {
+      streetName,
+      town,
+      city,
+      postalCode,
+      province
+    }
+  }
+}

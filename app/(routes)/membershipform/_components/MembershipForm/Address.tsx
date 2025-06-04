@@ -15,8 +15,10 @@ const Address = ({form, setForm,errors, validateField, setErrors, setSection}:an
     setErrors((prev:any) => ({ ...prev, [field]: error }));
 
   };
+
+
 const next:any = () => setSection((prev:any) => prev + 1);
-const prev:any = () => setSection((prev:any) => prev - 1);
+const prev:any = () => {setSection((prev:any) => prev - 1); setErrors({})};
   return (
     <>
       <div>
@@ -32,7 +34,7 @@ const prev:any = () => setSection((prev:any) => prev - 1);
             if(label === "Province") {
               return <div key={key}>
                    <label className="block mt-4">Province</label>
-            <select name="raceType" className="w-full border p-2 rounded">
+            <select name="province" onChange={(e) =>handleChange("province",e.target.value,)}className="w-full border p-2 rounded">
               <option value="gauteng">Gauteng</option>
               <option value="mpumalanga">Mpumalanga</option>
               <option value="limpopo">Limpopo</option>
@@ -48,6 +50,7 @@ const prev:any = () => setSection((prev:any) => prev - 1);
                  </div>
             } else {
               return  <div key={key}>
+                 <label className="block font-medium mb-1">{label}</label>
               <input
                 type="text"
                 placeholder={label}

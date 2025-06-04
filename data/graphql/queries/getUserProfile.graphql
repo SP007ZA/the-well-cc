@@ -1,0 +1,22 @@
+query GetUserProfile($where: UserWhereUniqueInput!) {
+  user(where: $where) {
+    profile {
+      id
+      bio,
+      age,
+      gender,
+      education,
+      occupation,
+      interests,
+      lookingFor,
+      profilePicture {
+        publicUrlTransformed
+      }
+      photos {
+        image {
+          publicUrlTransformed
+        }
+      }
+    }
+  }
+}

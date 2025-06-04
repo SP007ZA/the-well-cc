@@ -13,31 +13,36 @@ import { SignatureSection } from "./SignatureSection";
 export default function SignupForm() {
   const [section, setSection] = useState(1);
     const [date, setDate] = useState<"" | undefined>()
+    const [isOpen, setIsOpen] = useState(false);
 
- const [form, setForm] = useState({
+ const [form, setForm] = useState<any>({
   fullName: "",
   surname: "",
   idNumber: "",
   cell: "",
+  kinName:"",
+  kinRelation:"",
   kinCell:"",
   kinEmail:"",
   street: "",
   suburb: "",
   city: "",
-  province: "",
+  province: "Gauteng",
   postalCode: "",
   dateOfSalvation: date ? date : "",
   pastorsName:"",
-  churchNameNAddress:"",
-  churchContactNumber:"",
+  churchNameAddress:"",
+  churchContact:"",
   correspondencePreference:"",
   publishProfile: "",
   profileInDirectory: "",
-  membershipType:"",
-  naritialStatus:"",
+  membershipType:"Basic",
+  maritialStatus:"",
   kids:"",
-  race:"",
-  dateOutsideRace:""
+  race:"african",
+  dateOutsideRace:"",
+
+  
 });
 
  const [errors, setErrors] = useState<Record<string, string>>({});
@@ -54,10 +59,25 @@ export default function SignupForm() {
    const validateField = (field: string, value: string): string => {
     switch (field) {
       case "fullName":
+      if (!/^[a-zA-Z\s]{2,}$/.test(value)) return "Name must be at least 2 letters and only contain alphabets.";
+      break;
       case "surname":
+         if (!/^[a-zA-Z\s]{2,}$/.test(value)) return "Name must be at least 2 letters and only contain alphabets.";
+      break;
       case "street":
+         break;
       case "suburb":
+         if (!/^[a-zA-Z\s]{2,}$/.test(value)) return "Name must be at least 2 letters and only contain alphabets.";
+      break;
       case "city":
+         if (!/^[a-zA-Z\s]{2,}$/.test(value)) return "Name must be at least 2 letters and only contain alphabets.";
+      break;
+      case "pastorsName":
+         if (!/^[a-zA-Z\s]{2,}$/.test(value)) return "Name must be at least 2 letters and only contain alphabets.";
+      break;
+      case "churchNameAddress":
+         if (!/^[a-zA-Z\s]{2,}$/.test(value)) return "Name must be at least 2 letters and only contain alphabets.";
+      break;
       case "province":
         if (!value.trim()) return "This field is required.";
         break;
@@ -70,6 +90,14 @@ export default function SignupForm() {
       case "kinCell":
         if (!/^[0-9]{9}$/.test(value)) return "Enter a valid 9-digit cellphone number.";
         break;
+      case "churchContact":
+        if (!/^[0-9]{9}$/.test(value)) return "Enter a valid 9-digit contact number.";
+        break;
+          case "kinName":
+      if (!/^[a-zA-Z\s]{2,}$/.test(value)) return "Name must be at least 2 letters and only contain alphabets.";
+      break;  case "kinRelation":
+      if (!/^[a-zA-Z\s]{2,}$/.test(value)) return "Relationship must be at least 2 letters and only contain alphabets.";
+      break;
       case "kinEmail":
         if (!value.includes("@")) return "Please enter a valid email.";
         break;
@@ -135,7 +163,7 @@ const handleSubmit = (e: React.FormEvent) => {
         )}
 
         {section === 7 && (
-        <SignatureSection form={form}  setForm= {setForm} errors={errors}  setErrors={setErrors} validateField={validateField} setSection={setSection}/>
+        <SignatureSection isOpen={isOpen} setIsOpen={setIsOpen}  form={form}  setForm= {setForm} errors={errors}  setErrors={setErrors} validateField={validateField} setSection={setSection}/>
         )}
       </form>
     </div>

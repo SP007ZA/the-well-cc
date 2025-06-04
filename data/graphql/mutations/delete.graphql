@@ -1,0 +1,5 @@
+mutation DeleteGuests($where: [GuestWhereUniqueInput!]!) {
+  deleteGuests(where: $where) {
+    firstName
+  }
+}

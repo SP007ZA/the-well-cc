@@ -1,0 +1,12 @@
+query GetUserPaymentInput($where: UserWhereUniqueInput!) {
+  user(where: $where) {
+    profile {
+      firstName
+      lastName
+    }
+    email
+    membership {
+      cellNumber
+    }
+  }
+}

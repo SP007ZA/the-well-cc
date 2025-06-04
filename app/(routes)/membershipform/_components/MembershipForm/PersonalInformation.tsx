@@ -17,11 +17,13 @@ const PersonalInformation = ({form, setForm,errors, validateField, setErrors, se
   };
 const next:any = () => setSection((prev:any) => prev + 1);
 
+
+
   return (
     <>
            <div>
              <label className="block text-center font-medium mb-1">Personal Information</label>
-        <label className="block font-medium mb-1">Full Name</label>
+        <label className="block font-medium mb-1">First Name</label>
         <input
           type="text"
           value={form.fullName}
@@ -83,7 +85,7 @@ const next:any = () => setSection((prev:any) => prev + 1);
         {errors.cell && <p className="text-red-500 text-sm mt-1">{errors.cell}</p>}
       </div>
             <div className="flex justify-between">
-              <Button   className="bg-rose-700 hover:bg-rose-800 text-white" type="button" onClick={next}>Next</Button>
+              <Button  className="bg-rose-700 hover:bg-rose-800 text-white" type="button" onClick={next}>Next</Button>
             </div>
           </>
   )

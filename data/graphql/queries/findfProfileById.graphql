@@ -1,0 +1,14 @@
+query Profile($where: ProfileWhereUniqueInput!) {
+  profile(where: $where) {
+    id
+    firstName
+    lastName
+    user {
+      email
+      membership {
+        id
+        cellNumber
+      }
+    }
+  }
+}

@@ -1,11 +1,10 @@
 /* eslint-disable */
 "use client";
-
-
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Bell, CalendarDays, MessageCircle, Wallet } from "lucide-react";
-import Link from "next/link";
+import NotificationsCard from "@/app/_components/NotificationCard";
+import { useQuery } from "@apollo/client";
+import { GetUnreadNotificationsDocument, GetUnreadNotificationsQuery, GetUnreadNotificationsQueryVariables } from "@/data/gql/graphql";
+import { useEffect } from "react";
 
 const notifications = [
   {
@@ -61,31 +60,36 @@ const notifications = [
 ];
 
 export default function NotificationsPage() {
+
+ const {data, loading, error} = useQuery<GetUnreadNotificationsQuery, GetUnreadNotificationsQueryVariables>(GetUnreadNotificationsDocument, {variables: {where: {isRead: {equals: false}, AND: [{user:{id: {equals:"cmbbmfjf3000032ztrz1zyk3b" }}}]}}})
+
+  
+
+  useEffect(() =>{
+
+  }, [data, loading])
+
+
+
+
   return (
     <div className="max-w-3xl mx-auto p-6 space-y-4">
       <h1 className="text-2xl font-bold text-rose-700 mb-4 flex items-center gap-2">
         <Bell className="w-6 h-6" /> Notifications
       </h1>
 
-      {notifications.map(({ id, icon: Icon, title, message, date, actionText, actionHref }) => (
-        <Card key={id} className="p-4 shadow-sm border border-rose-100">
-          <div className="flex items-start gap-4">
-            <Icon className="w-6 h-6 text-rose-600 mt-1" />
-            <div className="flex-1 space-y-2">
-              <div>
-                <h3 className="text-base font-semibold text-rose-900">{title}</h3>
-                <p className="text-sm text-gray-700">{message}</p>
-                <p className="text-xs text-gray-400">{new Date(date).toLocaleDateString()}</p>
-              </div>
-              <Link href={actionHref}>
-                <Button variant="outline" className="text-rose-700 border-rose-300 hover:bg-rose-50">
-                  {actionText}
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </Card>
-      ))}
+
+
+      {data?.notifications.length === 0 ? (
+        <div className="text-center text-gray-500 mt-8">
+          <p className="text-lg">No notifications yet.</p>
+        </div>
+      ) :(
+      
+      
+      data?.notifications.map(({ id, icon: Icon, title, content, createdAt, actionText, actionHref }) => (
+       <NotificationsCard key={id} id={id} Icon={Icon} title={title} message={content} date={createdAt} actionText={actionText} actionHref={actionHref}/>
+      )))}
     </div>
   );
 }

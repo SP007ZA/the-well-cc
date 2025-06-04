@@ -1,0 +1,5 @@
+mutation UpdateIsReadNotification($where: NotificationWhereUniqueInput!, $data: NotificationUpdateInput!) {
+  updateNotification(where: $where, data: $data) {
+  isRead  
+  }
+}

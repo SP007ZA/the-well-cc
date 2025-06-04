@@ -35,7 +35,7 @@ const Profiles = () => {
     <div className="p-6 space-y-6">
       <h1 className="text-2xl font-bold text-rose-700">Member Profiles</h1>
       <p className="text-muted-foreground text-sm">
-        Browse profiles of fellow paid members. Click to view details.
+        Browse profiles of fellow members. Click to view details.
       </p>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

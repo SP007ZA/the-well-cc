@@ -1,0 +1,4 @@
+query GetUnreadNotificationCount($where: NotificationWhereInput!) {
+  notificationsCount(where: $where)
+  
+}

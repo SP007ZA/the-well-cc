@@ -1,0 +1,9 @@
+mutation CompleteProfile($where: ProfileWhereUniqueInput!, $data: ProfileUpdateInput!) {
+  updateProfile(where: $where, data: $data) {
+  id
+  user {
+    isProfile
+  }
+   
+  }
+}

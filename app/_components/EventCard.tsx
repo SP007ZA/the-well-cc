@@ -13,22 +13,24 @@ export default function EventCard({
   endDate,
   location,
   thumbnail,
+  member
 }: {
   id: string;
   title: string;
   description: string;
-  startDate: string;
-  endDate: string;
+  startDate: Date;
+  endDate: Date;
   location: string;
   thumbnail: string; // Image URL
+  member: boolean
 }) {
-  const formattedStart = format(new Date(startDate), 'MMMM d, yyyy · h:mm a');
-  const formattedEnd = format(new Date(endDate), 'MMMM d, yyyy · h:mm a');
+  const formattedStart = format(startDate, 'MMMM d, yyyy · h:mm a');
+  const formattedEnd = format(endDate, 'MMMM d, yyyy · h:mm a');
 
   return (
          <>
               <Link
-      href={`/events/${id}`}
+      href={member ? `/dashboard/events/${id}`  :`/events/${id}`}
       className="block bg-rose-50 rounded-xl overflow-hidden shadow hover:shadow-md transition hover:scale-[1.02]"
     >
         <Card className="overflow-hidden border shadow-sm">

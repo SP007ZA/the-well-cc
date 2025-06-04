@@ -31,7 +31,7 @@ export default function SignUpPage() {
 
     if (Object.keys(newErrors).length === 0) {
       // Proceed with signup or call backend API
-      await signUp({variables:{ data:{name: "Peter", email:email, password:password}}}).then(() => {
+      await signUp({variables:{ data:{userName: "Peter", email:email, password:password}}}).then(() => {
        console.log("Succesfully created a User")
       }).catch(err => console.log(err))
     }

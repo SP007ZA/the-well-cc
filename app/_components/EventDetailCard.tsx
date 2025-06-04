@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 
 // Mock function — replace with your actual DB/API call
 
-export default async function EventDetailCard({id,thumbnail, title, startDate, endDate, location, fullAddress, description}) {
+export default function EventDetailCard({id,thumbnail, title, startDate, endDate, location, fullAddress, description, member}) {
  
 
   return (
@@ -19,7 +19,7 @@ export default async function EventDetailCard({id,thumbnail, title, startDate, e
       {/* Title + Details */}
       <h1 className="text-3xl font-bold mb-2">{title}</h1>
       <p className="text-sm text-gray-600 mb-1">
-        {format(new Date(startDate), 'MMMM d, yyyy · h:mm a')} → {format(new Date(endDate), 'h:mm a')}
+        {format(startDate, 'MMMM d, yyyy · h:mm a')} → {format(endDate, 'h:mm a')}
       </p>
       <p className="text-sm text-gray-500 mb-2">📍 <strong>{location}</strong></p>
 
@@ -30,7 +30,7 @@ export default async function EventDetailCard({id,thumbnail, title, startDate, e
       <p className="mb-6 text-gray-800">{description}</p>
 
       {/* Ticket Button */}
-      <a href={`/events/${id}/buy`}>
+      <a href={member ? `/dashboard/events/${id}/purchase` :`/events/${id}/purchase`}>
         <Button className="bg-rose-700 text-white hover:bg-rose-800">🎟 Reserve a Ticket</Button>
       </a>
 

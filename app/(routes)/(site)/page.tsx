@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Heart, Users, Calendar, MessageCircle, Church, MapPin, CalendarCheck, Star, HeartHandshake } from "lucide-react";
+import Link from "next/link";
 export default function Home() {
   return (
     <div className="bg-gray-50  text-gray-800">
@@ -11,9 +12,11 @@ export default function Home() {
         <p className="text-lg md:text-xl max-w-2xl mx-auto">
           Welcome to The Well Christian Club – where like-minded singles connect through shared beliefs, spiritual growth, and meaningful relationships.
         </p>
+        <Link href={"/signup"}>
         <Button className="mt-6 text-white bg-rose-700 hover:bg-rose-800 px-6 py-3 rounded-full text-lg">
           Join Now
         </Button>
+        </Link>
       </section>
 
        {/* Offerings Section */}
@@ -108,7 +111,9 @@ export default function Home() {
             <li>✗ No access to member profiles</li>
             <li>✗ No WhatsApp group access</li>
           </ul>
+           <Link href={"/signup"}>
           <Button variant="outline">Sign Up</Button>
+          </Link>
         </div>
 
         {/* Premium Plan */}
@@ -120,7 +125,9 @@ export default function Home() {
             <li>✓ Access to events with discount</li>
             <li>✓ Exclusive WhatsApp group access</li>
           </ul>
+           <Link href={"/signup"}>
           <Button className="bg-rose-700 text-white hover:bg-rose-800">Subscribe</Button>
+          </Link>
         </div>
 
         {/* Platinum Plan */}
@@ -133,7 +140,10 @@ export default function Home() {
             <li>✓ WhatsApp group access</li>
             <li>✓ Save 37% compared to monthly</li>
           </ul>
+           <Link href={"/signup"}>
           <Button className="bg-yellow-500 text-white hover:bg-yellow-600">Get Platinum</Button>
+          </Link>
+
         </div>
       </div>
     </section>
@@ -187,7 +197,9 @@ export default function Home() {
         <div className="text-center mt-16">
           <h4 className="text-lg font-semibold mb-2">Dont miss out!</h4>
           <p className="mb-4">Premium and Platinum members enjoy exclusive access and discounts to all our events.</p>
+           <Link href={"/login?membership=upgrade"}>
           <Button className="bg-rose-700 text-white hover:bg-rose-800 px-6 py-2 rounded-full">Upgrade Membership</Button>
+          </Link>
         </div>
       </div>
     </section>
@@ -198,9 +210,11 @@ export default function Home() {
         <p className="text-lg max-w-xl mx-auto">
           Sign up today and take the first step toward a Christ-centered relationship.
         </p>
+         <Link href={"/signup"}>
         <Button className="mt-6 bg-rose-700 text-white hover:bg-rose-800 px-6 py-3 rounded-full text-lg">
           Create My Profile
         </Button>
+        </Link>
       </section>
     </div>
   );

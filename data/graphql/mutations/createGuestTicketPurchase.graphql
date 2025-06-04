@@ -1,0 +1,17 @@
+mutation CreateGuestTicketPurchase($data: GuestCreateInput!) {
+  createGuest(data: $data) {
+    id
+    firstName
+    lastName
+    contact
+ ticket {
+  id
+  price
+  qty
+  guest {
+    id
+  }
+  ticketCode
+ }
+  }
+}

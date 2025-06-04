@@ -1,0 +1,11 @@
+query GetUserProfilePicture($where: UserWhereUniqueInput!) {
+  user(where: $where) {
+    profile {
+      id
+      profilePicture {
+        publicUrlTransformed
+      }
+      
+    }
+  }
+}

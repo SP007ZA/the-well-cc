@@ -1,3 +1,4 @@
+import RandomScriptures from '@/app/_components/RandonScripture'
 import Link from 'next/link'
 import React from 'react'
 
@@ -58,7 +59,7 @@ const Footer = () => {
 
       {/* Bottom Section */}
       <div className="mt-10 text-center text-xs text-gray-500">
-        <p className="italic mb-1">“Delight yourself in the Lord, and He will give you the desires of your heart.” – Psalm 37:4</p>
+        <RandomScriptures/>
         <p>&copy; {new Date().getFullYear()} The Well Christian Club. All rights reserved.</p>
       </div>
     </footer>
