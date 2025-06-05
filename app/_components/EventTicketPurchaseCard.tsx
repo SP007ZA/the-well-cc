@@ -5,25 +5,38 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { CreateGuestTicketPurchaseDocument, CreateGuestTicketPurchaseMutation, CreateGuestTicketPurchaseMutationVariables } from "@/data/gql/graphql";
+import { useMutation } from "@apollo/client";
+import { error } from "console";
 import { format } from "date-fns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 
 export default function EventPruchaseCard ({firstName, lastName, email, cellNumber, id, price, thumbnail, description, startDate, endDate, fullAddress, title, member}) {
      const [quantity, setQuantity] = useState(1);
      const [guestNameFirst, setGuestNameFirst] = useState('');
      const [guestNameLast, setGuestNameLast] = useState('');
      const [guestEmail, setGuestEmail] = useState('');
-       const [guestTel, setGuestTel] = useState('');
-         const [formError, setFormError] = useState('');
+     const [guestTel, setGuestTel] = useState('');
+     const [formError, setFormError] = useState('');
 
+     const[setID, setSessionID] = useState<any>()
+    
+
+     const [loading, setLoading] = useState(false)
+
+
+const sessionId = crypto.randomUUID();
       const total = quantity * price;
       const phrase = "the_well_cc_payment_testing"
+
+      const [CreateGuestTicketPurchase, data] = useMutation<CreateGuestTicketPurchaseMutation, CreateGuestTicketPurchaseMutationVariables>(CreateGuestTicketPurchaseDocument, {variables: {data:{ firstName:guestNameFirst, lastName:guestNameLast, email:guestEmail, contact: Number(guestTel), ticket: { create: [{qty:quantity, price, sessionID: setID, event: {connect: {id}}}]} }}})
 
 const myData = [];
 // Merchant details
 myData["merchant_id"] = "10023375";
 myData["merchant_key"] = "04afueikmam8r";
-myData["return_url"] =  member ? "https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/success" :` https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/${id}/purchase/success?firstName=${guestNameFirst}&lastName=${guestNameLast}&email=${guestEmail}&cellNumber=${guestTel}&qty=${quantity}&price=${total}`;
+myData["return_url"] =  member ? "https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/success" :` https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/${id}/purchase/success?sessionId=${setID}&firstName=${guestNameFirst}&email=${guestEmail}`;
 myData["cancel_url"] = "https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/cancel";
 
 // Buyer details
@@ -37,33 +50,65 @@ myData["amount"] = total.toString();
 myData["item_name"] = {title};
 myData["item_description"] = {description};
 
-    const handlePurchase = (e: React.FormEvent) => {
-    if (!member && !isGuestValid()) {
-      e.preventDefault(); // Prevent form submission
+ useEffect(() => {
+ setSessionID(sessionId)
+},[])
+
+  const handlePurchase = async (e: React.FormEvent) => {
+  e.preventDefault(); // Prevent form submission
+  setFormError('');
+
+  const form = e.currentTarget as HTMLFormElement; 
+  
+  // Run guest validation if user is not a member
+  if (!member) {
+    if (!guestNameFirst || !guestNameLast || !guestEmail || !guestTel) {
+      setFormError("Please fill in all the fields.");
       return;
     }
 
-    // Proceed normally if valid
-    console.log("Valid Purchase");
-  };
-
-   const isGuestValid = () => {
-    if (!guestNameFirst || !guestNameLast || !guestEmail || !guestTel) {
-      setFormError("Please fill in all fields.");
-      return false;
-    }
-
     if (!/^\d{9}$/.test(guestTel)) {
-      setFormError("Phone number must be 9 digits (without +27).");
-      return false;
+      setFormError("Cell number must be exactly 9 digits (without +27).");
+      return;
+    }
+  }
+
+  setLoading(true);
+
+  try {
+    if (!member) {
+      const response = await CreateGuestTicketPurchase();
+      const createdTicketId = response.data?.createGuest.ticket[0]?.id;
+
+      if (!createdTicketId) {
+        setFormError("Something went wrong creating your ticket. Please try again.");
+        return;
+      }
+
+      setTimeout(() => {
+         setLoading(true);
+      }, 500)
+
     }
 
-    setFormError(""); // Clear errors
-    return true;
-  };
+    // Let the form post to PayFast
+    form.submit(); 
+
+    console.log({guestNameFirst, guestNameLast, guestEmail})
+
+  } catch (error) {
+    console.error(error);
+    setFormError("Failed to process the ticket. Please try again.");
+  } finally {
+    setLoading(false);
+  } 
+
+
+};
+
+ 
 
    
-
 
     return (
         <>
@@ -172,7 +217,7 @@ myData["item_description"] = {description};
             type="submit"
             className="bg-rose-700 text-white hover:bg-rose-800"
           >
-            Reserve Tickets
+            {loading ? 'Please Wait...' : 'Reserve Tickets'}
           </Button>
       </div>
        </form>

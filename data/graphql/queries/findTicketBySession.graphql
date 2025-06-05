@@ -1,0 +1,5 @@
+query findTicketBySessionID($where: TicketWhereInput!) {
+  tickets(where: $where) {
+    id
+  }
+}

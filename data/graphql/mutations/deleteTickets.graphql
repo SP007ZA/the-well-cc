@@ -1,0 +1,5 @@
+mutation DeleteTickets($where: [TicketWhereUniqueInput!]!) {
+  deleteTickets(where: $where) {
+    id
+  }
+}
