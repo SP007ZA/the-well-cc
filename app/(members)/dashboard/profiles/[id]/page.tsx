@@ -75,6 +75,7 @@ export default function ProfilePage({ params }: { params: Promise<{ id: string }
          name: `${data?.profile.firstName} ${data?.profile.lastName}`,
             photo: data?.profile.profilePicture.publicUrlTransformed,
             gallery: data?.profile.photos.map((item) => (item.image.publicUrlTransformed)),
+            interests: data?.profile.interests.split(' '),
             location: `${data?.profile.address.city}, ${data?.profile.address.province}`,
             bio: data?.profile.bio
 
@@ -84,6 +85,8 @@ export default function ProfilePage({ params }: { params: Promise<{ id: string }
      }
 
   }, [data, loading])
+
+  console.log()
 
   if (data?.profile === null) {
     return <div className="p-6 text-center text-gray-500">Member not found.</div>
