@@ -29,7 +29,7 @@ export default function SignupForm() {
   city: "",
   province: "Gauteng",
   postalCode: "",
-  dateOfSalvation: date ? date : "",
+  dateOfSalvation: date,
   pastorsName:"",
   churchNameAddress:"",
   churchContact:"",

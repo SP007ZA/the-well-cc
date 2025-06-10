@@ -5,8 +5,9 @@ import NotificationsCard from "@/app/_components/NotificationCard";
 import { useQuery } from "@apollo/client";
 import { GetUnreadNotificationsDocument, GetUnreadNotificationsQuery, GetUnreadNotificationsQueryVariables } from "@/data/gql/graphql";
 import { useEffect } from "react";
+import ProtectedRoute from "../_components/ProtectedRoute";
 
-const notifications = [
+/*const notifications = [
   {
     id: 1,
     type: "event",
@@ -57,7 +58,7 @@ const notifications = [
     actionText: "Reply Now",
     actionHref: "/dashboard/chat",
   },
-];
+]; */
 
 export default function NotificationsPage() {
 
@@ -73,6 +74,7 @@ export default function NotificationsPage() {
 
 
   return (
+    <ProtectedRoute>
     <div className="max-w-3xl mx-auto p-6 space-y-4">
       <h1 className="text-2xl font-bold text-rose-700 mb-4 flex items-center gap-2">
         <Bell className="w-6 h-6" /> Notifications
@@ -91,5 +93,6 @@ export default function NotificationsPage() {
        <NotificationsCard key={id} id={id} Icon={Icon} title={title} message={content} date={createdAt} actionText={actionText} actionHref={actionHref}/>
       )))}
     </div>
+    </ProtectedRoute>
   );
 }

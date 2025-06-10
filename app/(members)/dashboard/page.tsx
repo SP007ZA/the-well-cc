@@ -1,11 +1,12 @@
 /* eslint-disable */
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { Card, CardContent } from '@/components/ui/card'
-import { MessageSquare, Bell, CalendarCheck, User } from 'lucide-react'
+import {  Bell, CalendarCheck, User } from 'lucide-react'
 import RandomScriptures from '@/app/_components/RandonScripture'
+import ProtectedRoute from './_components/ProtectedRoute'
 
 const features = [
   {
@@ -26,12 +27,12 @@ const features = [
     description: 'Stay updated with important alerts, messages, and announcements.',
     link: '/dashboard/notifications'
   },
-  {
+ /* {
     title: 'Chats',
     icon: <MessageSquare className="text-rose-700 w-6 h-6" />,
     description: 'Connect and message with other members who share your faith journey.',
     link: '/dashboard/chat'
-  }
+  } */
 ]
 
 
@@ -40,6 +41,7 @@ const Dashboard = () => {
 
 
   return (
+    <ProtectedRoute>
     <div className="p-6 space-y-6">
       <h1 className="text-3xl font-bold text-rose-700">Welcome to Your Dashboard</h1>
       <p className="text-muted-foreground text-sm max-w-lg">
@@ -68,6 +70,7 @@ const Dashboard = () => {
        <RandomScriptures/>
       </div>
     </div>
+    </ProtectedRoute>
   )
 }
 

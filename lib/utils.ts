@@ -1,4 +1,6 @@
 /* eslint-disable */
+import { GetUserAuthDocument, GetUserAuthQuery, GetUserAuthQueryVariables } from "@/data/gql/graphql";
+import { useQuery } from "@apollo/client";
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -61,4 +63,9 @@ export function base64ToFile(base64String, filename) {
   }
 
   return new File([u8arr], filename, { type: mime });
+}
+
+export function useUser() {
+    const { data } = useQuery<GetUserAuthQuery, GetUserAuthQueryVariables>(GetUserAuthDocument)
+    return data?.authenticatedItem
 }

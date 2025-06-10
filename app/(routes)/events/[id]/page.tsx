@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use client'
 
 import EventDetailCard from "@/app/_components/EventDetailCard";

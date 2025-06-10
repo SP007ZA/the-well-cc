@@ -1,0 +1,6 @@
+mutation UpdateGuestCreateTicket($where: GuestWhereUniqueInput!, $data: GuestUpdateInput!) {
+  updateGuest(where: $where, data: $data) {
+    id
+  
+  }
+}

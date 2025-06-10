@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use client";
 
 import { ProfileDocument, ProfileQuery, ProfileQueryVariables } from '@/data/gql/graphql';

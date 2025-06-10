@@ -1,0 +1,21 @@
+query GetMemberProfile($where: ProfileWhereUniqueInput!) {
+  profile(where: $where) {
+    id
+    firstName
+      lastName
+      bio
+      interests
+      profilePicture {
+        publicUrlTransformed
+      }
+      photos {
+        image {
+          publicUrlTransformed
+        }
+      }
+      address {
+        city
+        province
+      }
+  }
+}

@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use client'
 
 import { useForm } from 'react-hook-form'
@@ -5,6 +6,7 @@ import { use, useRef, useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { CompleteProfileDocument, CompleteProfileMutation, CompleteProfileMutationVariables } from '@/data/gql/graphql'
 import LoadingSpinner from '@/app/_components/LoadingSpinner'
+import ProtectedRoute from '@/app/(members)/dashboard/_components/ProtectedRoute'
 
 
 
@@ -104,6 +106,7 @@ setRedirectTimer(true)
   if(redirectTimer) return <><LoadingSpinner message={"Plase Wait To be Redirected To the Member Dashboard"}/></>
 
   return (
+    <ProtectedRoute>
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="max-w-2xl mx-auto p-6 bg-white rounded-2xl shadow-md space-y-6"
@@ -245,5 +248,6 @@ setRedirectTimer(true)
         {submitting ? 'Submitting...' : 'Submit Profile'}
       </button>
     </form>
+    </ProtectedRoute>
   )
 }

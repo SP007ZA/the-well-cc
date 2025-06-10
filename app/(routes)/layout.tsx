@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react'
 import Header from './_components/Menu/Header'
 import Footer from './_components/Menu/Footer'

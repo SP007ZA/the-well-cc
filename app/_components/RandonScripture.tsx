@@ -4,12 +4,17 @@
 import { useEffect, useState } from "react"
 
     const scriptures = [
-  '"I can do all things through Christ who strengthens me." - Philippians 4:13',
-  '"Trust in the Lord with all your heart and lean not on your own understanding." - Proverbs 3:5',
-  '"For I know the plans I have for you, declares the Lord..." - Jeremiah 29:11',
-  '"Be strong and courageous. Do not be afraid..." - Joshua 1:9',
-  '“Delight yourself in the Lord, and He will give you the desires of your heart.” – Psalm 37:4',
-  '"The Lord is my shepherd; I shall not want." - Psalm 23:1'
+  '"For it is better to marry than to burn with passion." - 1Corinthians 7:9 ',
+  '"Do not be unequally yoked together with unbelievers" - 2Corinthians 6:14',
+  '"Flee also youthful lusts; but pursue righteousness." - 2Timothy 2:22',
+  '"He who finds a wife finds what is good and receives favor from the LORD." - Proverbs 18:22',
+  '“A wife of noble character who can find? She is worth far more than rubies. – Proverbs 31:10',
+  '"How beautiful you are, my darling!Your eyes are like doves." - Song 1:15',
+  '"Do not arouse or awaken love until the time is right." - Song 2:7',
+  '"How beautiful you are, my darling!Your eyes are like doves." - Song 1:15',
+  '"faith, hope, and love are abiding virtues, with love being the greatest of the three" - 1Corinthians 13:3',
+  '"Love one another, as I have loved you." - John 15:12',
+  '"Love and faithfulness meet together; righteousness and peace kiss each other." - Psalm 85:11'
 ]
 
 const RandomScriptures = () => {

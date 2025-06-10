@@ -18,17 +18,25 @@ const documents = {
     "mutation CreateGuestTicketPurchase($data: GuestCreateInput!) {\n  createGuest(data: $data) {\n    id\n    firstName\n    lastName\n    contact\n    ticket {\n      id\n      price\n      qty\n      guest {\n        id\n      }\n      ticketCode\n    }\n  }\n}": types.CreateGuestTicketPurchaseDocument,
     "mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {\n  updateUser(where: $where, data: $data) {\n    id\n    profile {\n      id\n      firstName\n    }\n    membership {\n      memberShipType\n    }\n  }\n}": types.UpdateUserDocument,
     "mutation CreateUser($data: UserCreateInput!) {\n  createUser(data: $data) {\n    id\n  }\n}": types.CreateUserDocument,
+    "mutation CreateUserTicket($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {\n  updateUser(where: $where, data: $data) {\n    id\n  }\n}": types.CreateUserTicketDocument,
     "mutation DeleteGuests($where: [GuestWhereUniqueInput!]!) {\n  deleteGuests(where: $where) {\n    firstName\n  }\n}": types.DeleteGuestsDocument,
     "mutation DeleteTickets($where: [TicketWhereUniqueInput!]!) {\n  deleteTickets(where: $where) {\n    id\n  }\n}": types.DeleteTicketsDocument,
+    "mutation SIGNIN_MUTATION($email: String!, $password: String!) {\n  authenticateUserWithPassword(email: $email, password: $password) {\n    ... on UserAuthenticationWithPasswordSuccess {\n      item {\n        id\n        email\n        isProfile\n        isMemberForm\n      }\n    }\n    ... on UserAuthenticationWithPasswordFailure {\n      message\n    }\n  }\n}": types.Signin_MutationDocument,
+    "mutation SignOut {\n  endSession\n}": types.SignOutDocument,
+    "mutation UpdateGuestCreateTicket($where: GuestWhereUniqueInput!, $data: GuestUpdateInput!) {\n  updateGuest(where: $where, data: $data) {\n    id\n  }\n}": types.UpdateGuestCreateTicketDocument,
     "mutation UpdateIsReadNotification($where: NotificationWhereUniqueInput!, $data: NotificationUpdateInput!) {\n  updateNotification(where: $where, data: $data) {\n    isRead\n  }\n}": types.UpdateIsReadNotificationDocument,
     "mutation UpdateMembership($where: MembershipWhereUniqueInput!, $data: MembershipUpdateInput!) {\n  updateMembership(where: $where, data: $data) {\n    memberShipType\n    hasPaidSubscription\n    user {\n      email\n      profile {\n        id\n      }\n    }\n  }\n}": types.UpdateMembershipDocument,
     "mutation UpdateTicketStatus($where: TicketWhereUniqueInput!, $data: TicketUpdateInput!) {\n  updateTicket(where: $where, data: $data) {\n    id\n    status\n  }\n}": types.UpdateTicketStatusDocument,
+    "query FindGuestByEmail($where: GuestWhereInput!) {\n  guests(where: $where) {\n    id\n  }\n}": types.FindGuestByEmailDocument,
     "query findTicketBySessionID($where: TicketWhereInput!) {\n  tickets(where: $where) {\n    id\n  }\n}": types.FindTicketBySessionIdDocument,
     "query FindUserByEmail($email: String) {\n  user(where: {email: $email}) {\n    id\n  }\n}": types.FindUserByEmailDocument,
     "query Profile($where: ProfileWhereUniqueInput!) {\n  profile(where: $where) {\n    id\n    firstName\n    lastName\n    user {\n      email\n      membership {\n        id\n        cellNumber\n      }\n    }\n  }\n}": types.ProfileDocument,
     "query GetUserProfilePicture($where: UserWhereUniqueInput!) {\n  user(where: $where) {\n    profile {\n      id\n      profilePicture {\n        publicUrlTransformed\n      }\n    }\n  }\n}": types.GetUserProfilePictureDocument,
     "query GetActiveEvents($where: EventWhereInput!) {\n  events(where: $where) {\n    id\n    title\n    description\n    price\n    startDate\n    endDate\n    eventThumbnail {\n      image {\n        publicUrlTransformed\n      }\n    }\n    address {\n      streetName\n      town\n      city\n      postalCode\n      province\n    }\n  }\n}": types.GetActiveEventsDocument,
     "query GetEvent($where: EventWhereUniqueInput!) {\n  event(where: $where) {\n    id\n    title\n    description\n    price\n    startDate\n    endDate\n    eventThumbnail {\n      image {\n        publicUrlTransformed\n      }\n    }\n    address {\n      streetName\n      town\n      city\n      postalCode\n      province\n    }\n  }\n}": types.GetEventDocument,
+    "query EventHistories {\n  eventHistories {\n    id\n    display\n    comments {\n      comment\n      id\n      likeCount\n      user {\n        userName\n      }\n    }\n    event {\n      title\n    }\n    galleryImages {\n      id\n      image {\n        publicUrlTransformed\n      }\n      title\n    }\n    youtubeLink {\n      title\n      id\n      url\n      description\n    }\n  }\n}": types.EventHistoriesDocument,
+    "query GetMemberProfile($where: ProfileWhereUniqueInput!) {\n  profile(where: $where) {\n    id\n    firstName\n    lastName\n    bio\n    interests\n    profilePicture {\n      publicUrlTransformed\n    }\n    photos {\n      image {\n        publicUrlTransformed\n      }\n    }\n    address {\n      city\n      province\n    }\n  }\n}": types.GetMemberProfileDocument,
+    "query GetMemberUsers($where: UserWhereInput!) {\n  users(where: $where) {\n    id\n    profile {\n      id\n      firstName\n      lastName\n      bio\n      interests\n      profilePicture {\n        publicUrlTransformed\n      }\n      photos {\n        image {\n          publicUrlTransformed\n        }\n      }\n      address {\n        city\n        province\n      }\n    }\n  }\n}": types.GetMemberUsersDocument,
     "query GetUnreadNotificationCount($where: NotificationWhereInput!) {\n  notificationsCount(where: $where)\n}": types.GetUnreadNotificationCountDocument,
     "query GetUnreadNotifications($where: NotificationWhereInput!) {\n  notifications(where: $where) {\n    id\n    type\n    icon\n    title\n    content\n    createdAt\n    actionText\n    actionHref\n  }\n}": types.GetUnreadNotificationsDocument,
     "query getUserAuth {\n  authenticatedItem {\n    ... on User {\n      id\n      userName\n      email\n      isProfile\n    }\n  }\n}": types.GetUserAuthDocument,
@@ -73,11 +81,27 @@ export function graphql(source: "mutation CreateUser($data: UserCreateInput!) {\
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "mutation CreateUserTicket($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {\n  updateUser(where: $where, data: $data) {\n    id\n  }\n}"): (typeof documents)["mutation CreateUserTicket($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {\n  updateUser(where: $where, data: $data) {\n    id\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "mutation DeleteGuests($where: [GuestWhereUniqueInput!]!) {\n  deleteGuests(where: $where) {\n    firstName\n  }\n}"): (typeof documents)["mutation DeleteGuests($where: [GuestWhereUniqueInput!]!) {\n  deleteGuests(where: $where) {\n    firstName\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation DeleteTickets($where: [TicketWhereUniqueInput!]!) {\n  deleteTickets(where: $where) {\n    id\n  }\n}"): (typeof documents)["mutation DeleteTickets($where: [TicketWhereUniqueInput!]!) {\n  deleteTickets(where: $where) {\n    id\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation SIGNIN_MUTATION($email: String!, $password: String!) {\n  authenticateUserWithPassword(email: $email, password: $password) {\n    ... on UserAuthenticationWithPasswordSuccess {\n      item {\n        id\n        email\n        isProfile\n        isMemberForm\n      }\n    }\n    ... on UserAuthenticationWithPasswordFailure {\n      message\n    }\n  }\n}"): (typeof documents)["mutation SIGNIN_MUTATION($email: String!, $password: String!) {\n  authenticateUserWithPassword(email: $email, password: $password) {\n    ... on UserAuthenticationWithPasswordSuccess {\n      item {\n        id\n        email\n        isProfile\n        isMemberForm\n      }\n    }\n    ... on UserAuthenticationWithPasswordFailure {\n      message\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation SignOut {\n  endSession\n}"): (typeof documents)["mutation SignOut {\n  endSession\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation UpdateGuestCreateTicket($where: GuestWhereUniqueInput!, $data: GuestUpdateInput!) {\n  updateGuest(where: $where, data: $data) {\n    id\n  }\n}"): (typeof documents)["mutation UpdateGuestCreateTicket($where: GuestWhereUniqueInput!, $data: GuestUpdateInput!) {\n  updateGuest(where: $where, data: $data) {\n    id\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -90,6 +114,10 @@ export function graphql(source: "mutation UpdateMembership($where: MembershipWhe
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation UpdateTicketStatus($where: TicketWhereUniqueInput!, $data: TicketUpdateInput!) {\n  updateTicket(where: $where, data: $data) {\n    id\n    status\n  }\n}"): (typeof documents)["mutation UpdateTicketStatus($where: TicketWhereUniqueInput!, $data: TicketUpdateInput!) {\n  updateTicket(where: $where, data: $data) {\n    id\n    status\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query FindGuestByEmail($where: GuestWhereInput!) {\n  guests(where: $where) {\n    id\n  }\n}"): (typeof documents)["query FindGuestByEmail($where: GuestWhereInput!) {\n  guests(where: $where) {\n    id\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -114,6 +142,18 @@ export function graphql(source: "query GetActiveEvents($where: EventWhereInput!)
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query GetEvent($where: EventWhereUniqueInput!) {\n  event(where: $where) {\n    id\n    title\n    description\n    price\n    startDate\n    endDate\n    eventThumbnail {\n      image {\n        publicUrlTransformed\n      }\n    }\n    address {\n      streetName\n      town\n      city\n      postalCode\n      province\n    }\n  }\n}"): (typeof documents)["query GetEvent($where: EventWhereUniqueInput!) {\n  event(where: $where) {\n    id\n    title\n    description\n    price\n    startDate\n    endDate\n    eventThumbnail {\n      image {\n        publicUrlTransformed\n      }\n    }\n    address {\n      streetName\n      town\n      city\n      postalCode\n      province\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query EventHistories {\n  eventHistories {\n    id\n    display\n    comments {\n      comment\n      id\n      likeCount\n      user {\n        userName\n      }\n    }\n    event {\n      title\n    }\n    galleryImages {\n      id\n      image {\n        publicUrlTransformed\n      }\n      title\n    }\n    youtubeLink {\n      title\n      id\n      url\n      description\n    }\n  }\n}"): (typeof documents)["query EventHistories {\n  eventHistories {\n    id\n    display\n    comments {\n      comment\n      id\n      likeCount\n      user {\n        userName\n      }\n    }\n    event {\n      title\n    }\n    galleryImages {\n      id\n      image {\n        publicUrlTransformed\n      }\n      title\n    }\n    youtubeLink {\n      title\n      id\n      url\n      description\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query GetMemberProfile($where: ProfileWhereUniqueInput!) {\n  profile(where: $where) {\n    id\n    firstName\n    lastName\n    bio\n    interests\n    profilePicture {\n      publicUrlTransformed\n    }\n    photos {\n      image {\n        publicUrlTransformed\n      }\n    }\n    address {\n      city\n      province\n    }\n  }\n}"): (typeof documents)["query GetMemberProfile($where: ProfileWhereUniqueInput!) {\n  profile(where: $where) {\n    id\n    firstName\n    lastName\n    bio\n    interests\n    profilePicture {\n      publicUrlTransformed\n    }\n    photos {\n      image {\n        publicUrlTransformed\n      }\n    }\n    address {\n      city\n      province\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query GetMemberUsers($where: UserWhereInput!) {\n  users(where: $where) {\n    id\n    profile {\n      id\n      firstName\n      lastName\n      bio\n      interests\n      profilePicture {\n        publicUrlTransformed\n      }\n      photos {\n        image {\n          publicUrlTransformed\n        }\n      }\n      address {\n        city\n        province\n      }\n    }\n  }\n}"): (typeof documents)["query GetMemberUsers($where: UserWhereInput!) {\n  users(where: $where) {\n    id\n    profile {\n      id\n      firstName\n      lastName\n      bio\n      interests\n      profilePicture {\n        publicUrlTransformed\n      }\n      photos {\n        image {\n          publicUrlTransformed\n        }\n      }\n      address {\n        city\n        province\n      }\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

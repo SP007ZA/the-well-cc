@@ -5,6 +5,7 @@ import {  GetEventDocument, GetEventQuery, GetEventQueryVariables } from "@/data
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useParams } from 'next/navigation';
+import ProtectedRoute from "../../_components/ProtectedRoute";
 
 interface Event {
   id: string;
@@ -68,9 +69,11 @@ export default function MemberEventsPage() {
       }, [data]);
 
   return (
+    <ProtectedRoute>
     <div className="p-6 space-y-10">
       <h1 className="text-3xl font-bold">Events Details </h1>  
        { event?.id &&  <EventDetailCard id={event?.id} title={event?.title}description={event?.description} startDate={event?.startDate} endDate={event?.endDate} location={event?.location} thumbnail={event?.thumbnail} member={true} fullAddress={event?.fullAdress} />}
     </div>
+    </ProtectedRoute>
   );
 }

@@ -1,0 +1,18 @@
+    mutation SIGNIN_MUTATION($email: String!, $password: String!){
+        authenticateUserWithPassword(email: $email, password: $password) {
+            ... on UserAuthenticationWithPasswordSuccess {
+           item {
+               id
+               email
+               isProfile
+               isMemberForm
+       
+           }
+       }
+
+       ...on UserAuthenticationWithPasswordFailure {
+           message
+       }
+        }
+      
+    }

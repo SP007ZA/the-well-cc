@@ -1,0 +1,24 @@
+query GetMemberUsers($where: UserWhereInput!) {
+  users(where: $where) {
+    id
+    profile {
+      id
+      firstName
+      lastName
+      bio
+      interests
+      profilePicture {
+        publicUrlTransformed
+      }
+      photos {
+        image {
+          publicUrlTransformed
+        }
+      }
+      address {
+        city
+        province
+      }
+    }
+  }
+}

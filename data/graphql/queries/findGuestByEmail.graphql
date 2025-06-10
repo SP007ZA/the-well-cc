@@ -1,0 +1,5 @@
+query FindGuestByEmail($where: GuestWhereInput!) {
+  guests(where: $where) {
+    id
+  }
+}

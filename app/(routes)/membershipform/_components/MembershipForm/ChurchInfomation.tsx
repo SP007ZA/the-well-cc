@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
 import { Calendar } from "@/components/ui/calendar"
@@ -15,6 +15,7 @@ PopoverTrigger,
 
 const ChurchInfomation = ({form, setForm,errors, validateField, setErrors, setSection, date, setDate}:any) => {
 
+  
 
     const [month, setMonth] = useState<Date>(new Date())
 
@@ -30,6 +31,12 @@ const ChurchInfomation = ({form, setForm,errors, validateField, setErrors, setSe
     setErrors((prev:any) => ({ ...prev, [field]: error }));
 
   };
+
+ useEffect(() => {
+setForm({ ...form, dateOfSalvation: `${date}` });
+ },[date])
+
+
 
  function CustomCaption({
   displayMonth,
@@ -121,7 +128,11 @@ const prev:any = () => {setSection((prev:any) => prev - 1); setErrors({})};
           <Calendar
             mode="single"
             selected={date}
-            onSelect={setDate}
+            onSelect={(selectedDate) => {
+                if (selectedDate) {
+            setDate(selectedDate);
+            }
+            }}
             month={month}
             onMonthChange={setMonth}
             components={{

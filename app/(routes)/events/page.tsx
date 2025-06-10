@@ -1,10 +1,11 @@
+/* eslint-disable */
 "use client"
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { EventGallery } from "./_components/EventGallery";
 import { format } from "date-fns";
-import Image from "next/image";
+
 import UpcomingEvents from "@/app/(members)/dashboard/events/_components/UpcomingEvents";
 
 
@@ -39,7 +40,7 @@ export default function EventsPage() {
         </section>
 
         {/* Past Events */}
-        <section className="mb-16">
+    {false &&   <section className="mb-16">
           <h2 className="text-2xl font-semibold mb-6">Previous Highlights</h2>
           <div className="grid md:grid-cols-2 gap-8">
             <div className="rounded-xl overflow-hidden shadow">
@@ -68,12 +69,12 @@ export default function EventsPage() {
               </div>
             </div>
           </div>
-        </section>
+        </section>}
          {/* Gallery section below events */}
       <EventGallery />
 
         {/* Comments Section */}
-        <section className="max-w-3xl mt-10 mx-auto">
+     {false &&    <section className="max-w-3xl mt-10 mx-auto">
           <h2 className="text-2xl font-semibold mb-4">Comments & Reflections</h2>
 
           {isSubscribed ? (
@@ -101,7 +102,7 @@ export default function EventsPage() {
               <Button className="bg-rose-700 mt-5 text-white hover:bg-rose-800 px-6 py-2 rounded-full">Upgrade Membership</Button>
               </div>
           )}
-        </section>
+        </section>}
       </div>
     </div>
   );

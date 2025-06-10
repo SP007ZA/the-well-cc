@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use client'
 
 import { useForm } from 'react-hook-form'
@@ -14,6 +15,8 @@ import {
 } from '@/data/gql/graphql'
 import LoadingSpinner from '@/app/_components/LoadingSpinner'
 import { Card } from '@/components/ui/card'
+import { useUser } from '@/lib/utils'
+import ProtectedRoute from '../_components/ProtectedRoute'
 
 export default function EditProfileForm({ userId }: { userId: string }) {
   const [submitting, setSubmitting] = useState(false)
@@ -23,6 +26,7 @@ export default function EditProfileForm({ userId }: { userId: string }) {
     const profileInputRef = useRef<HTMLInputElement>(null)
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const { id } = useUser()
 
   const {
     register,
@@ -35,7 +39,7 @@ export default function EditProfileForm({ userId }: { userId: string }) {
   const { data: userData, loading: loadingUser } = useQuery<GetUserProfileQuery, GetUserProfileQueryVariables>(
     GetUserProfileDocument,
     {
-      variables:{ where: { id: "cmbbmfjf3000032ztrz1zyk3b" }},
+      variables:{ where: { id}},
     }
   )
 
@@ -137,6 +141,7 @@ export default function EditProfileForm({ userId }: { userId: string }) {
   if (loadingUser) return <LoadingSpinner message="Loading profile..." />
 
   return (
+    <ProtectedRoute>
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="max-w-2xl mx-auto p-6 bg-white rounded-2xl shadow-md space-y-6"
@@ -272,5 +277,6 @@ export default function EditProfileForm({ userId }: { userId: string }) {
       </button>
       </Card>
     </form>
+    </ProtectedRoute>
   )
 }

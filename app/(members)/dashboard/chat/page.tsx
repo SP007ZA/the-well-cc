@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, Plus } from "lucide-react";
 import Link from "next/link";
+import ProtectedRoute from '../_components/ProtectedRoute';
 
 const chatInbox = [
   // Example empty array. Replace with your actual chat data or fetch dynamically.
@@ -41,6 +42,7 @@ const chatInbox = [
 
 export default function ChatInboxPage() {
   return (
+    <ProtectedRoute>
     <div className="max-w-2xl mx-auto p-6 space-y-4">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold text-rose-700 flex items-center gap-2">
@@ -76,5 +78,6 @@ export default function ChatInboxPage() {
         ))
       )}
     </div>
+    </ProtectedRoute>
   );
 }

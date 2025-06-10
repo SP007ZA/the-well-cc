@@ -1,18 +1,32 @@
+/* eslint-disable */
 "use client"
 import { signIn } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FcGoogle } from "react-icons/fc";
 import Image from 'next/image';
-
+import { useMutation } from "@apollo/client";
+import { Signin_MutationDocument, Signin_MutationMutation, Signin_MutationMutationVariables } from "@/data/gql/graphql";
+import LoadingSpinner from "@/app/_components/LoadingSpinner";
+import { useUser } from "@/lib/utils";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+  const [errors, setErrors] = useState<{ email?: string; password?: string, loginError?: string }>({});
+ const [loading, setLoading] = useState(false)
+ const user = useUser()
+  const [logIn] = useMutation<Signin_MutationMutation, Signin_MutationMutationVariables>(Signin_MutationDocument)
 
 
+
+  useEffect(()=>{
+      if(user?.id === null) {
+        window.location.href = '/dashboard'
+      }
+  },[user?.id])
+      
 const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: typeof errors = {};
@@ -22,12 +36,69 @@ const handleLogin = async (e: React.FormEvent) => {
 
     setErrors(newErrors);
 
-    if (Object.keys(newErrors).length === 0) {
+    if (Object.keys(newErrors)?.length === 0) {
       // Placeholder for password login. Replace with real auth if needed.
-      console.log("Logging in with", { email, password });
+console.log({email, password})
+
+           await logIn({variables: {email, password}}).then(({data}) => {
+
+            console.log(data)
+            //@ts-ignore
+        if(data?.authenticateUserWithPassword.item?.__typename === "User") {
+               //@ts-ignore
+            const userEmail = data?.authenticateUserWithPassword.item?.email
+             
+               //@ts-ignore
+             if(data?.authenticateUserWithPassword.item.isProfile === true)   {
+                  setLoading(true)
+                 setTimeout(() =>{   
+                   return  window.location.href = '/dashboard'
+                 },5000)
+                  
+                  //@ts-ignore
+             }  else if(data?.authenticateUserWithPassword.item.isMemberForm === false) {
+           
+                 setLoading(true)
+                 setTimeout(() =>{
+                    return  window.location.href = '/membershipform'
+                 },5000)
+             }
+              //@ts-ignore
+             else if(data?.authenticateUserWithPassword?.item?.isProfile === false) { 
+                  
+              
+               setLoading(true)
+                 setTimeout(() =>{
+                    //@ts-ignore
+                    return  window.location.href =` /complete-profile/${data?.authenticateUserWithPassword.item.id }`
+                 },5000)  
+               
+          
+          } 
+        }
+     
+          if(data?.authenticateUserWithPassword?.__typename === "UserAuthenticationWithPasswordFailure") {
+                
+               
+                 const errMesage =  data?.authenticateUserWithPassword?.message
+                 newErrors.loginError = `${errMesage} Please enter correct email and password, Click forgot-password to reset your password or go-to Sign-UP` 
+          }
+      }).catch(err =>  console.log(err)) 
+
+
+
+
+
+
+
+
+
+
+
+
     }
   };
-
+if(loading) return <LoadingSpinner message={"Please wait while we redirect you..."}/>
   return (
     <div className="min-h-screen flex items-center justify-center bg-rose-50 p-6">
       <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
@@ -48,22 +119,22 @@ const handleLogin = async (e: React.FormEvent) => {
       </Link>
         
         <h2 className="text-2xl font-bold text-center mb-6 text-rose-700">Welcome Back</h2>
-
         {/* Google Login */}
+       {false &&  
         <Button
           onClick={() => signIn("google", { callbackUrl: "/" })}
           className="w-full flex items-center justify-center gap-2 border mb-6"
           variant="outline"
         >
           <FcGoogle size={22} /> Sign in with Google
-        </Button>
+        </Button>}
 
         {/* Divider */}
-        <div className="flex items-center my-4">
+     {false &&    <div className="flex items-center my-4">
           <div className="flex-grow h-px bg-gray-300"></div>
           <span className="px-4 text-sm text-gray-500">or</span>
           <div className="flex-grow h-px bg-gray-300"></div>
-        </div>
+        </div>}
 
         {/* Email & Password Login */}
         <form onSubmit={handleLogin} className="space-y-4">
@@ -89,10 +160,11 @@ const handleLogin = async (e: React.FormEvent) => {
               required
             />
             {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
+            {errors.loginError && <p className="text-red-500 text-xs mt-1">{errors.loginError}</p>}
           </div>
 
-          <Button type="submit" className="w-full bg-rose-700 text-white hover:bg-rose-800">
-            Login
+          <Button  type="submit" className="w-full bg-rose-700 text-white hover:bg-rose-800">
+           {loading ? "Please Wait..." : "Login"}
           </Button>
         </form>
 

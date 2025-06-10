@@ -1,0 +1,30 @@
+query EventHistories {
+  eventHistories {
+    id
+    display
+    comments {
+      comment
+      id
+      likeCount
+      user {
+        userName
+      }
+    }
+    event {
+      title
+    }
+    galleryImages {
+      id
+      image {
+        publicUrlTransformed
+      }
+      title
+    }
+    youtubeLink {
+      title
+      id
+      url
+      description
+    }
+  }
+}

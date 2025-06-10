@@ -14,8 +14,10 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import { useQuery } from "@apollo/client";
-import { GetUnreadNotificationCountDocument, GetUnreadNotificationCountQuery, GetUnreadNotificationCountQueryVariables, GetUserProfilePictureDocument, GetUserProfilePictureQuery, GetUserProfilePictureQueryVariables } from "@/data/gql/graphql";
+import { useMutation, useQuery } from "@apollo/client";
+import { GetUnreadNotificationCountDocument, GetUnreadNotificationCountQuery, GetUnreadNotificationCountQueryVariables, GetUserProfilePictureDocument, GetUserProfilePictureQuery, GetUserProfilePictureQueryVariables, SignOutDocument, SignOutMutation, SignOutMutationVariables } from "@/data/gql/graphql";
+import { useUser } from "@/lib/utils";
+import ProtectedRoute from "./_components/ProtectedRoute";
 
 
 interface MemberDashboardLayoutProps {
@@ -27,19 +29,28 @@ const navItems = [
   { key: "profile", icon: User, label: "Profiles", href: "/dashboard/profiles" },
   { key: "events", icon: CalendarDays, label: "Events", href: "/dashboard/events" },
   { key: "notifications", icon: Bell, label: "Notifications", href: "/dashboard/notifications" },
-  { key: "chat", icon: MessageCircle, label: "Chat", href: "/dashboard/chat" },
+ /* { key: "chat", icon: MessageCircle, label: "Chat", href: "/dashboard/chat" } */,
 ];
 
 export default function MemberDashboardLayout({ children }: MemberDashboardLayoutProps) {
+  const user = useUser()
   const pathname = usePathname();
   const [darkMode, setDarkMode] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [profilePicture, setProfilePicture] = useState<any>()
 const dropdownRef = useRef<HTMLDivElement>(null);
+const [signOut] = useMutation<SignOutMutation, SignOutMutationVariables>(SignOutDocument)
+const {data} = useQuery<GetUserProfilePictureQuery, GetUserProfilePictureQueryVariables>(GetUserProfilePictureDocument, {variables: {where: {id: user?.id}}})
 
-const {data} = useQuery<GetUserProfilePictureQuery, GetUserProfilePictureQueryVariables>(GetUserProfilePictureDocument, {variables: {where: {id: "cmbbmfjf3000032ztrz1zyk3b"}}})
+const {data:count} = useQuery<GetUnreadNotificationCountQuery, GetUnreadNotificationCountQueryVariables>(GetUnreadNotificationCountDocument, {variables:{where: {isRead: {equals: false}, AND: [{user: {id: {equals:user?.id}}}]}}, pollInterval:30000})
 
-const {data:count} = useQuery<GetUnreadNotificationCountQuery, GetUnreadNotificationCountQueryVariables>(GetUnreadNotificationCountDocument, {variables:{where: {isRead: {equals: false}, AND: [{user: {id: {equals:"cmbbmfjf3000032ztrz1zyk3b"}}}]}}, pollInterval:30000})
+
+
+    const handleSignOut =  () => {
+        
+       return signOut().then(data => {return  window.location.href = '/'}).catch(err => {return  window.location.href = '/'})
+        
+    }
 
   useEffect(() => {
     const storedMode = localStorage.getItem("theme");
@@ -65,6 +76,7 @@ const {data:count} = useQuery<GetUnreadNotificationCountQuery, GetUnreadNotifica
     .map((seg) => seg.charAt(0).toUpperCase() + seg.slice(1));
 
   return (
+    <ProtectedRoute>
     <div className={darkMode ? "dark" : ""}>
       <div className="min-h-screen flex flex-col md:flex-row bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
         {/* Sidebar for Desktop */}
@@ -139,10 +151,10 @@ const {data:count} = useQuery<GetUnreadNotificationCountQuery, GetUnreadNotifica
                                   <Link href="/dashboard/edit-profile" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
                                    Edit My Profile
                                   </Link>
-                                  <Link href="/dashboard/settings" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
+                               {false &&    <Link href="/dashboard/settings" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
                                     Settings
-                                  </Link>
-                                  <button className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                  </Link>}
+                                  <button onClick={handleSignOut} className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
                                     Logout
                                   </button>
                                 </div>
@@ -176,5 +188,6 @@ const {data:count} = useQuery<GetUnreadNotificationCountQuery, GetUnreadNotifica
         </div>
       </div>
     </div>
+    </ProtectedRoute>
   );
 }

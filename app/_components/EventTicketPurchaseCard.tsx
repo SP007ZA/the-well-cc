@@ -5,9 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CreateGuestTicketPurchaseDocument, CreateGuestTicketPurchaseMutation, CreateGuestTicketPurchaseMutationVariables } from "@/data/gql/graphql";
-import { useMutation } from "@apollo/client";
-import { error } from "console";
+import { CreateGuestTicketPurchaseDocument, CreateGuestTicketPurchaseMutation, CreateGuestTicketPurchaseMutationVariables, CreateUserMutationVariables, CreateUserTicketDocument, CreateUserTicketMutation, CreateUserTicketMutationVariables, FindGuestByEmailDocument, FindGuestByEmailQuery, FindGuestByEmailQueryVariables, UpdateGuestCreateTicketDocument, UpdateGuestCreateTicketMutation, UpdateGuestCreateTicketMutationVariables } from "@/data/gql/graphql";
+import { useMutation, useQuery } from "@apollo/client";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 
@@ -20,7 +19,7 @@ export default function EventPruchaseCard ({firstName, lastName, email, cellNumb
      const [guestTel, setGuestTel] = useState('');
      const [formError, setFormError] = useState('');
 
-     const[setID, setSessionID] = useState<any>()
+     const[sessionID, setSessionID] = useState<any>()
     
 
      const [loading, setLoading] = useState(false)
@@ -30,14 +29,16 @@ const sessionId = crypto.randomUUID();
       const total = quantity * price;
       const phrase = "the_well_cc_payment_testing"
 
-      const [CreateGuestTicketPurchase, data] = useMutation<CreateGuestTicketPurchaseMutation, CreateGuestTicketPurchaseMutationVariables>(CreateGuestTicketPurchaseDocument, {variables: {data:{ firstName:guestNameFirst, lastName:guestNameLast, email:guestEmail, contact: Number(guestTel), ticket: { create: [{qty:quantity, price, sessionID: setID, event: {connect: {id}}}]} }}})
-
+      const [CreateGuestTicketPurchase] = useMutation<CreateGuestTicketPurchaseMutation, CreateGuestTicketPurchaseMutationVariables>(CreateGuestTicketPurchaseDocument, {variables: {data:{ firstName:guestNameFirst, lastName:guestNameLast, email:guestEmail, contact: Number(guestTel), ticket: { create: [{qty:quantity, price, sessionID: sessionID, event: {connect: {id}}}]} }}})
+      const [CreateUserTicket] = useMutation<CreateUserTicketMutation, CreateUserTicketMutationVariables>(CreateUserTicketDocument, {variables: { where: {email: email}  ,data:{tickets: {create: [{qty:quantity, price, sessionID: sessionID, event: {connect: {id}}}]}}}})
+      const {data} = useQuery<FindGuestByEmailQuery, FindGuestByEmailQueryVariables>(FindGuestByEmailDocument, {variables: { where: {email: {equals: guestEmail}}}})
+      const [UpdateGuestCreateTicket] = useMutation<UpdateGuestCreateTicketMutation, UpdateGuestCreateTicketMutationVariables>(UpdateGuestCreateTicketDocument)
 const myData = [];
 // Merchant details
 myData["merchant_id"] = "10023375";
 myData["merchant_key"] = "04afueikmam8r";
-myData["return_url"] =  member ? "https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/success" :` https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/${id}/purchase/success?sessionId=${setID}&firstName=${guestNameFirst}&email=${guestEmail}`;
-myData["cancel_url"] = "https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/cancel";
+myData["return_url"] =  member ? ` https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/dashboard/events/${id}/purchase/success?sessionId=${sessionID}&firstName=${firstName}&email=${email}` :` https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/${id}/purchase/success?sessionId=${sessionID}&firstName=${guestNameFirst}&email=${guestEmail}`;
+myData["cancel_url"] = member ? `https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/dashboard/events/${id}/purchase/cancel` : `https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/${id}/purchase/cancel`;
 
 // Buyer details
 myData["name_first"] = member ? firstName : guestNameFirst;
@@ -77,26 +78,49 @@ myData["item_description"] = {description};
 
   try {
     if (!member) {
+      //Find Guest by guestEmail.. 
+      if(data.guests.length == 0) {      
       const response = await CreateGuestTicketPurchase();
       const createdTicketId = response.data?.createGuest.ticket[0]?.id;
-
       if (!createdTicketId) {
         setFormError("Something went wrong creating your ticket. Please try again.");
         return;
+      } 
+      } else {
+        const guestId = data.guests[0].id
+             const response = await UpdateGuestCreateTicket({variables: {where: {id: guestId}, data: {ticket: {create:  [{qty:quantity, price, sessionID: sessionID, event: {connect: {id}}}]}}}});
+      const createdTicketId = response.data?.updateGuest.id;
+      if (!createdTicketId) {
+        setFormError("Something went wrong creating your ticket. Please try again.");
+        return;
+      }    
       }
-
       setTimeout(() => {
          setLoading(true);
       }, 500)
 
+    }else {
+        const response = await CreateUserTicket()
+        const createdTicketId = response.data?.updateUser.id;
+
+      
+         if (!createdTicketId) {
+        setFormError("Something went wrong creating your ticket. Please try again.");
+        return; 
+      }
+       setTimeout(() => {
+         setLoading(true);
+      }, 500)
     }
+
+
+
 
     // Let the form post to PayFast
     form.submit(); 
 
-    console.log({guestNameFirst, guestNameLast, guestEmail})
 
-  } catch (error) {
+  }catch (error) {
     console.error(error);
     setFormError("Failed to process the ticket. Please try again.");
   } finally {

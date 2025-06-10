@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/client';
 import { GetEventDocument, GetEventQuery, GetEventQueryVariables, GetUserPaymentInputDocument, GetUserPaymentInputQuery, GetUserPaymentInputQueryVariables } from '@/data/gql/graphql';
 import { useParams } from 'next/navigation';
 import EventPruchaseCard from '@/app/_components/EventTicketPurchaseCard';
+import ProtectedRoute from '../../../_components/ProtectedRoute';
 // Replace with your API call
 
 /*const event = {
@@ -96,8 +97,10 @@ export default function TicketCheckoutPage() {
 
 
   return (
+    <ProtectedRoute>
     <div className="max-w-3xl mx-auto p-6">
      { event?.id && <EventPruchaseCard firstName={userData?.firstName || ''} lastName={userData?.lastName || ''} email={userData?.email || ''} cellNumber={userData?.cellNumber} id={event?.id} title={event?.title}description={event?.description} startDate={event?.startDate} endDate={event?.endDate} fullAddress={event?.fullAdress} thumbnail={event?.thumbnail} member={true} price={event?.price}/>}
     </div>
+    </ProtectedRoute>
   );
 }

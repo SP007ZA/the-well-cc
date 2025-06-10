@@ -1,20 +1,37 @@
+/* eslint-disable */
 "use client";
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from "next/link";
 import {  Menu, X } from "lucide-react";
 import Image from 'next/image';
 import {usePathname } from 'next/navigation';
+import { useUser } from '@/lib/utils';
+import { useMutation } from '@apollo/client';
+import { SignOutDocument, SignOutMutation, SignOutMutationVariables } from '@/data/gql/graphql';
 
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-
+const user = useUser()
 const pathname = usePathname();
 
-const handleNavClick = (targetId: string) => {
+const [signOut] = useMutation<SignOutMutation, SignOutMutationVariables>(SignOutDocument)
 
-  console.log("Pathname", pathname)
+
+useEffect(() => {
+
+
+}, [user?.id])
+
+console.log(user?.id)
+    const handleSignOut =  () => {
+        
+       return signOut().then(data => {return  window.location.href = '/'}).catch(err => {return  window.location.href = '/'})
+        
+    }
+
+const handleNavClick = (targetId: string) => {
   if (pathname === "/") {
     // Already on homepage
     const el = document.getElementById(targetId);
@@ -58,6 +75,7 @@ const handleNavClick = (targetId: string) => {
 
         {/* Auth buttons */}
         <div className="hidden md:flex gap-4">
+          {user?.id === undefined ? <>
           <Link
             href="/signup"
             className="px-4 py-2 bg-rose-700 text-white rounded-md hover:bg-red-700"
@@ -69,7 +87,13 @@ const handleNavClick = (targetId: string) => {
             className="px-4 py-2 border border-rose-700 text-rose-700 rounded-md hover:bg-blue-50"
           >
             Login
-          </Link>
+          </Link></>  :  <Link
+            href="/"
+            onClick={handleSignOut}
+            className="px-4 py-2 border border-rose-700 text-rose-700 rounded-md hover:bg-blue-50"
+          >
+            Logout
+          </Link> }
         </div>
 
         {/* Mobile Menu Toggle */}

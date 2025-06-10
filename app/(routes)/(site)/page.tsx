@@ -1,5 +1,7 @@
+/* eslint-disable */
 "use client";
 
+import UpcomingEvents from "@/app/(members)/dashboard/events/_components/UpcomingEvents";
 import { Button } from "@/components/ui/button";
 import { Heart, Users, Calendar, MessageCircle, Church, MapPin, CalendarCheck, Star, HeartHandshake } from "lucide-react";
 import Link from "next/link";
@@ -155,52 +157,19 @@ export default function Home() {
           Meet, mingle, and grow your faith with our exciting in-person and online events tailored for Christian singles.
         </p>
 
-        <div className="grid md:grid-cols-3 gap-8">
+       
           {/* Event Card 1 */}
-          <div className="bg-rose-50 rounded-2xl p-6 shadow hover:shadow-lg transition">
-            <CalendarCheck className="text-rose-700 mb-3" size={32} />
-            <h3 className="text-xl font-semibold mb-1">Faith & Fellowship Night</h3>
-            <p className="text-sm text-gray-500 mb-3">June 28, 2025 · 7:00 PM</p>
-            <p className="mb-2">Join us for a night of worship, networking, and Christian encouragement. Open to all members!</p>
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <MapPin size={16} /> The Grace Centre, Johannesburg
-            </div>
-            <Button className="mt-4 bg-rose-700 text-white hover:bg-rose-800 w-full">RSVP</Button>
-          </div>
-
-          {/* Event Card 2 */}
-          <div className="bg-rose-50 rounded-2xl p-6 shadow hover:shadow-lg transition">
-            <Users className="text-rose-700 mb-3" size={32} />
-            <h3 className="text-xl font-semibold mb-1">Singles Social Picnic</h3>
-            <p className="text-sm text-gray-500 mb-3">July 13, 2025 · 1:00 PM</p>
-            <p className="mb-2">Relax in nature and connect with other singles through games, prayer, and food in the park.</p>
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <MapPin size={16} /> Zoo Lake Park, Johannesburg
-            </div>
-            <Button className="mt-4 bg-rose-700 text-white hover:bg-rose-800 w-full">Join Picnic</Button>
-          </div>
-
-          {/* Event Card 3 */}
-          <div className="bg-rose-50 rounded-2xl p-6 shadow hover:shadow-lg transition">
-            <CalendarCheck className="text-rose-700 mb-3" size={32} />
-            <h3 className="text-xl font-semibold mb-1">Online Matchmaking Workshop</h3>
-            <p className="text-sm text-gray-500 mb-3">August 5, 2025 · 6:00 PM</p>
-            <p className="mb-2">Get tips from Christian counselors and explore how to build lasting relationships on a biblical foundation.</p>
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <MapPin size={16} /> Zoom Online
-            </div>
-            <Button className="mt-4 bg-rose-700 text-white hover:bg-rose-800 w-full">Register</Button>
-          </div>
-        </div>
+          <UpcomingEvents member={false}/>
+        
 
         {/* Call to Action */}
-        <div className="text-center mt-16">
+         {false && <div className="text-center mt-16">
           <h4 className="text-lg font-semibold mb-2">Dont miss out!</h4>
           <p className="mb-4">Premium and Platinum members enjoy exclusive access and discounts to all our events.</p>
            <Link href={"/login?membership=upgrade"}>
           <Button className="bg-rose-700 text-white hover:bg-rose-800 px-6 py-2 rounded-full">Upgrade Membership</Button>
           </Link>
-        </div>
+        </div>}
       </div>
     </section>
 
