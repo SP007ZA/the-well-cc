@@ -18,7 +18,7 @@ import { Card } from '@/components/ui/card'
 import { useUser } from '@/lib/utils'
 import ProtectedRoute from '../_components/ProtectedRoute'
 
-export default function EditProfileForm({ userId }: { userId: string }) {
+export default function EditProfileForm() {
   const [submitting, setSubmitting] = useState(false)
   const [previews, setPreviews] = useState<string[]>([])
   const [profilePreview, setProfilePreview] = useState<string | null>(null)
