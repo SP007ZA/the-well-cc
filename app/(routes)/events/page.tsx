@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { EventGallery } from "./_components/EventGallery";
-import { format } from "date-fns";
 
 import UpcomingEvents from "@/app/(members)/dashboard/events/_components/UpcomingEvents";
 
@@ -21,8 +20,7 @@ export default function EventsPage() {
       setIsSubscribed(true)
     }
   };
-   const formattedStart = format(new Date(), 'MMMM d, yyyy · h:mm a');
-  const formattedEnd = format(new Date(), 'MMMM d, yyyy · h:mm a');
+  
 
   return (
     <div className="px-6 py-16 bg-white">

@@ -7,6 +7,7 @@ import { GetEventDocument, GetEventQuery, GetEventQueryVariables, GetUserPayment
 import { useParams } from 'next/navigation';
 import EventPruchaseCard from '@/app/_components/EventTicketPurchaseCard';
 import ProtectedRoute from '../../../_components/ProtectedRoute';
+import { useUser } from '@/lib/utils';
 // Replace with your API call
 
 /*const event = {
@@ -44,11 +45,13 @@ export default function TicketCheckoutPage() {
  
      const params = useParams();
     const id = params?.id as string;
+
+    const user = useUser()
   
-    const {data: userInfo} = useQuery<GetUserPaymentInputQuery, GetUserPaymentInputQueryVariables>(GetUserPaymentInputDocument, {variables: {where: {id: "cmbbmfjf3000032ztrz1zyk3b"}}})
+    const {data: userInfo} = useQuery<GetUserPaymentInputQuery, GetUserPaymentInputQueryVariables>(GetUserPaymentInputDocument, {variables: {where: {id: user?.id}}})
     
   
-      const { data, loading } = useQuery<GetEventQuery, GetEventQueryVariables>(
+      const { data } = useQuery<GetEventQuery, GetEventQueryVariables>(
         GetEventDocument,
         {
           variables: {
@@ -85,7 +88,7 @@ export default function TicketCheckoutPage() {
             firstName: userInfo?.user.profile.firstName,
             lastName: userInfo?.user.profile.lastName,
             email: userInfo?.user.email,
-            cellNumber: userInfo?.user.membership.cellNumber
+            cellNumber: userInfo?.user.membership?.cellNumber
           }
 
           setUserData(info)

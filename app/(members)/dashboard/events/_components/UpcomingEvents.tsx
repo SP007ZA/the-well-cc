@@ -1,7 +1,6 @@
 'use client';
 
 import EventCard from "@/app/_components/EventCard";
-import { Card } from "@/components/ui/card";
 import {
   GetActiveEventsDocument,
   GetActiveEventsQuery,
@@ -21,7 +20,7 @@ interface Event {
 }
 
 export default function UpcomingEvents({member}) {
-  const { data, loading } = useQuery<GetActiveEventsQuery, GetActiveEventsQueryVariables>(
+  const { data } = useQuery<GetActiveEventsQuery, GetActiveEventsQueryVariables>(
     GetActiveEventsDocument,
     {
       variables: {

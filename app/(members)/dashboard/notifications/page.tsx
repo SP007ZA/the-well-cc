@@ -1,6 +1,6 @@
 /* eslint-disable */
 "use client";
-import { Bell, CalendarDays, MessageCircle, Wallet } from "lucide-react";
+import { Bell } from "lucide-react";
 import NotificationsCard from "@/app/_components/NotificationCard";
 import { useQuery } from "@apollo/client";
 import { GetUnreadNotificationsDocument, GetUnreadNotificationsQuery, GetUnreadNotificationsQueryVariables } from "@/data/gql/graphql";
@@ -62,7 +62,7 @@ import ProtectedRoute from "../_components/ProtectedRoute";
 
 export default function NotificationsPage() {
 
- const {data, loading, error} = useQuery<GetUnreadNotificationsQuery, GetUnreadNotificationsQueryVariables>(GetUnreadNotificationsDocument, {variables: {where: {isRead: {equals: false}, AND: [{user:{id: {equals:"cmbbmfjf3000032ztrz1zyk3b" }}}]}}})
+ const {data, loading} = useQuery<GetUnreadNotificationsQuery, GetUnreadNotificationsQueryVariables>(GetUnreadNotificationsDocument, {variables: {where: {isRead: {equals: false}, AND: [{user:{id: {equals:"cmbbmfjf3000032ztrz1zyk3b" }}}]}}})
 
   
 

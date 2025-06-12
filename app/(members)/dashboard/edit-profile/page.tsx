@@ -32,7 +32,7 @@ export default function EditProfileForm({ userId }: { userId: string }) {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: {  },
   } = useForm()
 
   // Load current user data
@@ -105,9 +105,7 @@ export default function EditProfileForm({ userId }: { userId: string }) {
 
     const newImages = selectedFiles.map((file) => ({ image: file }))
 
-     const profilePictureData = profileFile
-    ? { delete: true, create: { image: profileFile } }
-    : undefined
+  
 
       //console.log({profileFile})
 

@@ -43,7 +43,7 @@ myData["cancel_url"] = member ? `https://the-well-cc-x5jv-mzansionlinecvgmailcom
 // Buyer details
 myData["name_first"] = member ? firstName : guestNameFirst;
 myData["name_last"] = member ? lastName : guestNameLast;
-myData["email_address"] = member ? "msp@gmail.com" : guestEmail;
+myData["email_address"] = member ? email : guestEmail;
 myData["cell_number"] = member ? `0${cellNumber}` : `0${guestTel}`;
 // Transaction details
 myData["m_payment_id"] = {id};

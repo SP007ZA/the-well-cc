@@ -6,7 +6,6 @@ import {
   User,
   CalendarDays,
   Bell,
-  MessageCircle,
   Sun,
   Moon,
   Monitor

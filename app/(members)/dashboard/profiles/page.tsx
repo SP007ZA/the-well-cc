@@ -39,7 +39,7 @@ const Profiles = () => {
 
   const {id} = useUser()
    //@ts-ignore
-  const {data, loading, error} = useQuery<GetMemberUsersQuery, GetMemberUsersQueryVariables>(GetMemberUsersDocument, {variables: { where:{ profile:{publishProfile:{ equals:true }}, isProfile: {equals: true}, membership: {memberShipType:{not:{equals: 'Basic'}}}}}})
+  const {data, loading} = useQuery<GetMemberUsersQuery, GetMemberUsersQueryVariables>(GetMemberUsersDocument, {variables: { where:{ profile:{publishProfile:{ equals:true }}, isProfile: {equals: true}, membership: {memberShipType:{not:{equals: 'Basic'}}}}}})
 
      const [memberProfiles, setMemberProfiles] = useState<any>([])
 

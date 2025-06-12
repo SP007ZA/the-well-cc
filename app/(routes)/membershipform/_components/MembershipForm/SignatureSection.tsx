@@ -14,14 +14,14 @@ import { base64ToFile, useUser } from "@/lib/utils"
 
 export function SignatureSection({form, isOpen, setIsOpen, setSection}:any) {
      const [agreed, setAgreed] = useState(false)
-  const [area, setArea] = useState("")
+  
   const [photo, setPhoto] = useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const sigCanvasRef = useRef<SignatureCanvas>(null)
   const [signature, setSignature] = useState<any>()
     
   
-  const [createMember, {data, loading, error}]= useMutation<UpdateUserMutation,UpdateUserMutationVariables>(UpdateUserDocument)
+  const [createMember, {loading}]= useMutation<UpdateUserMutation,UpdateUserMutationVariables>(UpdateUserDocument)
 
   const user = useUser()
   const handleClear = () => {

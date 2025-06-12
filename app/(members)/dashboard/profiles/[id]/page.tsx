@@ -62,7 +62,7 @@ export default function ProfilePage({ params }: { params: Promise<{ id: string }
    const [open, setOpen] = useState(false)
   const [index, setIndex] = useState(0)
 
-  const {data, loading, error} = useQuery<GetMemberProfileQuery, GetMemberProfileQueryVariables>(GetMemberProfileDocument, {variables: {where:{id}}})
+  const {data, loading} = useQuery<GetMemberProfileQuery, GetMemberProfileQueryVariables>(GetMemberProfileDocument, {variables: {where:{id}}})
   const [memberProfile, setMemberProfile] = useState<any>()
   
  

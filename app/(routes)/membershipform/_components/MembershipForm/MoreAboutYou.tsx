@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button'
 import React from 'react'
 
-const MoreAboutYou = ({form, setForm, validateField, setErrors, setSection}:any) => {
+const MoreAboutYou = ({form, setForm, setErrors, setSection}:any) => {
 
   const handleChange = (field: string, value: string | boolean) => {
     setForm({ ...form, [field]: value });

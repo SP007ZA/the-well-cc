@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button'
 import React from 'react'
 
-const MembershipType = ({setForm, setErrors, validateField, form, setSection}:any) => {
+const MembershipType = ({setForm, setErrors, form, setSection}:any) => {
 
    const handleChange = (field: string, value: string | boolean) => {
     setForm({ ...form, [field]: value });

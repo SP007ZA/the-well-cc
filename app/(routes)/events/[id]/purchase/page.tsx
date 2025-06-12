@@ -28,7 +28,7 @@ export default  function TicketCheckoutPage() {
 
      console.log(id)
 
-       const { data, loading } = useQuery<GetEventQuery, GetActiveEventsQueryVariables>(
+       const { data } = useQuery<GetEventQuery, GetActiveEventsQueryVariables>(
 
        
              GetEventDocument,

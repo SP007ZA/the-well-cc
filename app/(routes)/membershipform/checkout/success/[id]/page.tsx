@@ -20,7 +20,7 @@ export default function MembershipSuccessPage() {
 
  
 
-  const [updateSubscriptionPayment, { data, loading, error }] = useMutation<
+  const [updateSubscriptionPayment, { data, error }] = useMutation<
     UpdateMembershipMutation,
     UpdateMembershipMutationVariables
   >(UpdateMembershipDocument);
