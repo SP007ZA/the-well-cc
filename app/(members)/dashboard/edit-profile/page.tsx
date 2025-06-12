@@ -26,7 +26,7 @@ export default function EditProfileForm({ userId }: { userId: string }) {
     const profileInputRef = useRef<HTMLInputElement>(null)
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const { id } = useUser()
+  const user = useUser()
 
   const {
     register,
@@ -39,7 +39,7 @@ export default function EditProfileForm({ userId }: { userId: string }) {
   const { data: userData, loading: loadingUser } = useQuery<GetUserProfileQuery, GetUserProfileQueryVariables>(
     GetUserProfileDocument,
     {
-      variables:{ where: { id}},
+      variables:{ where: { id: user?.id}},
     }
   )
 
