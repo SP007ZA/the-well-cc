@@ -19,6 +19,20 @@ const Address = ({form, setForm,errors, validateField, setErrors, setSection}:an
 
 const next:any = () => setSection((prev:any) => prev + 1);
 const prev:any = () => {setSection((prev:any) => prev - 1); setErrors({})};
+const isFormValid =
+  form.street?.trim() &&
+  form.suburb?.trim() &&
+  form.city?.trim() &&
+  form.province?.trim() &&
+  form.postalCode?.trim() &&
+  !errors.street &&
+  !errors.suburb &&
+  !errors.city &&
+  !errors.province &&
+  !errors.postalCode;
+
+
+
   return (
     <>
       <div>
@@ -34,7 +48,8 @@ const prev:any = () => {setSection((prev:any) => prev - 1); setErrors({})};
             if(label === "Province") {
               return <div key={key}>
                    <label className="block mt-4">Province</label>
-            <select name="province" onChange={(e) =>handleChange("province",e.target.value,)}className="w-full border p-2 rounded">
+            <select name="province" value={form.province || ""} onChange={(e) =>handleChange("province",e.target.value,)}className="w-full border p-2 rounded">
+              <option value="">-- Select A Province --</option>
               <option value="gauteng">Gauteng</option>
               <option value="mpumalanga">Mpumalanga</option>
               <option value="limpopo">Limpopo</option>
@@ -71,7 +86,14 @@ const prev:any = () => {setSection((prev:any) => prev - 1); setErrors({})};
       </div>
            <div className="flex justify-between">
               <Button className="bg-rose-700 hover:bg-rose-800 text-white" type="button" onClick={prev}>Back</Button>
-              <Button className="bg-rose-700 hover:bg-rose-800 text-white" type="button" onClick={next}>Next</Button>
+            <Button
+            className="bg-rose-700 hover:bg-rose-800 text-white disabled:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-70"
+            type="button"
+            onClick={next}
+            disabled={!isFormValid}
+                >
+                  Next
+                </Button>
             </div>
           </>
   )

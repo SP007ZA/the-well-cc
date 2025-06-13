@@ -27,19 +27,19 @@ export default function SignupForm() {
   street: "",
   suburb: "",
   city: "",
-  province: "Gauteng",
+  province: "",
   postalCode: "",
   dateOfSalvation: date,
   pastorsName:"",
   churchNameAddress:"",
   churchContact:"",
   correspondencePreference:"",
-  publishProfile: "",
-  profileInDirectory: "",
-  membershipType:"Basic",
+  publishProfile: "yes",
+  profileInDirectory: "yes",
+  membershipType:"",
   maritialStatus:"",
   kids:"",
-  race:"african",
+  race:"",
   dateOutsideRace:"",
 
   
@@ -85,10 +85,10 @@ export default function SignupForm() {
         if (!/^[0-9]{13}$/.test(value)) return "ID number must be exactly 13 digits.";
         break;
       case "cell":
-        if (!/^[0-9]{9}$/.test(value)) return "Enter a valid 9-digit cellphone number.";
-        break;
+     if (!/^[1-9][0-9]{8}$/.test(value)) return "Enter a valid 9-digit cellphone number (no leading 0)."; 
+     break;
       case "kinCell":
-        if (!/^[0-9]{9}$/.test(value)) return "Enter a valid 9-digit cellphone number.";
+      if (!/^[1-9][0-9]{8}$/.test(value)) return "Enter a valid 9-digit cellphone number (no leading 0)."; 
         break;
       case "churchContact":
         if (!/^[0-9]{9}$/.test(value)) return "Enter a valid 9-digit contact number.";

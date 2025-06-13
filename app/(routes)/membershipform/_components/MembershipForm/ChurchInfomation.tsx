@@ -93,8 +93,10 @@ const prev:any = () => {setSection((prev:any) => prev - 1); setErrors({})};
      <label className="block font-semibold text-center mb-2">Church Information</label>
        <label className="block font-medium mb-1">Pastor's Name</label>
             <Input placeholder="Pastor's Name" name="pastorsName" className={errors.pastorsName ? "border-red-500" : ""} onChange={(e) => handleChange("pastorsName", e.target.value)} onBlur={() => handleBlur("pastorsName")}  />
+              {errors.pastorsName && <p className="text-red-500 text-sm mt-1">{errors.pastorsName}</p>}
             <label className="block font-medium mb-1">Church Name & Address</label>
             <Textarea placeholder="Church Name & Address" name="churchNameAddress" className={errors.churchNameAddress ? "border-red-500" : ""} onChange={(e) => handleChange("churchNameAddress", e.target.value)} onBlur={() => handleBlur("churchNameAddress")}  />
+                {errors.churchNameAddress && <p className="text-red-500 text-sm mt-1">{errors.churchNameAddress}</p>}
             <label className="block font-medium mb-1">Church Contact Number</label>
               <div className="relative">
           <span className="absolute inset-y-0 left-3 flex items-center text-sm">🇿🇦 +27</span>
@@ -144,13 +146,7 @@ const prev:any = () => {setSection((prev:any) => prev - 1); setErrors({})};
         </PopoverContent>
       </Popover>
     
-            <label className="block mt-4">Correspondence Preference:</label>
-           
-            <select name="correspondencePreference" onChange={(e) => handleChange("correspondencePreference", e.target.value)} className="w-full border p-2 rounded">
-              <option value="email">Email</option>
-              <option value="whatsApp">WhatsApp</option>
-              <option value="both">Both</option>
-            </select>
+          
             <div className="flex justify-between">
               <Button className="bg-rose-700 hover:bg-rose-800 text-white" type="button" onClick={prev}>Back</Button>
               <Button className="bg-rose-700 hover:bg-rose-800 text-white" type="button" onClick={next}>Next</Button>

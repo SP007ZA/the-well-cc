@@ -25,13 +25,13 @@ const prev:any = () => {setSection((prev:any) => prev - 1); setErrors({})};
      <>
             <h3 className="font-semibold">Next of Kin (for emergencies)</h3>
             <label className="block font-medium mb-1">Name</label>
-            <Input placeholder="Name" className={errors.kinEmail ? "border-red-500" : ""} onChange={(e) => handleChange("kinName", e.target.value)} onBlur={() => handleBlur("kinName")} name="kinName" type='text'/>
+            <Input placeholder="Name" className={errors.kinEmail ? "border-red-500" : ""} value={form.kinName || ''} onChange={(e) => handleChange("kinName", e.target.value)} onBlur={() => handleBlur("kinName")} name="kinName" type='text'/>
           {errors.kinName && <p className="text-red-500 text-xs mt-1">{errors.kinName}</p>}
             <label className="block font-medium mb-1">Relationship</label>
-            <Input placeholder="Relationship" className={errors.kinEmail ? "border-red-500" : ""}  onChange={(e) => handleChange("kinRelation", e.target.value)}  onBlur={() => handleBlur("kinRelation")}  name="kinRelation" type='text' />
+            <Input placeholder="Relationship" className={errors.kinEmail ? "border-red-500" : ""} value={form.kinRelation || ''}  onChange={(e) => handleChange("kinRelation", e.target.value)}  onBlur={() => handleBlur("kinRelation")}  name="kinRelation" type='text' />
            {errors.kinRelation && <p className="text-red-500 text-xs mt-1">{errors.kinRelation}</p>}
              <label className="block font-medium mb-1">Email Address</label>
-             <Input placeholder="Email Address" className={errors.kinEmail ? "border-red-500" : ""} onChange={(e) => handleChange("kinEmail", e.target.value)} onBlur={() => handleBlur("kinEmail")} name="kinEmail" type="email" />
+             <Input placeholder="Email Address" className={errors.kinEmail ? "border-red-500" : ""} value={form.kinEmail || ''} onChange={(e) => handleChange("kinEmail", e.target.value)} onBlur={() => handleBlur("kinEmail")} name="kinEmail" type="email" />
              {errors.kinEmail && <p className="text-red-500 text-xs mt-1">{errors.kinEmail}</p>}
              <div>
         <label className="block font-medium mb-1">Cellphone Number</label>
@@ -41,7 +41,7 @@ const prev:any = () => {setSection((prev:any) => prev - 1); setErrors({})};
             type="tel"
             placeholder="Enter 9-digit number"
             maxLength={9}
-            value={form.kinCell}
+            value={form.kinCell || ''}
             onChange={(e) => handleChange("kinCell", e.target.value.replace(/\D/g, ""))}
             onBlur={() => handleBlur("kinCell")}
             className={`w-full pl-16 border px-3 py-2 rounded ${

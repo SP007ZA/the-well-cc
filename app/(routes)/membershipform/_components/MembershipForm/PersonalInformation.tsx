@@ -17,6 +17,15 @@ const PersonalInformation = ({form, setForm,errors, validateField, setErrors, se
   };
 const next:any = () => setSection((prev:any) => prev + 1);
 
+const isFormValid =
+  form.fullName &&
+  form.surname &&
+  form.idNumber &&
+  form.cell &&
+  !errors.fullName &&
+  !errors.surname &&
+  !errors.idNumber &&
+  !errors.cell;
 
 
   return (
@@ -85,7 +94,14 @@ const next:any = () => setSection((prev:any) => prev + 1);
         {errors.cell && <p className="text-red-500 text-sm mt-1">{errors.cell}</p>}
       </div>
             <div className="flex justify-between">
-              <Button  className="bg-rose-700 hover:bg-rose-800 text-white" type="button" onClick={next}>Next</Button>
+             <Button
+  className="bg-rose-700 hover:bg-rose-800 text-white disabled:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-70"
+  type="button"
+  onClick={next}
+  disabled={!isFormValid}
+>
+  Next
+</Button>
             </div>
           </>
   )

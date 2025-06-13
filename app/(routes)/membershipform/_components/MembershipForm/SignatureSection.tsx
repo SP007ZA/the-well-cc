@@ -18,15 +18,18 @@ export function SignatureSection({form, isOpen, setIsOpen, setSection}:any) {
   const [photo, setPhoto] = useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const sigCanvasRef = useRef<SignatureCanvas>(null)
-  const [signature, setSignature] = useState<any>()
+  const [signature, setSignature] = useState<any>(null)
     
   
   const [createMember, {loading}]= useMutation<UpdateUserMutation,UpdateUserMutationVariables>(UpdateUserDocument)
 
   const user = useUser()
-  const handleClear = () => {
-    sigCanvasRef.current?.clear()
-  }
+
+
+ const handleClear = () => {
+  sigCanvasRef.current?.clear();
+  setSignature(null);
+};
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -37,12 +40,17 @@ export function SignatureSection({form, isOpen, setIsOpen, setSection}:any) {
     }
   }
  
-  console.log(form)
+
 
   const handleDrawEnd = () => {
-    const dataUrl = sigCanvasRef.current.getTrimmedCanvas().toDataURL('image/png');
-    setSignature(dataUrl); // live update when user lifts pen/mouse
-  };
+  const isEmpty = sigCanvasRef.current?.isEmpty();
+  if (!isEmpty) {
+    const dataUrl = sigCanvasRef.current?.getTrimmedCanvas().toDataURL("image/png");
+    setSignature(dataUrl);
+  } else {
+    setSignature(null); // force null if no valid drawing
+  }
+};
 
         
  const  handleGenerate= async () =>{
@@ -53,7 +61,7 @@ const file =   base64ToFile(signature, "signature")
 
          //Add complete-profile/[id]
 
-     await  createMember({variables: {where:{id:user?.id}, data:{profile:{create:{firstName:form.fullName, lastName:form.surname, address:{create:{streetName:form?.street, town:form.suburb, city:form.city, province:form.province, postalCode:Number(form.postalCode)}}, profilePicture:photo}}, membership:{create:{idNumber:Number(form.idNumber), cellNumber:Number(form.cell), wouldYouDateOutSideOfYourRace:true, maritalStatus:form.maritialStatus, kids:form.kids, memberShipType:form.membershipType,race:form.race, church:{create:{churchContactNumber:Number(form.churchContact), churchNameAndAddress: form.churchNameAddress, dateOfSalvation:form.dateOfSalvation, pastorsName:form.pastorsName}}, user:{connect:{id:"cmbbmfjf3000032ztrz1zyk3b"}},constitutionAgreement:true, correspondencePreference:form.correspondencePreference, nextOfKin:{create:{cellNumber:Number(form.kinCell),email:form.kinEmail, name:form.kinName, relationship:form.kinRelation}}, signature:{create:{image:file}}}}}}}).then(({data}) => {
+     await  createMember({variables: {where:{id:user?.id}, data:{profile:{create:{firstName:form.fullName, lastName:form.surname, address:{create:{streetName:form?.street, town:form.suburb, city:form.city, province:form.province, postalCode:Number(form.postalCode)}}, profilePicture:photo}}, membership:{create:{idNumber:Number(form.idNumber), cellNumber:Number(form.cell), wouldYouDateOutSideOfYourRace:true, maritalStatus:form.maritialStatus, kids:form.kids, memberShipType:form.membershipType,race:form.race, church:{create:{churchContactNumber:Number(form.churchContact), churchNameAndAddress: form.churchNameAddress, dateOfSalvation:form.dateOfSalvation, pastorsName:form.pastorsName}}, user:{connect:{id:user?.id}},constitutionAgreement:true, correspondencePreference:form.correspondencePreference, nextOfKin:{create:{cellNumber:Number(form.kinCell),email:form.kinEmail, name:form.kinName, relationship:form.kinRelation}}, signature:{create:{image:file}}}}}}}).then(({data}) => {
         console.log(data)
 
        // console.log(data.updateUser.profile.id)
@@ -73,10 +81,12 @@ const file =   base64ToFile(signature, "signature")
     }
 
     
-    
+    console.log(form)
 
 //  const next = () => setSection((prev:any) => prev + 1); 
 const prev:any = () => setSection((prev:any) => prev - 1);
+
+ const canSubmit = agreed && photo !== null && signature !== null
 
 if(loading) return <><LoadingSpinner message="Please wait to be redirected..."/> </>
 
@@ -135,7 +145,14 @@ if(loading) return <><LoadingSpinner message="Please wait to be redirected..."/>
    
         <div className="flex justify-between">
                     <Button className="bg-rose-700 hover:bg-rose-800 text-white" type="button" onClick={prev}>Back</Button>
-                    <Button className="bg-rose-700 hover:bg-rose-800 text-white" type="button" onClick={handleGenerate}>Submit</Button>
+                     <Button
+          className="bg-rose-700 hover:bg-rose-800 text-white disabled:bg-gray-300 disabled:opacity-70"
+          type="button"
+          onClick={handleGenerate}
+          disabled={!canSubmit}
+        >
+          Submit
+        </Button>
                     
                 
                   </div>

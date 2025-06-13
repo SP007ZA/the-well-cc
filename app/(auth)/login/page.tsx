@@ -45,8 +45,7 @@ console.log({email, password})
             console.log(data)
             //@ts-ignore
         if(data?.authenticateUserWithPassword.item?.__typename === "User") {
-               //@ts-ignore
-            const userEmail = data?.authenticateUserWithPassword.item?.email
+      
              
                //@ts-ignore
              if(data?.authenticateUserWithPassword.item.isProfile === true)   {

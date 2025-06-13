@@ -56,7 +56,7 @@ const [loading, setLoading] =  useState(false)
     }
   };
 
-  if(loading) <LoadingSpinner message={"You have succefully signed up. Please wait to be redirected to login..."} />
+  if(loading) return <LoadingSpinner message={"You have succefully signed up. Please wait to be redirected to login..."} />
 
 
   return (
@@ -149,7 +149,7 @@ const [loading, setLoading] =  useState(false)
           </div>
 
           <Button type="submit" className="w-full bg-rose-700 text-white hover:bg-rose-800">
-            Continue with Email
+              {loading ? "Please Wait..." : "Continue with Email"}
           </Button>
         </form>
 

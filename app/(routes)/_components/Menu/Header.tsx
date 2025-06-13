@@ -24,7 +24,7 @@ useEffect(() => {
 
 }, [user?.id])
 
-console.log(user?.id)
+
     const handleSignOut =  () => {
         
        return signOut().then(() => {return  window.location.href = '/'}).catch(() => {return  window.location.href = '/'})

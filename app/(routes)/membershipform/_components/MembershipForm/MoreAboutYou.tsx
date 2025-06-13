@@ -14,24 +14,48 @@ const MoreAboutYou = ({form, setForm, setErrors, setSection}:any) => {
 const next:any = () => setSection((prev:any) => prev + 1);
 const prev:any = () => setSection((prev:any) => prev - 1);
 
+const isFormValid =
+  form.maritialStatus?.trim() &&
+  form.kids?.trim() &&
+  form.race?.trim() &&
+ form.dateOutsideRace?.trim();
 
 
   return (
       <>
             <label className="block">Marital Status:</label>
-            <div className="flex gap-4 flex-wrap">
-              <label><input type="radio" name="maritialStatus" onChange={(e)=>handleChange("maritialStatus",e.target.value)} value="single" /> Single</label>
-              <label><input type="radio" name="maritialStatus" onChange={(e)=>handleChange("maritialStatus",e.target.value)} value="divorced" /> Divorced</label>
-              <label><input type="radio" name="maritialStatus" onChange={(e)=>handleChange("maritialStatus",e.target.value)} value="widowed" /> Widowed</label>
-            </div>
-            <label className="block mt-4">Kids:</label>
-            <div className="flex gap-4 flex-wrap">
-              <label><input type="radio" name="kids" onChange={(e)=>handleChange("kids",e.target.value)} value="have kids" /> Have kids</label>
-              <label><input type="radio" name="kids" onChange={(e)=>handleChange("kids",e.target.value)} value="do not have" /> Do Not Have</label>
-              <label><input type="radio" name="kids" onChange={(e)=>handleChange("kids",e.target.value)} value="do not want" /> Do Not Want</label>
-            </div>
+      <div className="flex gap-4 flex-wrap">
+        {["single", "divorced", "widowed"].map((status) => (
+          <label key={status}>
+            <input
+              type="radio"
+              name="maritialStatus"
+              value={status}
+              checked={form.maritialStatus === status}
+              onChange={(e) => handleChange("maritialStatus", e.target.value)}
+            />{" "}
+            {status.charAt(0).toUpperCase() + status.slice(1)}
+          </label>
+        ))}
+      </div>
+              <label className="block mt-4">Kids:</label>
+      <div className="flex gap-4 flex-wrap">
+        {["have kids", "do not have", "do not want"].map((option) => (
+          <label key={option}>
+            <input
+              type="radio"
+              name="kids"
+              value={option}
+              checked={form.kids === option}
+              onChange={(e) => handleChange("kids", e.target.value)}
+            />{" "}
+            {option}
+          </label>
+        ))}
+      </div>
              <label className="block mt-4">Race</label>
-            <select name="race" onChange={(e)=>handleChange("race",e.target.value)} className="w-full border p-2 rounded">
+            <select name="race" value={form.race || ""} onChange={(e)=>handleChange("race",e.target.value)} className="w-full border p-2 rounded">
+              <option value="">-- Select Race --</option>
               <option value="african">African</option>
               <option value="coloured">Coloured</option>
               <option value="indian/asian">Indian / Asian</option>
@@ -40,12 +64,29 @@ const prev:any = () => setSection((prev:any) => prev - 1);
             </select>
             <label className="block mt-4">Would you date outside your race?</label>
             <div className="flex gap-4">
-              <label><input type="radio" name="dateOutsideRace" onChange={(e)=>handleChange("dateOutsideRace",e.target.checked)} value="yes" /> Yes</label>
-              <label><input type="radio" name="dateOutsideRace" onChange={(e)=>handleChange("dateOutsideRace",e.target.checked)} value="no" /> No</label>
+               {["yes", "no"].map((option) => (
+          <label key={option}>
+            <input
+              type="radio"
+              name="dateOutsideRace"
+              value={option}
+              checked={form.dateOutsideRace === option}
+              onChange={(e) => handleChange("dateOutsideRace", e.target.value)}
+            />{" "}
+          {option.charAt(0).toUpperCase() + option.slice(1)}
+          </label>
+        ))}
             </div>
             <div className="flex justify-between">
               <Button className="bg-rose-700 hover:bg-rose-800 text-white" type="button" onClick={prev}>Back</Button>
-              <Button  className="bg-rose-700 hover:bg-rose-800 text-white" type="button" onClick={next}>Next</Button>
+              <Button
+                className="bg-rose-700 hover:bg-rose-800 text-white disabled:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-70"
+                type="button"
+                onClick={next}
+                disabled={!isFormValid}
+              >
+                Next
+              </Button>
             </div>
           </>
   )
