@@ -123,12 +123,15 @@ const handleNavClick = (targetId: string) => {
             <Link href="/about"
             onClick={() => setMenuOpen(false)}
             >About Us</Link>
-            <Link href="#contact"
+            <Link href="/#contact"
             onClick={() => setMenuOpen(false)}
             >Contact</Link>
           </nav>
+
+         
           <div className="flex flex-col gap-2 pt-2">
-            <Link
+             { user?.id === undefined ? <>
+               <Link
               href="/signup"
               className="px-4 py-2 bg-rose-600 text-white rounded-md text-center"
             >
@@ -139,7 +142,16 @@ const handleNavClick = (targetId: string) => {
               className="px-4 py-2 border border-rose-600 text-rose-600 rounded-md text-center"
             >
               Login
+            </Link></> : <>
+             <Link
+              href="/"
+              className="px-4 py-2 border border-rose-600 text-rose-600 rounded-md text-center"
+               onClick={handleSignOut}
+            >
+              Logout
             </Link>
+            </>}
+          
           </div>
         </div>
       )}
