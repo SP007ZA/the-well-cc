@@ -1,10 +1,11 @@
 import RandomScriptures from '@/app/_components/RandonScripture'
 import Link from 'next/link'
 import React from 'react'
+import ContactSection from './contactSecction'
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-100 text-gray-700 py-10 mt-20 border-t">
+    <footer id="contact" className="bg-gray-100 text-gray-700 py-10 mt-20 border-t">
       <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-4 gap-10 text-sm">
 
         {/* About Section */}
@@ -39,22 +40,9 @@ const Footer = () => {
           </ul>
         </div>
 
+
         {/* Contact & Social */}
-        <div>
-          <h3 className="text-lg font-bold mb-2 text-rose-700">Contact & Connect</h3>
-          <p>Email: <a href="mailto:admin@thewellcc.co.za" className="underline">admin@thewellcc.co.za</a></p>
-          <p>PO Box 5536, CRESTA, 2118</p>
-          <div className="mt-2">
-            <input
-              type="email"
-              placeholder="Your email"
-              className="px-2 py-1 border rounded w-full mt-2"
-            />
-            <button className="mt-2 bg-rose-700 hover:bg-rose-800 text-white px-4 py-1 rounded">
-              Subscribe
-            </button>
-          </div>
-        </div>
+        <ContactSection/>
       </div>
 
       {/* Bottom Section */}

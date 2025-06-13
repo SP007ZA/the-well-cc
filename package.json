@@ -17,7 +17,9 @@
     "@radix-ui/react-checkbox": "^1.3.2",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-popover": "^1.1.14",
+    "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",
+    "add": "^2.0.6",
     "apollo-upload-client": "16",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -34,7 +36,10 @@
     "react-hook-form": "^7.56.4",
     "react-icons": "^5.5.0",
     "react-signature-canvas": "1.0.3",
+    "separator": "^0.1.0",
+    "shadcn": "^2.6.3",
     "tailwind-merge": "^3.3.0",
+    "yarn": "^1.22.22",
     "yet-another-react-lightbox": "^3.23.2"
   },
   "devDependencies": {

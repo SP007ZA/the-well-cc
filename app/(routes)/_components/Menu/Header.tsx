@@ -70,7 +70,9 @@ const handleNavClick = (targetId: string) => {
           >How It Works</Link>
           <Link href="/events">Events</Link>
           <Link href="/about">About Us</Link>
-          <Link href="/contact">Contact</Link>
+          <Link href="#contact"
+          onClick={() => handleNavClick('contact')}
+          >Contact</Link>
         </nav>
 
         {/* Auth buttons */}
@@ -121,7 +123,7 @@ const handleNavClick = (targetId: string) => {
             <Link href="/about"
             onClick={() => setMenuOpen(false)}
             >About Us</Link>
-            <Link href="/contact"
+            <Link href="#contact"
             onClick={() => setMenuOpen(false)}
             >Contact</Link>
           </nav>
