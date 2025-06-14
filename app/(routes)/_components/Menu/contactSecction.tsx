@@ -7,7 +7,7 @@ import {
 
 export default function ContactSection() {
   return (
-    <div className="bg-white rounded-lg shadow p-6">
+    <div id="contact" className="bg-white rounded-lg shadow p-6">
       <h3 className="text-lg font-bold mb-4 text-rose-700">Contact & Connect</h3>
 
       <ul className="space-y-3 text-muted-foreground">

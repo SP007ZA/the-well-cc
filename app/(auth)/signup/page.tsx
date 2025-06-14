@@ -1,6 +1,6 @@
 /* eslint-disable */
 "use client"
-import {  signIn } from "next-auth/react";import { useState } from "react";
+import {  signIn } from "next-auth/react";import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,7 @@ import Image from 'next/image';
 import { useMutation } from "@apollo/client";
 import { CreateUserDocument, CreateUserMutation, CreateUserMutationVariables } from "@/data/gql/graphql";
 import LoadingSpinner from "@/app/_components/LoadingSpinner";
+import { useUser } from "@/lib/utils";
 
 
 export default function SignUpPage() {
@@ -16,12 +17,22 @@ export default function SignUpPage() {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
+ const user = useUser()
 
   const [errors, setErrors] = useState<{ email?: string; password?: string; confirm?: string, userName?: string }>({});
 
   const [signUp] = useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument)
 const [loading, setLoading] =  useState(false)
+
+
+  useEffect(()=>{
+      if(user?.id !== null) {
+        window.location.href = '/dashboard'
+      }
+  },[user?.id])
+
+  console.log(user?.id)
+
    const handleEmailSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: typeof errors = {};

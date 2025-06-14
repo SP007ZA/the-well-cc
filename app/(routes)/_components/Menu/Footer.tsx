@@ -1,11 +1,32 @@
+/* eslint-disable */
+"use client";
+
 import RandomScriptures from '@/app/_components/RandonScripture'
 import Link from 'next/link'
 import React from 'react'
 import ContactSection from './contactSecction'
+import { usePathname } from 'next/navigation'
 
 const Footer = () => {
+
+  const pathname = usePathname();
+
+
+  const handleNavClick = (targetId: string) => {
+  if (pathname === "/") {
+    // Already on homepage
+    const el = document.getElementById(targetId);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  } else {
+
+    // Navigate to homepage with hash
+    window.location.href = `/#${targetId}`;
+  }
+};
   return (
-    <footer id="contact" className="bg-gray-100 text-gray-700 py-10 mt-20 border-t">
+    <footer  className="bg-gray-100 text-gray-700 py-10 mt-20 border-t">
       <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-4 gap-10 text-sm">
 
         {/* About Section */}
@@ -23,7 +44,7 @@ const Footer = () => {
             <li><Link href="/" className="hover:underline">Home</Link></li>
             <li><Link href="/about" className="hover:underline">About Us</Link></li>
             <li><Link href="/how-it-works" className="hover:underline">How It Works</Link></li>
-            <li><Link href="/membership" className="hover:underline">Membership Plans</Link></li>
+            <li><Link href="/#membership" className="hover:underline">Membership Plans</Link></li>
             <li><Link href="/events" className="hover:underline">Events</Link></li>
             <li><Link href="/login" className="hover:underline">Sign In</Link></li>
           </ul>

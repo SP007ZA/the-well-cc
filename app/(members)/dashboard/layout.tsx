@@ -56,7 +56,7 @@ const {data:count} = useQuery<GetUnreadNotificationCountQuery, GetUnreadNotifica
     if (storedMode === "dark") setDarkMode(true);
 
     if (data?.user) {
-      setProfilePicture(data?.user.profile.profilePicture.publicUrlTransformed)
+      setProfilePicture(data?.user?.profile?.profilePicture?.publicUrlTransformed)
     }
   }, [data, count]);
 

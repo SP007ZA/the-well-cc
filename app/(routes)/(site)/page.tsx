@@ -99,7 +99,7 @@ export default function Home() {
     </section>
 
 
-       <section className="py-20 px-6 bg-rose-50">
+       <section id="membership-plans" className="py-20 px-6 bg-rose-50">
       <h2 className="text-3xl font-bold text-center mb-12 text-rose-700">Membership Plans</h2>
       <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
 
