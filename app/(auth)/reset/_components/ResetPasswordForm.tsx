@@ -7,7 +7,7 @@ import { useMutation } from "@apollo/client";
 import { RedeemUserPasswordResetTokenDocument, RedeemUserPasswordResetTokenMutation, RedeemUserPasswordResetTokenMutationVariables } from "@/data/gql/graphql";
 import LoadingSpinner from "@/app/_components/LoadingSpinner";
 
-export default function ResetPasswordPage() {
+export default function ResetPasswordForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
