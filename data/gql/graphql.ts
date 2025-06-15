@@ -19,6 +19,74 @@ export type Scalars = {
   Upload: any;
 };
 
+export type ActivateToken = {
+  __typename?: 'ActivateToken';
+  activatedAt?: Maybe<Scalars['DateTime']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id: Scalars['ID'];
+  token?: Maybe<Scalars['String']>;
+  user?: Maybe<User>;
+};
+
+export type ActivateTokenCreateInput = {
+  activatedAt?: InputMaybe<Scalars['DateTime']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  token?: InputMaybe<Scalars['String']>;
+  user?: InputMaybe<UserRelateToOneForCreateInput>;
+};
+
+export type ActivateTokenManyRelationFilter = {
+  every?: InputMaybe<ActivateTokenWhereInput>;
+  none?: InputMaybe<ActivateTokenWhereInput>;
+  some?: InputMaybe<ActivateTokenWhereInput>;
+};
+
+export type ActivateTokenOrderByInput = {
+  activatedAt?: InputMaybe<OrderDirection>;
+  createdAt?: InputMaybe<OrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  token?: InputMaybe<OrderDirection>;
+};
+
+export type ActivateTokenRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<ActivateTokenWhereUniqueInput>>;
+  create?: InputMaybe<Array<ActivateTokenCreateInput>>;
+};
+
+export type ActivateTokenRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<ActivateTokenWhereUniqueInput>>;
+  create?: InputMaybe<Array<ActivateTokenCreateInput>>;
+  disconnect?: InputMaybe<Array<ActivateTokenWhereUniqueInput>>;
+  set?: InputMaybe<Array<ActivateTokenWhereUniqueInput>>;
+};
+
+export type ActivateTokenUpdateArgs = {
+  data: ActivateTokenUpdateInput;
+  where: ActivateTokenWhereUniqueInput;
+};
+
+export type ActivateTokenUpdateInput = {
+  activatedAt?: InputMaybe<Scalars['DateTime']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  token?: InputMaybe<Scalars['String']>;
+  user?: InputMaybe<UserRelateToOneForUpdateInput>;
+};
+
+export type ActivateTokenWhereInput = {
+  AND?: InputMaybe<Array<ActivateTokenWhereInput>>;
+  NOT?: InputMaybe<Array<ActivateTokenWhereInput>>;
+  OR?: InputMaybe<Array<ActivateTokenWhereInput>>;
+  activatedAt?: InputMaybe<DateTimeNullableFilter>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
+  id?: InputMaybe<IdFilter>;
+  token?: InputMaybe<StringFilter>;
+  user?: InputMaybe<UserWhereInput>;
+};
+
+export type ActivateTokenWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
 export type Address = {
   __typename?: 'Address';
   city?: Maybe<Scalars['String']>;
@@ -1268,6 +1336,8 @@ export type MessageWhereUniqueInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   authenticateUserWithPassword?: Maybe<UserAuthenticationWithPasswordResult>;
+  createActivateToken?: Maybe<ActivateToken>;
+  createActivateTokens?: Maybe<Array<Maybe<ActivateToken>>>;
   createAddress?: Maybe<Address>;
   createAddresses?: Maybe<Array<Maybe<Address>>>;
   createBlock?: Maybe<Block>;
@@ -1302,6 +1372,8 @@ export type Mutation = {
   createProfilePhotos?: Maybe<Array<Maybe<ProfilePhoto>>>;
   createProfiles?: Maybe<Array<Maybe<Profile>>>;
   createReport?: Maybe<Report>;
+  createReportConcern?: Maybe<ReportConcern>;
+  createReportConcerns?: Maybe<Array<Maybe<ReportConcern>>>;
   createReports?: Maybe<Array<Maybe<Report>>>;
   createSignature?: Maybe<Signature>;
   createSignatures?: Maybe<Array<Maybe<Signature>>>;
@@ -1311,6 +1383,8 @@ export type Mutation = {
   createUsers?: Maybe<Array<Maybe<User>>>;
   createYouTubeLink?: Maybe<YouTubeLink>;
   createYouTubeLinks?: Maybe<Array<Maybe<YouTubeLink>>>;
+  deleteActivateToken?: Maybe<ActivateToken>;
+  deleteActivateTokens?: Maybe<Array<Maybe<ActivateToken>>>;
   deleteAddress?: Maybe<Address>;
   deleteAddresses?: Maybe<Array<Maybe<Address>>>;
   deleteBlock?: Maybe<Block>;
@@ -1344,6 +1418,8 @@ export type Mutation = {
   deleteProfilePhotos?: Maybe<Array<Maybe<ProfilePhoto>>>;
   deleteProfiles?: Maybe<Array<Maybe<Profile>>>;
   deleteReport?: Maybe<Report>;
+  deleteReportConcern?: Maybe<ReportConcern>;
+  deleteReportConcerns?: Maybe<Array<Maybe<ReportConcern>>>;
   deleteReports?: Maybe<Array<Maybe<Report>>>;
   deleteSignature?: Maybe<Signature>;
   deleteSignatures?: Maybe<Array<Maybe<Signature>>>;
@@ -1356,6 +1432,8 @@ export type Mutation = {
   endSession: Scalars['Boolean'];
   redeemUserPasswordResetToken?: Maybe<RedeemUserPasswordResetTokenResult>;
   sendUserPasswordResetLink: Scalars['Boolean'];
+  updateActivateToken?: Maybe<ActivateToken>;
+  updateActivateTokens?: Maybe<Array<Maybe<ActivateToken>>>;
   updateAddress?: Maybe<Address>;
   updateAddresses?: Maybe<Array<Maybe<Address>>>;
   updateBlock?: Maybe<Block>;
@@ -1389,6 +1467,8 @@ export type Mutation = {
   updateProfilePhotos?: Maybe<Array<Maybe<ProfilePhoto>>>;
   updateProfiles?: Maybe<Array<Maybe<Profile>>>;
   updateReport?: Maybe<Report>;
+  updateReportConcern?: Maybe<ReportConcern>;
+  updateReportConcerns?: Maybe<Array<Maybe<ReportConcern>>>;
   updateReports?: Maybe<Array<Maybe<Report>>>;
   updateSignature?: Maybe<Signature>;
   updateSignatures?: Maybe<Array<Maybe<Signature>>>;
@@ -1404,6 +1484,16 @@ export type Mutation = {
 export type MutationAuthenticateUserWithPasswordArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+
+export type MutationCreateActivateTokenArgs = {
+  data: ActivateTokenCreateInput;
+};
+
+
+export type MutationCreateActivateTokensArgs = {
+  data: Array<ActivateTokenCreateInput>;
 };
 
 
@@ -1577,6 +1667,16 @@ export type MutationCreateReportArgs = {
 };
 
 
+export type MutationCreateReportConcernArgs = {
+  data: ReportConcernCreateInput;
+};
+
+
+export type MutationCreateReportConcernsArgs = {
+  data: Array<ReportConcernCreateInput>;
+};
+
+
 export type MutationCreateReportsArgs = {
   data: Array<ReportCreateInput>;
 };
@@ -1619,6 +1719,16 @@ export type MutationCreateYouTubeLinkArgs = {
 
 export type MutationCreateYouTubeLinksArgs = {
   data: Array<YouTubeLinkCreateInput>;
+};
+
+
+export type MutationDeleteActivateTokenArgs = {
+  where: ActivateTokenWhereUniqueInput;
+};
+
+
+export type MutationDeleteActivateTokensArgs = {
+  where: Array<ActivateTokenWhereUniqueInput>;
 };
 
 
@@ -1787,6 +1897,16 @@ export type MutationDeleteReportArgs = {
 };
 
 
+export type MutationDeleteReportConcernArgs = {
+  where: ReportConcernWhereUniqueInput;
+};
+
+
+export type MutationDeleteReportConcernsArgs = {
+  where: Array<ReportConcernWhereUniqueInput>;
+};
+
+
 export type MutationDeleteReportsArgs = {
   where: Array<ReportWhereUniqueInput>;
 };
@@ -1841,6 +1961,17 @@ export type MutationRedeemUserPasswordResetTokenArgs = {
 
 export type MutationSendUserPasswordResetLinkArgs = {
   email: Scalars['String'];
+};
+
+
+export type MutationUpdateActivateTokenArgs = {
+  data: ActivateTokenUpdateInput;
+  where: ActivateTokenWhereUniqueInput;
+};
+
+
+export type MutationUpdateActivateTokensArgs = {
+  data: Array<ActivateTokenUpdateArgs>;
 };
 
 
@@ -2023,6 +2154,17 @@ export type MutationUpdateProfilesArgs = {
 export type MutationUpdateReportArgs = {
   data: ReportUpdateInput;
   where: ReportWhereUniqueInput;
+};
+
+
+export type MutationUpdateReportConcernArgs = {
+  data: ReportConcernUpdateInput;
+  where: ReportConcernWhereUniqueInput;
+};
+
+
+export type MutationUpdateReportConcernsArgs = {
+  data: Array<ReportConcernUpdateArgs>;
 };
 
 
@@ -2497,6 +2639,9 @@ export type ProfileWhereUniqueInput = {
 
 export type Query = {
   __typename?: 'Query';
+  activateToken?: Maybe<ActivateToken>;
+  activateTokens?: Maybe<Array<ActivateToken>>;
+  activateTokensCount?: Maybe<Scalars['Int']>;
   address?: Maybe<Address>;
   addresses?: Maybe<Array<Address>>;
   addressesCount?: Maybe<Scalars['Int']>;
@@ -2548,6 +2693,9 @@ export type Query = {
   profiles?: Maybe<Array<Profile>>;
   profilesCount?: Maybe<Scalars['Int']>;
   report?: Maybe<Report>;
+  reportConcern?: Maybe<ReportConcern>;
+  reportConcerns?: Maybe<Array<ReportConcern>>;
+  reportConcernsCount?: Maybe<Scalars['Int']>;
   reports?: Maybe<Array<Report>>;
   reportsCount?: Maybe<Scalars['Int']>;
   signature?: Maybe<Signature>;
@@ -2563,6 +2711,25 @@ export type Query = {
   youTubeLink?: Maybe<YouTubeLink>;
   youTubeLinks?: Maybe<Array<YouTubeLink>>;
   youTubeLinksCount?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryActivateTokenArgs = {
+  where: ActivateTokenWhereUniqueInput;
+};
+
+
+export type QueryActivateTokensArgs = {
+  cursor?: InputMaybe<ActivateTokenWhereUniqueInput>;
+  orderBy?: Array<ActivateTokenOrderByInput>;
+  skip?: Scalars['Int'];
+  take?: InputMaybe<Scalars['Int']>;
+  where?: ActivateTokenWhereInput;
+};
+
+
+export type QueryActivateTokensCountArgs = {
+  where?: ActivateTokenWhereInput;
 };
 
 
@@ -2875,6 +3042,25 @@ export type QueryReportArgs = {
 };
 
 
+export type QueryReportConcernArgs = {
+  where: ReportConcernWhereUniqueInput;
+};
+
+
+export type QueryReportConcernsArgs = {
+  cursor?: InputMaybe<ReportConcernWhereUniqueInput>;
+  orderBy?: Array<ReportConcernOrderByInput>;
+  skip?: Scalars['Int'];
+  take?: InputMaybe<Scalars['Int']>;
+  where?: ReportConcernWhereInput;
+};
+
+
+export type QueryReportConcernsCountArgs = {
+  where?: ReportConcernWhereInput;
+};
+
+
 export type QueryReportsArgs = {
   cursor?: InputMaybe<ReportWhereUniqueInput>;
   orderBy?: Array<ReportOrderByInput>;
@@ -2989,6 +3175,81 @@ export type Report = {
   reason?: Maybe<Scalars['String']>;
   reportedBy?: Maybe<User>;
   reportedUser?: Maybe<User>;
+};
+
+export type ReportConcern = {
+  __typename?: 'ReportConcern';
+  details?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  reason?: Maybe<Scalars['String']>;
+  reportedUser?: Maybe<User>;
+  user?: Maybe<Array<User>>;
+  userCount?: Maybe<Scalars['Int']>;
+};
+
+
+export type ReportConcernUserArgs = {
+  cursor?: InputMaybe<UserWhereUniqueInput>;
+  orderBy?: Array<UserOrderByInput>;
+  skip?: Scalars['Int'];
+  take?: InputMaybe<Scalars['Int']>;
+  where?: UserWhereInput;
+};
+
+
+export type ReportConcernUserCountArgs = {
+  where?: UserWhereInput;
+};
+
+export type ReportConcernCreateInput = {
+  details?: InputMaybe<Scalars['String']>;
+  reason?: InputMaybe<Scalars['String']>;
+  reportedUser?: InputMaybe<UserRelateToOneForCreateInput>;
+  user?: InputMaybe<UserRelateToManyForCreateInput>;
+};
+
+export type ReportConcernOrderByInput = {
+  details?: InputMaybe<OrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  reason?: InputMaybe<OrderDirection>;
+};
+
+export type ReportConcernRelateToOneForCreateInput = {
+  connect?: InputMaybe<ReportConcernWhereUniqueInput>;
+  create?: InputMaybe<ReportConcernCreateInput>;
+};
+
+export type ReportConcernRelateToOneForUpdateInput = {
+  connect?: InputMaybe<ReportConcernWhereUniqueInput>;
+  create?: InputMaybe<ReportConcernCreateInput>;
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type ReportConcernUpdateArgs = {
+  data: ReportConcernUpdateInput;
+  where: ReportConcernWhereUniqueInput;
+};
+
+export type ReportConcernUpdateInput = {
+  details?: InputMaybe<Scalars['String']>;
+  reason?: InputMaybe<Scalars['String']>;
+  reportedUser?: InputMaybe<UserRelateToOneForUpdateInput>;
+  user?: InputMaybe<UserRelateToManyForUpdateInput>;
+};
+
+export type ReportConcernWhereInput = {
+  AND?: InputMaybe<Array<ReportConcernWhereInput>>;
+  NOT?: InputMaybe<Array<ReportConcernWhereInput>>;
+  OR?: InputMaybe<Array<ReportConcernWhereInput>>;
+  details?: InputMaybe<StringFilter>;
+  id?: InputMaybe<IdFilter>;
+  reason?: InputMaybe<StringNullableFilter>;
+  reportedUser?: InputMaybe<UserWhereInput>;
+  user?: InputMaybe<UserManyRelationFilter>;
+};
+
+export type ReportConcernWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type ReportCreateInput = {
@@ -3208,6 +3469,8 @@ export type TicketWhereUniqueInput = {
 
 export type User = {
   __typename?: 'User';
+  activateToken?: Maybe<Array<ActivateToken>>;
+  activateTokenCount?: Maybe<Scalars['Int']>;
   comments?: Maybe<Array<Comment>>;
   commentsCount?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -3227,9 +3490,24 @@ export type User = {
   passwordResetRedeemedAt?: Maybe<Scalars['DateTime']>;
   passwordResetToken?: Maybe<PasswordState>;
   profile?: Maybe<Profile>;
+  reportConcern?: Maybe<ReportConcern>;
   tickets?: Maybe<Array<Ticket>>;
   ticketsCount?: Maybe<Scalars['Int']>;
   userName?: Maybe<Scalars['String']>;
+};
+
+
+export type UserActivateTokenArgs = {
+  cursor?: InputMaybe<ActivateTokenWhereUniqueInput>;
+  orderBy?: Array<ActivateTokenOrderByInput>;
+  skip?: Scalars['Int'];
+  take?: InputMaybe<Scalars['Int']>;
+  where?: ActivateTokenWhereInput;
+};
+
+
+export type UserActivateTokenCountArgs = {
+  where?: ActivateTokenWhereInput;
 };
 
 
@@ -3316,6 +3594,7 @@ export type UserAuthenticationWithPasswordSuccess = {
 };
 
 export type UserCreateInput = {
+  activateToken?: InputMaybe<ActivateTokenRelateToManyForCreateInput>;
   comments?: InputMaybe<CommentRelateToManyForCreateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
   email?: InputMaybe<Scalars['String']>;
@@ -3330,8 +3609,15 @@ export type UserCreateInput = {
   passwordResetRedeemedAt?: InputMaybe<Scalars['DateTime']>;
   passwordResetToken?: InputMaybe<Scalars['String']>;
   profile?: InputMaybe<ProfileRelateToOneForCreateInput>;
+  reportConcern?: InputMaybe<ReportConcernRelateToOneForCreateInput>;
   tickets?: InputMaybe<TicketRelateToManyForCreateInput>;
   userName?: InputMaybe<Scalars['String']>;
+};
+
+export type UserManyRelationFilter = {
+  every?: InputMaybe<UserWhereInput>;
+  none?: InputMaybe<UserWhereInput>;
+  some?: InputMaybe<UserWhereInput>;
 };
 
 export type UserOrderByInput = {
@@ -3343,6 +3629,18 @@ export type UserOrderByInput = {
   passwordResetIssuedAt?: InputMaybe<OrderDirection>;
   passwordResetRedeemedAt?: InputMaybe<OrderDirection>;
   userName?: InputMaybe<OrderDirection>;
+};
+
+export type UserRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<UserWhereUniqueInput>>;
+  create?: InputMaybe<Array<UserCreateInput>>;
+};
+
+export type UserRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<UserWhereUniqueInput>>;
+  create?: InputMaybe<Array<UserCreateInput>>;
+  disconnect?: InputMaybe<Array<UserWhereUniqueInput>>;
+  set?: InputMaybe<Array<UserWhereUniqueInput>>;
 };
 
 export type UserRelateToOneForCreateInput = {
@@ -3362,6 +3660,7 @@ export type UserUpdateArgs = {
 };
 
 export type UserUpdateInput = {
+  activateToken?: InputMaybe<ActivateTokenRelateToManyForUpdateInput>;
   comments?: InputMaybe<CommentRelateToManyForUpdateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
   email?: InputMaybe<Scalars['String']>;
@@ -3376,6 +3675,7 @@ export type UserUpdateInput = {
   passwordResetRedeemedAt?: InputMaybe<Scalars['DateTime']>;
   passwordResetToken?: InputMaybe<Scalars['String']>;
   profile?: InputMaybe<ProfileRelateToOneForUpdateInput>;
+  reportConcern?: InputMaybe<ReportConcernRelateToOneForUpdateInput>;
   tickets?: InputMaybe<TicketRelateToManyForUpdateInput>;
   userName?: InputMaybe<Scalars['String']>;
 };
@@ -3384,6 +3684,7 @@ export type UserWhereInput = {
   AND?: InputMaybe<Array<UserWhereInput>>;
   NOT?: InputMaybe<Array<UserWhereInput>>;
   OR?: InputMaybe<Array<UserWhereInput>>;
+  activateToken?: InputMaybe<ActivateTokenManyRelationFilter>;
   comments?: InputMaybe<CommentManyRelationFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   email?: InputMaybe<StringFilter>;
@@ -3398,6 +3699,7 @@ export type UserWhereInput = {
   passwordResetRedeemedAt?: InputMaybe<DateTimeNullableFilter>;
   passwordResetToken?: InputMaybe<PasswordFilter>;
   profile?: InputMaybe<ProfileWhereInput>;
+  reportConcern?: InputMaybe<ReportConcernWhereInput>;
   tickets?: InputMaybe<TicketManyRelationFilter>;
   userName?: InputMaybe<StringFilter>;
 };
@@ -3549,6 +3851,22 @@ export type DeleteTicketsMutationVariables = Exact<{
 
 export type DeleteTicketsMutation = { __typename?: 'Mutation', deleteTickets?: Array<{ __typename?: 'Ticket', id: string } | null> | null };
 
+export type RedeemUserPasswordResetTokenMutationVariables = Exact<{
+  email: Scalars['String'];
+  password: Scalars['String'];
+  token: Scalars['String'];
+}>;
+
+
+export type RedeemUserPasswordResetTokenMutation = { __typename?: 'Mutation', redeemUserPasswordResetToken?: { __typename?: 'RedeemUserPasswordResetTokenResult', code: PasswordResetRedemptionErrorCode, message: string } | null };
+
+export type SendUserPasswordResetLinkMutationVariables = Exact<{
+  email: Scalars['String'];
+}>;
+
+
+export type SendUserPasswordResetLinkMutation = { __typename?: 'Mutation', sendUserPasswordResetLink: boolean };
+
 export type Signin_MutationMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
@@ -3695,6 +4013,13 @@ export type GetUserProfileQueryVariables = Exact<{
 
 export type GetUserProfileQuery = { __typename?: 'Query', user?: { __typename?: 'User', profile?: { __typename?: 'Profile', id: string, bio?: string | null, age?: number | null, gender?: string | null, education?: string | null, occupation?: string | null, interests?: string | null, lookingFor?: string | null, profilePicture?: { __typename?: 'CloudinaryImage_File', publicUrlTransformed?: string | null } | null, photos?: Array<{ __typename?: 'ProfilePhoto', image?: { __typename?: 'CloudinaryImage_File', publicUrlTransformed?: string | null } | null }> | null } | null } | null };
 
+export type SearchUsersByUserNameQueryVariables = Exact<{
+  where: UserWhereInput;
+}>;
+
+
+export type SearchUsersByUserNameQuery = { __typename?: 'Query', users?: Array<{ __typename?: 'User', id: string, userName?: string | null }> | null };
+
 
 export const AuthenticateUserWithPasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AuthenticateUserWithPassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authenticateUserWithPassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserAuthenticationWithPasswordSuccess"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"item"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserAuthenticationWithPasswordFailure"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<AuthenticateUserWithPasswordMutation, AuthenticateUserWithPasswordMutationVariables>;
 export const CompleteProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CompleteProfile"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ProfileWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ProfileUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateProfile"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isProfile"}}]}}]}}]}}]} as unknown as DocumentNode<CompleteProfileMutation, CompleteProfileMutationVariables>;
@@ -3704,6 +4029,8 @@ export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"Ope
 export const CreateUserTicketDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateUserTicket"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateUserTicketMutation, CreateUserTicketMutationVariables>;
 export const DeleteGuestsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteGuests"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GuestWhereUniqueInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteGuests"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"firstName"}}]}}]}}]} as unknown as DocumentNode<DeleteGuestsMutation, DeleteGuestsMutationVariables>;
 export const DeleteTicketsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteTickets"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"TicketWhereUniqueInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteTickets"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteTicketsMutation, DeleteTicketsMutationVariables>;
+export const RedeemUserPasswordResetTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"redeemUserPasswordResetToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"token"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"redeemUserPasswordResetToken"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}},{"kind":"Argument","name":{"kind":"Name","value":"token"},"value":{"kind":"Variable","name":{"kind":"Name","value":"token"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<RedeemUserPasswordResetTokenMutation, RedeemUserPasswordResetTokenMutationVariables>;
+export const SendUserPasswordResetLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"sendUserPasswordResetLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sendUserPasswordResetLink"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}]}}]} as unknown as DocumentNode<SendUserPasswordResetLinkMutation, SendUserPasswordResetLinkMutationVariables>;
 export const Signin_MutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SIGNIN_MUTATION"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authenticateUserWithPassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserAuthenticationWithPasswordSuccess"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"item"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"isProfile"}},{"kind":"Field","name":{"kind":"Name","value":"isMemberForm"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserAuthenticationWithPasswordFailure"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<Signin_MutationMutation, Signin_MutationMutationVariables>;
 export const SignOutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SignOut"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"endSession"}}]}}]} as unknown as DocumentNode<SignOutMutation, SignOutMutationVariables>;
 export const UpdateGuestCreateTicketDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateGuestCreateTicket"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GuestWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GuestUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateGuest"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateGuestCreateTicketMutation, UpdateGuestCreateTicketMutationVariables>;
@@ -3725,3 +4052,4 @@ export const GetUnreadNotificationsDocument = {"kind":"Document","definitions":[
 export const GetUserAuthDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getUserAuth"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authenticatedItem"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"isProfile"}}]}}]}}]}}]} as unknown as DocumentNode<GetUserAuthQuery, GetUserAuthQueryVariables>;
 export const GetUserPaymentInputDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserPaymentInput"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"membership"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cellNumber"}}]}}]}}]}}]} as unknown as DocumentNode<GetUserPaymentInputQuery, GetUserPaymentInputQueryVariables>;
 export const GetUserProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserProfile"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"bio"}},{"kind":"Field","name":{"kind":"Name","value":"age"}},{"kind":"Field","name":{"kind":"Name","value":"gender"}},{"kind":"Field","name":{"kind":"Name","value":"education"}},{"kind":"Field","name":{"kind":"Name","value":"occupation"}},{"kind":"Field","name":{"kind":"Name","value":"interests"}},{"kind":"Field","name":{"kind":"Name","value":"lookingFor"}},{"kind":"Field","name":{"kind":"Name","value":"profilePicture"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"publicUrlTransformed"}}]}},{"kind":"Field","name":{"kind":"Name","value":"photos"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"publicUrlTransformed"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetUserProfileQuery, GetUserProfileQueryVariables>;
+export const SearchUsersByUserNameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchUsersByUserName"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserWhereInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"take"},"value":{"kind":"IntValue","value":"10"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}}]}}]}}]} as unknown as DocumentNode<SearchUsersByUserNameQuery, SearchUsersByUserNameQueryVariables>;

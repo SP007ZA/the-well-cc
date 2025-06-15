@@ -171,6 +171,9 @@ if(loading) return <LoadingSpinner message={"Please wait while we redirect you..
         <p className="text-sm text-center mt-6">
           Dont have an account? <Link href="/signup" className="text-rose-700 underline">Sign up here</Link>
         </p>
+        <p className="text-sm text-center mt-6">
+          Forgot your password? <Link href="/forgot-password" className="text-rose-700 underline">Click here</Link>
+        </p>
       </div>
     </div>
   );

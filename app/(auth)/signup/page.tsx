@@ -31,7 +31,7 @@ const [loading, setLoading] =  useState(false)
       }
   },[user?.id])
 
-  console.log(user?.id)
+
 
    const handleEmailSignup = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -21,6 +21,8 @@ const documents = {
     "mutation CreateUserTicket($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {\n  updateUser(where: $where, data: $data) {\n    id\n  }\n}": types.CreateUserTicketDocument,
     "mutation DeleteGuests($where: [GuestWhereUniqueInput!]!) {\n  deleteGuests(where: $where) {\n    firstName\n  }\n}": types.DeleteGuestsDocument,
     "mutation DeleteTickets($where: [TicketWhereUniqueInput!]!) {\n  deleteTickets(where: $where) {\n    id\n  }\n}": types.DeleteTicketsDocument,
+    "mutation redeemUserPasswordResetToken($email: String!, $password: String!, $token: String!) {\n  redeemUserPasswordResetToken(email: $email, password: $password, token: $token) {\n    code\n    message\n  }\n}": types.RedeemUserPasswordResetTokenDocument,
+    "mutation sendUserPasswordResetLink($email: String!) {\n  sendUserPasswordResetLink(email: $email)\n}": types.SendUserPasswordResetLinkDocument,
     "mutation SIGNIN_MUTATION($email: String!, $password: String!) {\n  authenticateUserWithPassword(email: $email, password: $password) {\n    ... on UserAuthenticationWithPasswordSuccess {\n      item {\n        id\n        email\n        isProfile\n        isMemberForm\n      }\n    }\n    ... on UserAuthenticationWithPasswordFailure {\n      message\n    }\n  }\n}": types.Signin_MutationDocument,
     "mutation SignOut {\n  endSession\n}": types.SignOutDocument,
     "mutation UpdateGuestCreateTicket($where: GuestWhereUniqueInput!, $data: GuestUpdateInput!) {\n  updateGuest(where: $where, data: $data) {\n    id\n  }\n}": types.UpdateGuestCreateTicketDocument,
@@ -42,6 +44,7 @@ const documents = {
     "query getUserAuth {\n  authenticatedItem {\n    ... on User {\n      id\n      userName\n      email\n      isProfile\n    }\n  }\n}": types.GetUserAuthDocument,
     "query GetUserPaymentInput($where: UserWhereUniqueInput!) {\n  user(where: $where) {\n    profile {\n      firstName\n      lastName\n    }\n    email\n    membership {\n      cellNumber\n    }\n  }\n}": types.GetUserPaymentInputDocument,
     "query GetUserProfile($where: UserWhereUniqueInput!) {\n  user(where: $where) {\n    profile {\n      id\n      bio\n      age\n      gender\n      education\n      occupation\n      interests\n      lookingFor\n      profilePicture {\n        publicUrlTransformed\n      }\n      photos {\n        image {\n          publicUrlTransformed\n        }\n      }\n    }\n  }\n}": types.GetUserProfileDocument,
+    "query SearchUsersByUserName($where: UserWhereInput!) {\n  users(where: $where, take: 10) {\n    id\n    userName\n  }\n}": types.SearchUsersByUserNameDocument,
 };
 
 /**
@@ -90,6 +93,14 @@ export function graphql(source: "mutation DeleteGuests($where: [GuestWhereUnique
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation DeleteTickets($where: [TicketWhereUniqueInput!]!) {\n  deleteTickets(where: $where) {\n    id\n  }\n}"): (typeof documents)["mutation DeleteTickets($where: [TicketWhereUniqueInput!]!) {\n  deleteTickets(where: $where) {\n    id\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation redeemUserPasswordResetToken($email: String!, $password: String!, $token: String!) {\n  redeemUserPasswordResetToken(email: $email, password: $password, token: $token) {\n    code\n    message\n  }\n}"): (typeof documents)["mutation redeemUserPasswordResetToken($email: String!, $password: String!, $token: String!) {\n  redeemUserPasswordResetToken(email: $email, password: $password, token: $token) {\n    code\n    message\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation sendUserPasswordResetLink($email: String!) {\n  sendUserPasswordResetLink(email: $email)\n}"): (typeof documents)["mutation sendUserPasswordResetLink($email: String!) {\n  sendUserPasswordResetLink(email: $email)\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -174,6 +185,10 @@ export function graphql(source: "query GetUserPaymentInput($where: UserWhereUniq
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query GetUserProfile($where: UserWhereUniqueInput!) {\n  user(where: $where) {\n    profile {\n      id\n      bio\n      age\n      gender\n      education\n      occupation\n      interests\n      lookingFor\n      profilePicture {\n        publicUrlTransformed\n      }\n      photos {\n        image {\n          publicUrlTransformed\n        }\n      }\n    }\n  }\n}"): (typeof documents)["query GetUserProfile($where: UserWhereUniqueInput!) {\n  user(where: $where) {\n    profile {\n      id\n      bio\n      age\n      gender\n      education\n      occupation\n      interests\n      lookingFor\n      profilePicture {\n        publicUrlTransformed\n      }\n      photos {\n        image {\n          publicUrlTransformed\n        }\n      }\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query SearchUsersByUserName($where: UserWhereInput!) {\n  users(where: $where, take: 10) {\n    id\n    userName\n  }\n}"): (typeof documents)["query SearchUsersByUserName($where: UserWhereInput!) {\n  users(where: $where, take: 10) {\n    id\n    userName\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

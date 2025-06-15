@@ -54,7 +54,6 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-bold mb-2 text-rose-700">Trust & Safety</h3>
           <ul className="space-y-1">
-            <li><a href="/privacy" className="hover:underline">Privacy Policy</a></li>
             <li><a href="/terms" className="hover:underline">Terms of Service</a></li>
             <li><a href="/safety" className="hover:underline">Online Dating Safety Tips</a></li>
             <li><a href="/report" className="hover:underline">Report a Concern</a></li>
