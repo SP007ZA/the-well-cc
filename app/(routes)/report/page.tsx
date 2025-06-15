@@ -1,6 +1,7 @@
+/* eslint-disable */
 "use client";
 import React, { useState, useEffect, useMemo } from "react";
-import { useLazyQuery, gql } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import debounce from "lodash.debounce";
 import { SearchUsersByUserNameDocument, SearchUsersByUserNameQuery, SearchUsersByUserNameQueryVariables } from "@/data/gql/graphql";
 

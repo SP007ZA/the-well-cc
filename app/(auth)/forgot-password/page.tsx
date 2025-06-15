@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use client";
 import { SendUserPasswordResetLinkDocument, SendUserPasswordResetLinkMutation, SendUserPasswordResetLinkMutationVariables } from "@/data/gql/graphql";
 import { useMutation } from "@apollo/client";

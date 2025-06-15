@@ -25,13 +25,6 @@ export default function SignUpPage() {
 const [loading, setLoading] =  useState(false)
 
 
-  useEffect(()=>{
-      if(user?.id !== null) {
-        window.location.href = '/dashboard'
-      }
-  },[user?.id])
-
-
 
    const handleEmailSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -166,7 +159,7 @@ const [loading, setLoading] =  useState(false)
 
 
         <p className="text-xs text-center text-gray-500 mt-6">
-          By signing up, you agree to our <a href="/terms" className="underline">Terms</a> and <a href="/privacy" className="underline">Privacy Policy</a>.
+          By signing up, you agree to our <a href="/terms" className="underline">Terms</a>.
         </p>
 
         <p className="text-sm text-center mt-4">
