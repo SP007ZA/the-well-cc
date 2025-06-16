@@ -80,7 +80,9 @@ const {data:count} = useQuery<GetUnreadNotificationCountQuery, GetUnreadNotifica
       <div className="min-h-screen flex flex-col md:flex-row bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
         {/* Sidebar for Desktop */}
         <aside className="hidden md:flex md:flex-col w-64 bg-rose-700 text-white p-4">
+          <Link href="/">
           <h2 className="text-lg font-bold mb-6">The Well CC</h2>
+          </Link>
           <nav className="space-y-3">
             {navItems.map(({ key, icon: Icon, label, href }) => (
               <Link

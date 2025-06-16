@@ -60,14 +60,21 @@ const file =   base64ToFile(signature, "signature")
      
 
          //Add complete-profile/[id]
+         /* if(form?.membershipType == 'Basic') {
+            console.log("Basic Membership")
+        } else{
+            // Go To Membership Subscription Page
+            console.log("Other Membership")
+        } */
 
      await  createMember({variables: {where:{id:user?.id}, data:{profile:{create:{firstName:form.fullName, lastName:form.surname, address:{create:{streetName:form?.street, town:form.suburb, city:form.city, province:form.province, postalCode:Number(form.postalCode)}}, profilePicture:photo}}, membership:{create:{idNumber:Number(form.idNumber), cellNumber:Number(form.cell), wouldYouDateOutSideOfYourRace:true, maritalStatus:form.maritialStatus, kids:form.kids, memberShipType:form.membershipType,race:form.race, church:{create:{churchContactNumber:Number(form.churchContact), churchNameAndAddress: form.churchNameAddress, dateOfSalvation:form.dateOfSalvation, pastorsName:form.pastorsName}}, user:{connect:{id:user?.id}},constitutionAgreement:true, correspondencePreference:form.correspondencePreference, nextOfKin:{create:{cellNumber:Number(form.kinCell),email:form.kinEmail, name:form.kinName, relationship:form.kinRelation}}, signature:{create:{image:file}}}}}}}).then(({data}) => {
-        console.log(data)
+    
 
        // console.log(data.updateUser.profile.id)
       //  console.log(data.updateUser.membership.memberShipType)
+      console.log(form?.memberShipType)
 
-      if(form.memberShipType === 'Basic') {
+        if(form?.membershipType == 'Basic') {
             window.location.href = `/complete-profile/${data?.updateUser.profile.id}`
         } else{
             // Go To Membership Subscription Page
@@ -81,7 +88,7 @@ const file =   base64ToFile(signature, "signature")
     }
 
     
-    console.log(form)
+  
 
 //  const next = () => setSection((prev:any) => prev + 1); 
 const prev:any = () => setSection((prev:any) => prev - 1);

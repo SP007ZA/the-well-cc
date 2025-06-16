@@ -24,7 +24,11 @@ export default function SignUpPage() {
   const [signUp] = useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument)
 const [loading, setLoading] =  useState(false)
 
-
+useEffect(() => {
+ if(user?.id !== undefined) {
+      window.location.href = '/dashboard'
+ }
+},[user?.id])
 
    const handleEmailSignup = async (e: React.FormEvent) => {
     e.preventDefault();
