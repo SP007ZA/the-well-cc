@@ -35,7 +35,7 @@ export default function ContactSection() {
         </li>
       </ul>
 
-      <div className="mt-6">
+     {false &&  <div className="mt-6">
         <label htmlFor="newsletter" className="block text-sm font-medium text-gray-700 mb-1">
           Subscribe to our newsletter
         </label>
@@ -50,7 +50,7 @@ export default function ContactSection() {
             Subscribe
           </button>
         </div>
-      </div>
+      </div>}
     </div>
   )
 }

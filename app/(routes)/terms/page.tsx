@@ -87,7 +87,7 @@ export default function TermsOfServicePage() {
             <p>
               For questions or concerns regarding this privacy statement, please contact us at our offices:
               <br />
-              Regus Office Park, 222 Smit Street, Braamfontein, Johannesburg, 2017
+            8th Floor TBE, 96 Rivonia Road, Sandton, 2196
             </p>
           </div>
         </section>

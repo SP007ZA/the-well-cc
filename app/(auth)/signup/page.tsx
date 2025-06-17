@@ -65,7 +65,7 @@ useEffect(() => {
     }
   };
 
-  if(loading) return <LoadingSpinner message={"You have succefully signed up!"} />
+  if(loading) return <LoadingSpinner message={"You have successfully signed up!"} />
 
 
   return (

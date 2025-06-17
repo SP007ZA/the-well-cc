@@ -55,7 +55,7 @@ const queryVariables = useMemo(() => ({
       })
       .catch((err) => console.error("Activation error:", err));
   }
-}, [data]); 
+}, [data, loading]); 
 
 console.log(tokenId)
     const onSubmit = async (formData: any) => {
