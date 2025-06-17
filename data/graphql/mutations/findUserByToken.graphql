@@ -1,0 +1,20 @@
+query FindUserByToken($Date: DateTime, $token: String) {
+        users(
+          where: {
+            activateToken: {
+              some: {
+                AND: [
+                  { activatedAt: null }
+                  { createdAt: { gt: $Date } }
+                  { token: { equals: $token } }
+                ]
+              }
+            }
+          }
+        ) {
+          id
+          activateToken(where: { token: { equals: $token } }) {
+            id
+          }
+        }
+      }

@@ -6,6 +6,7 @@
                email
                isProfile
                isMemberForm
+               isEmailVerified
        
            }
        }

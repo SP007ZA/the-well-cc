@@ -8,9 +8,12 @@ import { Input } from "@/components/ui/input";
 import { FcGoogle } from "react-icons/fc";
 import Image from 'next/image';
 import { useMutation } from "@apollo/client";
-import { Signin_MutationDocument, Signin_MutationMutation, Signin_MutationMutationVariables } from "@/data/gql/graphql";
+import { Signin_MutationDocument, Signin_MutationMutation, Signin_MutationMutationVariables, SignOutDocument, SignOutMutation, SignOutMutationVariables } from "@/data/gql/graphql";
 import LoadingSpinner from "@/app/_components/LoadingSpinner";
 import { useUser } from "@/lib/utils";
+
+
+
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,10 +22,11 @@ export default function LoginPage() {
  const user = useUser()
   const [logIn] = useMutation<Signin_MutationMutation, Signin_MutationMutationVariables>(Signin_MutationDocument)
 
-
+const [signOut] = useMutation<SignOutMutation, SignOutMutationVariables>(SignOutDocument)
 
   useEffect(()=>{
-      if(user?.id === null) {
+
+      if(user?.id === null && user?.isEmailVerified) {
         window.location.href = '/dashboard'
       }
   },[user?.id])
@@ -38,17 +42,23 @@ const handleLogin = async (e: React.FormEvent) => {
 
     if (Object.keys(newErrors)?.length === 0) {
       // Placeholder for password login. Replace with real auth if needed.
-console.log({email, password})
+
 
            await logIn({variables: {email, password}}).then(({data}) => {
 
             console.log(data)
             //@ts-ignore
         if(data?.authenticateUserWithPassword.item?.__typename === "User") {
-      
-             
                //@ts-ignore
-             if(data?.authenticateUserWithPassword.item.isProfile === true)   {
+             if(data?.authenticateUserWithPassword.item.isEmailVerified !== true) {
+                setLoading(true)
+                 
+                 setTimeout(() =>{   
+                   return signOut().then(() => {return  window.location.href = '/activate/invalidlogin'}).catch(() => {return  window.location.href = '/activate/invalidlogin'})
+                 },5000)
+             }
+               //@ts-ignore
+           else  if(data?.authenticateUserWithPassword.item.isProfile === true )   {
                   setLoading(true)
                  setTimeout(() =>{   
                    return  window.location.href = '/dashboard'
@@ -69,12 +79,12 @@ console.log({email, password})
                setLoading(true)
                  setTimeout(() =>{
                     //@ts-ignore
-                    return  window.location.href =` /complete-profile/${data?.authenticateUserWithPassword.item.id }`
+                    return  window.location.href =`/complete-profile/${data?.authenticateUserWithPassword.item.id }`
                  },5000)  
                
           
           } 
-        }
+        } 
      
           if(data?.authenticateUserWithPassword?.__typename === "UserAuthenticationWithPasswordFailure") {
                 

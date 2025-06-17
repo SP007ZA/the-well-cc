@@ -5,6 +5,7 @@ query getUserAuth{
       userName
       email
       isProfile
+      isEmailVerified
       
     
     }

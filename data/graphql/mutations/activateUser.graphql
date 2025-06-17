@@ -1,0 +1,5 @@
+mutation ActivateUser($userId:ID, $data: UserUpdateInput!) {
+  updateUser(where: {id: $userId}, data: $data) {
+    isEmailVerified
+  }
+}

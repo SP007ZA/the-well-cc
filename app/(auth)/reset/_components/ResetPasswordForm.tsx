@@ -59,9 +59,13 @@ export default function ResetPasswordForm() {
                  },5000)
 
  
-      }).catch((err) => {setError(err)})
+      }).catch((err) => {
+  setError(err?.message || "Something went wrong. Please try again."); // ✅ convert to string
+});
  
   }
+
+
 if(loading) return <LoadingSpinner message={"Your password has been succesfully changed. Please wait to be redirected to the login page..."} />
   return (
     <div className="min-h-screen bg-rose-50 flex items-center justify-center px-4 py-12">

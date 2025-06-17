@@ -1,0 +1,5 @@
+mutation UpdateActivateToken( $tokenId: ID, $data: ActivateTokenUpdateInput!) {
+  updateActivateToken(where: {id: $tokenId}, data: $data) {
+  id  
+  }
+}

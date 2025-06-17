@@ -1,0 +1,5 @@
+mutation CreateActivateToken($data: ActivateTokenCreateInput!) {
+  createActivateToken(data: $data) {
+  id  
+  }
+}
