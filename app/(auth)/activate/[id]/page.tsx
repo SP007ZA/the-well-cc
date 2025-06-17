@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import {
   useLazyQuery,
   useMutation,
-  gql,
   useQuery
 } from "@apollo/client";
 
@@ -101,7 +100,7 @@ console.log(tokenId)
                 className="mt-1 block w-full border border-rose-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-rose-500"
               />
               {errors.email && (
-                <p className="text-xs text-red-600 mt-1">{errors?.email.message}</p>
+                <p className="text-xs text-red-600 mt-1">{errors.root.message}</p>
               )}
             </div>
             <button
