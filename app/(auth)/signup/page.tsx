@@ -23,7 +23,7 @@ export default function SignUpPage() {
 
   const [signUp] = useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument)
 const [loading, setLoading] =  useState(false)
-
+const [emailSent, setEmailSemt] = useState(false)
 useEffect(() => {
  if(user?.id !== undefined) {
       window.location.href = '/dashboard'
@@ -47,7 +47,8 @@ useEffect(() => {
 
           setLoading(true)
                  setTimeout(() =>{   
-                   return  window.location.href = '/login'
+                   setEmailSemt(true)
+                    setLoading(false)
                  },5000)
 
       }).catch(err => {
@@ -64,7 +65,7 @@ useEffect(() => {
     }
   };
 
-  if(loading) return <LoadingSpinner message={"You have succefully signed up. Please wait to be redirected to login..."} />
+  if(loading) return <LoadingSpinner message={"You have succefully signed up!"} />
 
 
   return (
@@ -86,7 +87,8 @@ useEffect(() => {
         
       </Link>
         
-
+        {!emailSent ? (<>
+        
         <h2 className="text-2xl font-bold text-center mb-6 text-rose-700">Create Your Account</h2>
 
         {/* Google Sign In */}
@@ -169,7 +171,15 @@ useEffect(() => {
         <p className="text-sm text-center mt-4">
           Already have an account? <Link href="/login" className="text-rose-700 underline">Log in here</Link>
         </p>
+        </>) : (<>
+        <div className="mt-6 bg-green-100 border border-green-300 text-green-700 px-4 py-3 rounded-lg">
+              ✅ An email has been sent to <strong>{email}</strong>. Please click the activation link to verify your account.
+            </div>
+        </>) }
+
       </div>
+
+
     </div>
   );
 }
