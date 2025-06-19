@@ -43,8 +43,8 @@ const Footer = () => {
           <ul className="space-y-1">
             <li><Link href="/" className="hover:underline">Home</Link></li>
             <li><Link href="/about" className="hover:underline">About Us</Link></li>
-            <li><Link href="/how-it-works" className="hover:underline">How It Works</Link></li>
-            <li><Link href="/#membership" className="hover:underline">Membership Plans</Link></li>
+            <li><Link href="#how-it-works" className="hover:underline">How It Works</Link></li>
+            <li><Link href="/#membership-plans" className="hover:underline">Membership Plans</Link></li>
             <li><Link href="/events" className="hover:underline">Events</Link></li>
             <li><Link href="/login" className="hover:underline">Sign In</Link></li>
           </ul>
@@ -56,7 +56,7 @@ const Footer = () => {
           <ul className="space-y-1">
             <li><a href="/terms" className="hover:underline">Terms of Service</a></li>
             <li><a href="/safety" className="hover:underline">Online Dating Safety Tips</a></li>
-            <li><a href="/report" className="hover:underline">Report a Concern</a></li>
+         {false &&  <li><a href="/report" className="hover:underline">Report a Concern</a></li>}
           </ul>
         </div>
 

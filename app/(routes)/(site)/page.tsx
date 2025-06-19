@@ -3,7 +3,7 @@
 
 import UpcomingEvents from "@/app/(members)/dashboard/events/_components/UpcomingEvents";
 import { Button } from "@/components/ui/button";
-import { Heart, Users, Calendar, MessageCircle, Church, MapPin, CalendarCheck, Star, HeartHandshake } from "lucide-react";
+import { Heart, Users, Calendar, MessageCircle, Church, Star, HeartHandshake } from "lucide-react";
 import Link from "next/link";
 export default function Home() {
   return (
@@ -88,7 +88,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mt-16 text-center">
+        <div id="membership-plans" className="mt-16 text-center">
           <h4 className="text-lg font-semibold mb-2">Start Your Journey Today</h4>
           <p className="mb-4">Sign up for free or choose a membership to unlock more ways to connect.</p>
           <a href="/signup" className="inline-block bg-rose-700 text-white px-6 py-2 rounded-full hover:bg-rose-800">
@@ -96,10 +96,10 @@ export default function Home() {
           </a>
         </div>
       </div>
-    </section>
+    </section >
 
 
-       <section id="membership-plans" className="py-20 px-6 bg-rose-50">
+       <section  className="py-20 px-6 bg-rose-50">
       <h2 className="text-3xl font-bold text-center mb-12 text-rose-700">Membership Plans</h2>
       <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
 
