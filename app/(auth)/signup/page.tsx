@@ -1,11 +1,9 @@
 /* eslint-disable */
 "use client"
-import { signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { FcGoogle } from "react-icons/fc";
 import Image from 'next/image';
 import { useMutation } from "@apollo/client";
 import { CreateUserDocument, CreateUserMutation, CreateUserMutationVariables } from "@/data/gql/graphql";

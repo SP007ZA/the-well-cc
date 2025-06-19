@@ -82,8 +82,12 @@ export default function SignupForm() {
         if (!value.trim()) return "This field is required.";
         break;
       case "idNumber":
-        if (!/^[0-9]{13}$/.test(value)) return "ID number must be exactly 13 digits.";
-        break;
+  if (form.documentType === "id") {
+    if (!/^[0-9]{13}$/.test(value)) return "ID number must be exactly 13 digits.";
+  } else if (form.documentType === "passport") {
+    if (!/^[ADMT][0-9]{8}$/.test(value)) return "Invalid passport format (e.g., A12345678).";
+  }
+  break;
       case "cell":
      if (!/^[1-9][0-9]{8}$/.test(value)) return "Enter a valid 9-digit cellphone number (no leading 0)."; 
      break;
