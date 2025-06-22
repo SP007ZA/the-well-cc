@@ -1,0 +1,30 @@
+ query VerifyTicket( $where: TicketWhereInput!) {
+    tickets(where: $where) {
+      id
+      ticketCode
+      event {
+       title
+       startDate
+       address {
+        streetName
+        town
+        city
+        province
+       }
+      }
+      user {
+        email
+        profile {
+          firstName
+          lastName
+        }
+      }
+      guest {
+        firstName
+        lastName
+        email
+      }
+      isCheckedIn
+    }
+
+}

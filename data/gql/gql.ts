@@ -31,6 +31,7 @@ const documents = {
     "mutation UpdateGuestCreateTicket($where: GuestWhereUniqueInput!, $data: GuestUpdateInput!) {\n  updateGuest(where: $where, data: $data) {\n    id\n  }\n}": types.UpdateGuestCreateTicketDocument,
     "mutation UpdateIsReadNotification($where: NotificationWhereUniqueInput!, $data: NotificationUpdateInput!) {\n  updateNotification(where: $where, data: $data) {\n    isRead\n  }\n}": types.UpdateIsReadNotificationDocument,
     "mutation UpdateMembership($where: MembershipWhereUniqueInput!, $data: MembershipUpdateInput!) {\n  updateMembership(where: $where, data: $data) {\n    memberShipType\n    hasPaidSubscription\n    user {\n      email\n      profile {\n        id\n      }\n    }\n  }\n}": types.UpdateMembershipDocument,
+    "mutation UpdateTicket($where: TicketWhereUniqueInput!, $data: TicketUpdateInput!) {\n  updateTicket(where: $where, data: $data) {\n    id\n    isCheckedIn\n  }\n}": types.UpdateTicketDocument,
     "mutation UpdateTicketStatus($where: TicketWhereUniqueInput!, $data: TicketUpdateInput!) {\n  updateTicket(where: $where, data: $data) {\n    id\n    status\n  }\n}": types.UpdateTicketStatusDocument,
     "mutation UpdateActivateToken($tokenId: ID, $data: ActivateTokenUpdateInput!) {\n  updateActivateToken(where: {id: $tokenId}, data: $data) {\n    id\n  }\n}": types.UpdateActivateTokenDocument,
     "query FindGuestByEmail($where: GuestWhereInput!) {\n  guests(where: $where) {\n    id\n  }\n}": types.FindGuestByEmailDocument,
@@ -49,6 +50,7 @@ const documents = {
     "query GetUserPaymentInput($where: UserWhereUniqueInput!) {\n  user(where: $where) {\n    profile {\n      firstName\n      lastName\n    }\n    email\n    membership {\n      cellNumber\n    }\n  }\n}": types.GetUserPaymentInputDocument,
     "query GetUserProfile($where: UserWhereUniqueInput!) {\n  user(where: $where) {\n    profile {\n      id\n      bio\n      age\n      gender\n      education\n      occupation\n      interests\n      lookingFor\n      profilePicture {\n        publicUrlTransformed\n      }\n      photos {\n        image {\n          publicUrlTransformed\n        }\n      }\n    }\n  }\n}": types.GetUserProfileDocument,
     "query SearchUsersByUserName($where: UserWhereInput!) {\n  users(where: $where, take: 10) {\n    id\n    userName\n  }\n}": types.SearchUsersByUserNameDocument,
+    "query VerifyTicket($where: TicketWhereInput!) {\n  tickets(where: $where) {\n    id\n    ticketCode\n    event {\n      title\n      startDate\n      address {\n        streetName\n        town\n        city\n        province\n      }\n    }\n    user {\n      email\n      profile {\n        firstName\n        lastName\n      }\n    }\n    guest {\n      firstName\n      lastName\n      email\n    }\n    isCheckedIn\n  }\n}": types.VerifyTicketDocument,
 };
 
 /**
@@ -140,6 +142,10 @@ export function graphql(source: "mutation UpdateMembership($where: MembershipWhe
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "mutation UpdateTicket($where: TicketWhereUniqueInput!, $data: TicketUpdateInput!) {\n  updateTicket(where: $where, data: $data) {\n    id\n    isCheckedIn\n  }\n}"): (typeof documents)["mutation UpdateTicket($where: TicketWhereUniqueInput!, $data: TicketUpdateInput!) {\n  updateTicket(where: $where, data: $data) {\n    id\n    isCheckedIn\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "mutation UpdateTicketStatus($where: TicketWhereUniqueInput!, $data: TicketUpdateInput!) {\n  updateTicket(where: $where, data: $data) {\n    id\n    status\n  }\n}"): (typeof documents)["mutation UpdateTicketStatus($where: TicketWhereUniqueInput!, $data: TicketUpdateInput!) {\n  updateTicket(where: $where, data: $data) {\n    id\n    status\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -209,6 +215,10 @@ export function graphql(source: "query GetUserProfile($where: UserWhereUniqueInp
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query SearchUsersByUserName($where: UserWhereInput!) {\n  users(where: $where, take: 10) {\n    id\n    userName\n  }\n}"): (typeof documents)["query SearchUsersByUserName($where: UserWhereInput!) {\n  users(where: $where, take: 10) {\n    id\n    userName\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query VerifyTicket($where: TicketWhereInput!) {\n  tickets(where: $where) {\n    id\n    ticketCode\n    event {\n      title\n      startDate\n      address {\n        streetName\n        town\n        city\n        province\n      }\n    }\n    user {\n      email\n      profile {\n        firstName\n        lastName\n      }\n    }\n    guest {\n      firstName\n      lastName\n      email\n    }\n    isCheckedIn\n  }\n}"): (typeof documents)["query VerifyTicket($where: TicketWhereInput!) {\n  tickets(where: $where) {\n    id\n    ticketCode\n    event {\n      title\n      startDate\n      address {\n        streetName\n        town\n        city\n        province\n      }\n    }\n    user {\n      email\n      profile {\n        firstName\n        lastName\n      }\n    }\n    guest {\n      firstName\n      lastName\n      email\n    }\n    isCheckedIn\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

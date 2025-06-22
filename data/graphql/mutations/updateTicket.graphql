@@ -1,0 +1,6 @@
+mutation UpdateTicket($where: TicketWhereUniqueInput!, $data: TicketUpdateInput!) {
+  updateTicket(where: $where, data: $data) {
+  id
+  isCheckedIn  
+  }
+}
