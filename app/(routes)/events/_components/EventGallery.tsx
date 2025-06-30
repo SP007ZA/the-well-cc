@@ -1,11 +1,13 @@
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Lightbox from "yet-another-react-lightbox"
 import "yet-another-react-lightbox/styles.css"
 import Zoom from "yet-another-react-lightbox/plugins/zoom"
 import Captions from "yet-another-react-lightbox/plugins/captions"
+import { useQuery } from "@apollo/client"
+import { GetGalleryImagesDocument, GetGalleryImagesQuery } from "@/data/gql/graphql"
 
-const galleryItems = [
+/*const galleryItems = [
   {
     src: "/gallery/event1.jpg",
     alt: "Worship Night 2024",
@@ -31,13 +33,38 @@ const galleryItems = [
     alt: "Outreach",
     caption: "Community Outreach Drive",
   },
-]
+] */
 
 export function EventGallery() {
   const [open, setOpen] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  const slides = galleryItems.map((item) => ({
+  const [galleryItems, setGelleryItems] = useState<any>([])
+
+  const {data} = useQuery<GetGalleryImagesQuery>(GetGalleryImagesDocument)
+
+  useEffect(() => {
+
+    if(data?.galleryImages.length !==0) {
+      const items = data?.galleryImages.map((item) => {
+        return {
+          id:item.id,
+            src: item.image.publicUrlTransformed,
+            alt: item.title,
+            caption: item.title,
+  }
+
+      })
+      
+  setGelleryItems(items)
+    }
+
+
+  }, [data])
+
+  console.log(data)
+
+  const slides = galleryItems?.map((item) => ({
     src: item.src,
     alt: item.alt,
     description: item.caption,
@@ -47,7 +74,7 @@ export function EventGallery() {
     <section className="mt-12 space-y-6">
       <h2 className="text-2xl font-semibold text-rose-700">Event Gallery</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {galleryItems.map((item, idx) => (
+        {galleryItems?.map((item, idx) => (
           <button
             key={idx}
             onClick={() => {

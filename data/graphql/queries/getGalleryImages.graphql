@@ -1,0 +1,9 @@
+query GetGalleryImages {
+  galleryImages {
+    id
+    image {
+    publicUrlTransformed  
+    }
+    title
+  }
+}

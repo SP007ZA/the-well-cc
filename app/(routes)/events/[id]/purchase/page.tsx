@@ -26,8 +26,6 @@ export default  function TicketCheckoutPage() {
  const params = useParams();
      const id = params?.id as string;
 
-     console.log(id)
-
        const { data } = useQuery<GetEventQuery, GetActiveEventsQueryVariables>(
 
        
