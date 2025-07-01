@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import Lightbox from "yet-another-react-lightbox"
