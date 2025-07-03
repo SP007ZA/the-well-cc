@@ -80,7 +80,7 @@ const PersonalInformation = ({ form, setForm, errors, validateField, setErrors, 
         {errors.idNumber && <p className="text-red-500 text-sm">{errors.idNumber}</p>}
         {form.documentType === "passport" && (
           <p className="text-gray-500 text-xs mt-1">
-            Format: Starts with A, D, M, or T followed by 8 digits (e.g., A12345678)
+            Format: Must be 6–12 letters/numbers, with at least one number
           </p>
         )}
       </div>

@@ -72,7 +72,7 @@ const file =   base64ToFile(signature, "signature")
 
        // console.log(data.updateUser.profile.id)
       //  console.log(data.updateUser.membership.memberShipType)
-      console.log(form?.memberShipType)
+      //console.log(form?.memberShipType)
 
         if(form?.membershipType == 'Basic') {
             window.location.href = `/complete-profile/${data?.updateUser.profile.id}`

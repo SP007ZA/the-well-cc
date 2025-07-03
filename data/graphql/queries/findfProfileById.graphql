@@ -4,6 +4,7 @@ query Profile($where: ProfileWhereUniqueInput!) {
     firstName
     lastName
     user {
+      id
       email
       membership {
         id

@@ -85,7 +85,8 @@ export default function SignupForm() {
   if (form.documentType === "id") {
     if (!/^[0-9]{13}$/.test(value)) return "ID number must be exactly 13 digits.";
   } else if (form.documentType === "passport") {
-    if (!/^[ADMT][0-9]{8}$/.test(value)) return "Invalid passport format (e.g., A12345678).";
+    if (!/^(?=.*\d)[A-Z0-9]{6,12}$/i.test(value)) return "Invalid passport number. Must be 6–12 letters/numbers, with at least one number.";
+  
   }
   break;
       case "cell":

@@ -1,22 +1,44 @@
 /* eslint-disable */
+
 "use client";
 
-import { ProfileDocument, ProfileQuery, ProfileQueryVariables } from '@/data/gql/graphql';
-import { useQuery } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
+import {
+  ProfileDocument,
+  ProfileQuery,
+  ProfileQueryVariables,
+  UpdateUserMembershipDocument,
+  UpdateUserMembershipMutation,
+  UpdateUserMembershipMutationVariables,
+} from '@/data/gql/graphql';
 import { useParams, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+
+// ✅ Replace this with your actual update mutation!
+const UPDATE_MEMBERSHIP_PLAN = gql`
+  mutation UpdateMembershipPlan($id: ID!, $membershipType: String!) {
+    updateMembership(
+      where: { id: $id }
+      data: { membershipType: $membershipType }
+    ) {
+      id
+      membershipType
+    }
+  }
+`;
 
 export default function MembershipCheckout() {
   const params = useParams();
   const searchParams = useSearchParams();
   const id = params?.id as string;
-  const plan = searchParams.get("membershipType") || "Premium";
+  const planParam = searchParams.get("membershipType") || "Premium";
 
-  const { data, loading, error } = useQuery<ProfileQuery, ProfileQueryVariables>(
-    ProfileDocument,
-    { variables: { where: { id } } }
-  );
+  const { data, loading, error, refetch } = useQuery<
+    ProfileQuery,
+    ProfileQueryVariables
+  >(ProfileDocument, { variables: { where: { id } } });
 
+  const [updateMembership] = useMutation<UpdateUserMembershipMutation, UpdateUserMembershipMutationVariables>(UpdateUserMembershipDocument);
   const [isLoading, setIsLoading] = useState(false);
 
   const planDetails = {
@@ -24,24 +46,56 @@ export default function MembershipCheckout() {
     Platinum: { name: "Platinum", price: 600 },
   };
 
-  const selectedPlan = planDetails[plan as keyof typeof planDetails] || planDetails.Premium;
+  const [selectedPlan, setSelectedPlan] = useState(
+    planDetails[planParam as keyof typeof planDetails] || planDetails.Premium
+  );
 
-  //value={data?.profile?.user?.email) ADD to email
-
-  // Optional: you can log or handle errors/loading
   useEffect(() => {
     if (error) console.error(error);
   }, [error]);
 
+  // 🔄 Handle plan change & update backend
+  const handlePlanChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newPlan = e.target.value.trim() as keyof typeof planDetails; // trim spaces!
+  setSelectedPlan(planDetails[newPlan]);
+
+    try {
+      await updateMembership({
+        //@ts-ignore
+        variables: { where: {user: {id: data?.profile.user.id}}, data: {memberShipType: newPlan} },
+      });
+      // 🔃 Optionally refetch user profile
+      await refetch();
+    } catch (err) {
+      console.error("Failed to update membership plan:", err);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
       <div className="bg-white shadow-lg rounded-2xl max-w-md w-full p-6 border border-rose-700">
-        <h1 className="text-2xl font-bold text-rose-700 mb-2">Confirm Your Membership</h1>
-        <p className="text-gray-600 mb-4">You're subscribing to:</p>
+        <h1 className="text-2xl font-bold text-rose-700 mb-2">
+          Confirm Your Membership
+        </h1>
+        <p className="text-gray-600 mb-2">You're subscribing to:</p>
+
+        <select
+          value={selectedPlan.name}
+          onChange={handlePlanChange}
+          className="mb-4 border border-rose-300 rounded px-4 py-2 focus:ring-rose-600 focus:border-rose-600"
+        >
+          {Object.keys(planDetails).map((key) => (
+            <option key={key} value={planDetails[key].name}>
+              {planDetails[key].name} - R{planDetails[key].price}.00
+            </option>
+          ))}
+        </select>
 
         <div className="bg-rose-100 border border-rose-300 rounded-xl p-4 mb-6">
-          <h2 className="text-lg font-semibold text-rose-700">{selectedPlan.name}</h2>
-          <p className="text-rose-600 text-sm">R{selectedPlan.price}.00</p>
+          <h2 className="text-lg font-semibold text-rose-700">
+            {selectedPlan.name}
+          </h2>
+          {selectedPlan.name == 'Platinum' ? <p className="text-rose-600 text-sm">R{selectedPlan.price}.00 / year</p> : <p className="text-rose-600 text-sm">R{selectedPlan.price}.00 / month</p> }
         </div>
 
         <form
@@ -61,13 +115,25 @@ export default function MembershipCheckout() {
             name="cancel_url"
             value={`https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/membershipform/checkout/cancel/${id}?membershipType=${selectedPlan.name}`}
           />
-          <input type="hidden" name="name_first" value={data?.profile?.firstName || ''} />
-          <input type="hidden" name="name_last" value={data?.profile?.lastName || ''} />
-          <input type="hidden" name="email_address" value="mdfasdf@gmail.com" />
+          <input
+            type="hidden"
+            name="name_first"
+            value={data?.profile?.firstName || ""}
+          />
+          <input
+            type="hidden"
+            name="name_last"
+            value={data?.profile?.lastName || ""}
+          />
+          <input
+            type="hidden"
+            name="email_address"
+            value={data?.profile?.user?.email || ""}
+          />
           <input
             type="hidden"
             name="cell_number"
-            value={`0${data?.profile?.user?.membership?.cellNumber || ''}`}
+            value={`0${data?.profile?.user?.membership?.cellNumber || ""}`}
           />
           <input type="hidden" name="amount" value={selectedPlan.price} />
           <input
@@ -77,16 +143,32 @@ export default function MembershipCheckout() {
           />
           <input type="hidden" name="subscription_type" value="1" />
           <input type="hidden" name="billing_date" value="" />
-          <input type="hidden" name="recurring_amount" value={selectedPlan.price} />
+          <input
+            type="hidden"
+            name="recurring_amount"
+            value={selectedPlan.price}
+          />
           <input
             type="hidden"
             name="frequency"
             value={selectedPlan.name === "Premium" ? "3" : "6"}
           />
           <input type="hidden" name="cycles" value="0" />
-          <input type="hidden" name="subscription_notify_email" value="true" />
-          <input type="hidden" name="subscription_notify_webhook" value="true" />
-          <input type="hidden" name="subscription_notify_buyer" value="true" />
+          <input
+            type="hidden"
+            name="subscription_notify_email"
+            value="true"
+          />
+          <input
+            type="hidden"
+            name="subscription_notify_webhook"
+            value="true"
+          />
+          <input
+            type="hidden"
+            name="subscription_notify_buyer"
+            value="true"
+          />
 
           <button
             disabled={isLoading || loading || !data}

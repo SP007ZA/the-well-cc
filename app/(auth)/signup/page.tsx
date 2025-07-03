@@ -90,7 +90,7 @@ export default function SignUpPage() {
           />
           <div className='flex flex-col items-center'>
             <span className="text-xl font-bold text-gray-700">The Well CC</span>
-            <span className="text-md  text-rose-700">CHRISTIAN CLUB | GEN 2:18</span>
+            <span className="text-md  text-rose-700">CHRISTIAN CLUB | GENESIS 2:18</span>
           </div>
         </Link>
 

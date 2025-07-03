@@ -168,15 +168,24 @@ myData["item_description"] = {description};
         <Card className="overflow-hidden border shadow-sm  p-4 mb-6">
           <p className="font-semibold text-lg">🎟 Ticket: R{price}</p>
           <Label className="mt-3 block text-sm font-medium">Quantity:</Label>
-          <select
-            value={quantity}
-            onChange={(e) => setQuantity(Number(e.target.value))}
-            className="mt-1 block w-24 rounded border-gray-300 shadow-sm focus:ring-rose-600 focus:border-rose-600"
-          >
-            {[1, 2, 3, 4, 5].map((q) => (
-              <option key={q} value={q}>{q}</option>
-            ))}
-          </select>
+         <div className="flex items-center gap-2 mt-1 w-32">
+  <button
+    type="button"
+    onClick={() => setQuantity(Math.max(quantity - 1, 1))}
+    className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+  >
+    −
+  </button>
+  <span className="w-8 text-center">{quantity}</span>
+  <button
+    type="button"
+    onClick={() => setQuantity(quantity + 1)}
+    className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+  >
+    +
+  </button>
+</div>
+
 
           {!member && (
             <div className="mt-4 space-y-3">
