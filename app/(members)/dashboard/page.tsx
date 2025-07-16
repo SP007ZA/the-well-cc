@@ -4,7 +4,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { Card, CardContent } from '@/components/ui/card'
-import {  Bell, CalendarCheck, User } from 'lucide-react'
+import {  Bell, CalendarCheck, MessageCircle, User } from 'lucide-react'
 import RandomScriptures from '@/app/_components/RandonScripture'
 import ProtectedRoute from './_components/ProtectedRoute'
 
@@ -26,6 +26,12 @@ const features = [
     icon: <Bell className="text-rose-700 w-6 h-6" />,
     description: 'Stay updated with important alerts, messages, and announcements.',
     link: '/dashboard/notifications'
+  },
+  {
+    title: "Join WhatsApp Group",
+  icon: <MessageCircle className="text-rose-700 w-6 h-6" />,
+  description: "Connect instantly with The Well CC Christian Dating App community on WhatsApp.",
+  link: "https://chat.whatsapp.com/your-group-invite-link", // Replace with your real group link
   },
  /* {
     title: 'Chats',
