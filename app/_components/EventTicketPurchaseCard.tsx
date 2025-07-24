@@ -35,8 +35,8 @@ const sessionId = crypto.randomUUID();
       const [UpdateGuestCreateTicket] = useMutation<UpdateGuestCreateTicketMutation, UpdateGuestCreateTicketMutationVariables>(UpdateGuestCreateTicketDocument)
 const myData = [];
 // Merchant details
-myData["merchant_id"] = "10023375";
-myData["merchant_key"] = "04afueikmam8r";
+myData["merchant_id"] = "30391073";
+myData["merchant_key"] = "6x4meqntny3of";
 myData["return_url"] =  member ? ` https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/dashboard/events/${id}/purchase/success?sessionId=${sessionID}&firstName=${firstName}&email=${email}` :` https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/${id}/purchase/success?sessionId=${sessionID}&firstName=${guestNameFirst}&email=${guestEmail}`;
 myData["cancel_url"] = member ? `https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/dashboard/events/${id}/purchase/cancel` : `https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/${id}/purchase/cancel`;
 
