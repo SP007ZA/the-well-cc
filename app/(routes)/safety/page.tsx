@@ -41,7 +41,7 @@ export default function SafetyTipsPage() {
 
           <li>
             <strong className="text-rose-600">Report Suspicious Behavior:</strong> If someone is harassing you or
-            behaving inappropriately, report them immediately using our <a href="/report-concern" className="text-rose-600 underline">Report a Concern</a> page.
+            behaving inappropriately, report them immediately by sending an email to <span className="text-rose-600 underline">admin@thewellcc.co.za</span>
           </li>
 
           <li>

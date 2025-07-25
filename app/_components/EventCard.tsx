@@ -40,7 +40,7 @@ export default function EventCard({
                      alt={`${title} thumbnail`}
                     width={600} 
                     height={400}
-                    className="w-full h-48 object-fit rounded-lg mb-4"
+                    className="w-full h-48 object-contain rounded-lg mb-4"
                   />
       <h3 className="text-xl font-semibold">{title}</h3>
 

@@ -128,13 +128,13 @@ export default function Home() {
             <li>✓ Exclusive WhatsApp group access</li>
           </ul>
            <Link href={"/signup"}>
-          <Button className="bg-rose-700 text-white hover:bg-rose-800">Subscribe</Button>
+          <Button className="bg-rose-700 text-white hover:bg-rose-800">Get Basic</Button>
           </Link>
         </div>
 
         {/* Platinum Plan */}
         <div className="bg-white p-8 rounded-2xl shadow border-t-4 border-yellow-500">
-          <h3 className="text-2xl font-bold mb-4">Platinum</h3>
+          <h3 className="text-2xl font-bold mb-4">Get Platinum</h3>
           <p className="text-xl font-semibold mb-2">R600 / year</p>
           <ul className="text-sm mb-6 space-y-2">
             <li>✓ Full access to member profiles</li>

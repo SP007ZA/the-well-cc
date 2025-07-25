@@ -3,10 +3,12 @@
 import { SendUserPasswordResetLinkDocument, SendUserPasswordResetLinkMutation, SendUserPasswordResetLinkMutationVariables } from "@/data/gql/graphql";
 import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const router = useRouter();
 
   const [sendUserPasswordResetLink] = useMutation<SendUserPasswordResetLinkMutation, SendUserPasswordResetLinkMutationVariables>(SendUserPasswordResetLinkDocument)
 
@@ -61,9 +63,10 @@ setSubmitted(true);
             </p>
 
             <button
-              onClick={() => setSubmitted(false)}
+               onClick={() => router.push("/login")}
               className="mt-6 w-full bg-rose-100 text-rose-700 hover:bg-rose-200 font-semibold py-2 rounded-lg transition"
             >
+              
               Go Back
             </button>
           </>

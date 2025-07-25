@@ -43,7 +43,7 @@ const Footer = () => {
           <ul className="space-y-1">
             <li><Link href="/" className="hover:underline">Home</Link></li>
             <li><Link href="/about" className="hover:underline">About Us</Link></li>
-            <li><Link href="#how-it-works" className="hover:underline">How It Works</Link></li>
+            <li><Link href="#how-it-works" className="hover:underline" onClick={() => handleNavClick('how-it-works')}>How It Works</Link></li>
             <li><Link href="/#membership-plans" className="hover:underline">Membership Plans</Link></li>
             <li><Link href="/events" className="hover:underline">Events</Link></li>
             <li><Link href="/login" className="hover:underline">Sign In</Link></li>

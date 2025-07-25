@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import Image from 'next/image';
 import { useMutation } from "@apollo/client";
 import { CreateUserDocument, CreateUserMutation, CreateUserMutationVariables } from "@/data/gql/graphql";
+import { Eye, EyeOff, CheckCircle } from "lucide-react";
 import LoadingSpinner from "@/app/_components/LoadingSpinner";
 import { useUser } from "@/lib/utils";
 
@@ -15,13 +16,17 @@ export default function SignUpPage() {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  // Add state for toggling
+const [showPassword, setShowPassword] = useState(false);
+const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const user = useUser();
   const [showPasswordRules, setShowPasswordRules] = useState(false);
 
   const [errors, setErrors] = useState<{ email?: string; password?: string; confirm?: string; userName?: string }>({});
   const [signUp] = useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument);
   const [loading, setLoading] = useState(false);
-  const [emailSent, setEmailSemt] = useState(false);
+  const [wait, setWait] = useState(false)
+  const [emailSent, setEmailSent] = useState(false);
 
   useEffect(() => {
     if (user?.id !== undefined) {
@@ -54,6 +59,7 @@ export default function SignUpPage() {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
+      setWait(true);
       await signUp({
         variables: {
           data: { userName: userName, email: email, password: password }
@@ -61,10 +67,11 @@ export default function SignUpPage() {
       }).then(() => {
         setLoading(true);
         setTimeout(() => {
-          setEmailSemt(true);
+          setEmailSent(true);
           setLoading(false);
         }, 5000);
       }).catch(err => {
+        setWait(false);
         console.log(err.message);
         if (err.message.includes("email")) newErrors.email = 'Email already registered';
         if (err.message.includes("userName")) newErrors.userName = 'User name already exists';
@@ -123,41 +130,81 @@ export default function SignUpPage() {
                 {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
               </div>
 
-              <div>
-                <Input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onFocus={() => setShowPasswordRules(true)}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className={errors.password ? "border-red-500" : ""}
-                  required
-                />
-                {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
-                {showPasswordRules && (
-                  <ul className="text-xs mt-2 text-gray-600 list-disc pl-5">
-                    <li className={pwdRules.length ? "text-green-600" : "text-red-500"}>At least 12 characters</li>
-                    <li className={pwdRules.upper ? "text-green-600" : "text-red-500"}>At least one uppercase letter</li>
-                    <li className={pwdRules.lower ? "text-green-600" : "text-red-500"}>At least one lowercase letter</li>
-                    <li className={pwdRules.number ? "text-green-600" : "text-red-500"}>At least one number</li>
-                  </ul>
-                )}
-              </div>
+  <div className="relative">
+  <Input
+    type={showPassword ? "text" : "password"}
+    placeholder="Password"
+    value={password}
+    onFocus={() => setShowPasswordRules(true)}
+    onChange={(e) => setPassword(e.target.value)}
+    className={errors.password ? "border-red-500 pr-10" : "pr-10"}
+    required
+  />
+  <button
+    type="button"
+    onClick={() => setShowPassword(!showPassword)}
+    className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center text-gray-500"
+    tabIndex={-1}
+  >
+    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+  </button>
+</div>
 
-              <div>
-                <Input
-                  type="password"
-                  placeholder="Confirm Password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className={errors.confirm ? "border-red-500" : ""}
-                  required
-                />
-                {errors.confirm && <p className="text-red-500 text-xs mt-1">{errors.confirm}</p>}
-              </div>
+{/* ✅ Put these OUTSIDE of the relative container */}
+{errors.password && (
+  <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+)}
+
+{showPasswordRules && (
+  <ul className="text-xs mt-2 text-gray-600 list-disc pl-5">
+    <li className={pwdRules.length ? "text-green-600" : "text-red-500"}>
+      At least 12 characters
+    </li>
+    <li className={pwdRules.upper ? "text-green-600" : "text-red-500"}>
+      At least one uppercase letter
+    </li>
+    <li className={pwdRules.lower ? "text-green-600" : "text-red-500"}>
+      At least one lowercase letter
+    </li>
+    <li className={pwdRules.number ? "text-green-600" : "text-red-500"}>
+      At least one number
+    </li>
+  </ul>
+)}
+
+
+
+<div className="relative">
+  <Input
+    type={showConfirmPassword ? "text" : "password"}
+    placeholder="Confirm Password"
+    value={confirmPassword}
+    onChange={(e) => setConfirmPassword(e.target.value)}
+    className={errors.confirm ? "border-red-500 pr-10" : "pr-10"}
+    required
+  />
+  <button
+    type="button"
+    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+    className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center text-gray-500"
+    tabIndex={-1}
+  >
+    {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+  </button>
+</div>
+
+{/* ✅ OUTSIDE of the relative div! */}
+{password && confirmPassword && password === confirmPassword && (
+  <div className="flex items-center gap-1 text-green-600 text-sm mt-1">
+    <CheckCircle size={16} /> Passwords match
+  </div>
+)}
+
+
+
 
               <Button type="submit" className="w-full bg-rose-700 text-white hover:bg-rose-800">
-                {loading ? "Please Wait..." : "Continue with Email"}
+                {wait ? "Please Wait..." : "Sign Up"}
               </Button>
             </form>
 

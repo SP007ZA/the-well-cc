@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FcGoogle } from "react-icons/fc";
+import { Eye, EyeOff } from "lucide-react";
 import Image from 'next/image';
 import { useMutation } from "@apollo/client";
 import { Signin_MutationDocument, Signin_MutationMutation, Signin_MutationMutationVariables, SignOutDocument, SignOutMutation, SignOutMutationVariables } from "@/data/gql/graphql";
@@ -18,6 +19,9 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{ email?: string; password?: string, loginError?: string }>({});
+    // Add state for toggling
+const [showPassword, setShowPassword] = useState(false);
+const [showConfirmPassword, setShowConfirmPassword] = useState(false);
  const [loading, setLoading] = useState(false)
  const user = useUser()
   const [logIn] = useMutation<Signin_MutationMutation, Signin_MutationMutationVariables>(Signin_MutationDocument)
@@ -159,18 +163,33 @@ if(loading) return <LoadingSpinner message={"Please wait while we redirect you..
             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
           </div>
 
-          <div>
-            <Input
-              type="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={errors.password ? "border-red-500" : ""}
-              required
-            />
-            {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
-            {errors.loginError && <p className="text-red-500 text-xs mt-1">{errors.loginError}</p>}
-          </div>
+         <div className="relative">
+  <Input
+    type={showPassword ? "text" : "password"}
+    placeholder="Enter your password"
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+    className={errors.password ? "border-red-500 pr-10" : "pr-10"}
+    required
+  />
+  <button
+    type="button"
+    onClick={() => setShowPassword(!showPassword)}
+    className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center text-gray-500"
+    tabIndex={-1}
+  >
+    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+  </button>
+</div>
+
+{errors.password && (
+  <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+)}
+
+{errors.loginError && (
+  <p className="text-red-500 text-xs mt-1">{errors.loginError}</p>
+)}
+
 
           <Button  type="submit" className="w-full bg-rose-700 text-white hover:bg-rose-800">
            {loading ? "Please Wait..." : "Login"}
