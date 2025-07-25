@@ -203,7 +203,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
 
 
-              <Button type="submit" className="w-full bg-rose-700 text-white hover:bg-rose-800">
+              <Button type="submit" disabled={wait} className="w-full bg-rose-700 text-white hover:bg-rose-800">
                 {wait ? "Please Wait..." : "Sign Up"}
               </Button>
             </form>
