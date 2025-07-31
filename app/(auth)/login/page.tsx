@@ -31,9 +31,8 @@ const [signOut] = useMutation<SignOutMutation, SignOutMutationVariables>(SignOut
 
   useEffect(()=>{
 
-      if(!user?.isEmailVerified)    {
-          window.location.href = '/activate/invalidlogin'
-      } else if(user?.isMemberForm === false) {
+    
+if(user?.isMemberForm === false) {
           window.location.href = '/membershipform'
       }  else if(user?.isProfile === false) {
           window.location.href = `/complete-profile/${user?.id}`
