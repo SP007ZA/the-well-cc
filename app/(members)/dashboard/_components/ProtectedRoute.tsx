@@ -23,7 +23,7 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
       
       } 
 
-  }, [data]);
+  }, [user?.id,data]);
 
   if (loading) return <LoadingSpinner message={"Checking authentication..."} />
 
