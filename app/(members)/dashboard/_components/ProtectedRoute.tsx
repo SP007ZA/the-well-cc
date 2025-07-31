@@ -14,6 +14,10 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
        window.location.href = '/login'
     }
 
+    if(data?.authenticatedItem?.isEmailVerified === false) {
+      window.location.href = '/activate/invalidlogin'
+    }
+
   }, [data]);
 
   if (loading) return <LoadingSpinner message={"Checking authentication..."} />

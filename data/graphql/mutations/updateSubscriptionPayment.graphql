@@ -3,6 +3,7 @@ mutation UpdateMembership($where: MembershipWhereUniqueInput!, $data: Membership
     memberShipType
     hasPaidSubscription
     user {
+      id
     email
     profile {
       id

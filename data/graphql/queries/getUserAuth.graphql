@@ -6,6 +6,7 @@ query getUserAuth{
       email
       isProfile
       isEmailVerified
+      isMemberForm
       
     
     }

@@ -52,8 +52,8 @@ const Profiles = () => {
 
           return {
             id: item.profile.id,
-            name: `${item.profile.firstName} ${item.profile.lastName}`,
-            photo: item.profile.profilePicture.publicUrlTransformed,
+            name: `${item.profile?.firstName} ${item.profile?.lastName}`,
+            photo: item.profile?.profilePicture?.publicUrlTransformed,
             location: `${item.profile.address.city}, ${item.profile.address.province}`,
             bio: item.profile.bio
 
@@ -82,8 +82,8 @@ const Profiles = () => {
           >
             <Card className="overflow-hidden border shadow-sm">
               <Image
-                src={member.photo}
-                alt={member.name}
+                src={member?.photo}
+                alt={member?.name}
                 width={500}
                 height={300}
                 className="w-full h-48 object-cover"

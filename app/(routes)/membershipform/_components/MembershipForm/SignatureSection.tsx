@@ -1,6 +1,6 @@
 'use client'
 /* eslint-disable */
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import SignatureCanvas from "react-signature-canvas"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -20,10 +20,12 @@ export function SignatureSection({form, isOpen, setIsOpen, setSection}:any) {
   const sigCanvasRef = useRef<SignatureCanvas>(null)
   const [signature, setSignature] = useState<any>(null)
     
-  
+  const [isMember, setIsMember] = useState(true)
   const [createMember, {loading}]= useMutation<UpdateUserMutation,UpdateUserMutationVariables>(UpdateUserDocument)
 
   const user = useUser()
+
+ 
 
 
  const handleClear = () => {
@@ -67,7 +69,7 @@ const file =   base64ToFile(signature, "signature")
             console.log("Other Membership")
         } */
 
-     await  createMember({variables: {where:{id:user?.id}, data:{profile:{create:{firstName:form.fullName, lastName:form.surname, address:{create:{streetName:form?.street, town:form.suburb, city:form.city, province:form.province, postalCode:Number(form.postalCode)}}, profilePicture:photo}}, membership:{create:{idNumber:Number(form.idNumber), cellNumber:Number(form.cell), wouldYouDateOutSideOfYourRace:true, maritalStatus:form.maritialStatus, kids:form.kids, memberShipType:form.membershipType,race:form.race, church:{create:{churchContactNumber:Number(form.churchContact), churchNameAndAddress: form.churchNameAddress, dateOfSalvation:form.dateOfSalvation, pastorsName:form.pastorsName}}, user:{connect:{id:user?.id}},constitutionAgreement:true, correspondencePreference:form.correspondencePreference, nextOfKin:{create:{cellNumber:Number(form.kinCell),email:form.kinEmail, name:form.kinName, relationship:form.kinRelation}}, signature:{create:{image:file}}}}}}}).then(({data}) => {
+     await  createMember({variables: {where:{id:user?.id}, data:{isMemberForm:isMember, profile:{create:{firstName:form.fullName, lastName:form.surname, address:{create:{streetName:form?.street, town:form.suburb, city:form.city, province:form.province, postalCode:Number(form.postalCode)}}, profilePicture:photo}}, membership:{create:{idNumber:Number(form.idNumber), cellNumber:Number(form.cell), wouldYouDateOutSideOfYourRace:true, maritalStatus:form.maritialStatus, kids:form.kids, memberShipType:form.membershipType,race:form.race, church:{create:{churchContactNumber:Number(form.churchContact), churchNameAndAddress: form.churchNameAddress, dateOfSalvation:form.dateOfSalvation, pastorsName:form.pastorsName}}, user:{connect:{id:user?.id}},constitutionAgreement:true, correspondencePreference:form.correspondencePreference, nextOfKin:{create:{cellNumber:Number(form.kinCell),email:form.kinEmail, name:form.kinName, relationship:form.kinRelation}}, signature:{create:{image:file}}}}}}}).then(({data}) => {
     
 
        // console.log(data.updateUser.profile.id)
@@ -75,10 +77,10 @@ const file =   base64ToFile(signature, "signature")
       //console.log(form?.memberShipType)
 
         if(form?.membershipType == 'Basic') {
-            window.location.href = `/complete-profile/${data?.updateUser.profile.id}`
+         return   window.location.href = `/complete-profile/${user?.id}`
         } else{
             // Go To Membership Subscription Page
-             window.location.href = `/membershipform/checkout/${data?.updateUser.profile.id}?membershipType=${data.updateUser.membership.memberShipType}`
+          return   window.location.href = `/membershipform/checkout/${data?.updateUser.profile.id}?membershipType=${data.updateUser.membership.memberShipType}`
         } 
 
       
@@ -158,7 +160,7 @@ if(loading) return <><LoadingSpinner message="Please wait to be redirected..."/>
           onClick={handleGenerate}
           disabled={!canSubmit}
         >
-          Submit
+          {loading ? "Please Wait..." : "Submit"}
         </Button>
                     
                 

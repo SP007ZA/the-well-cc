@@ -28,11 +28,20 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
 const [signOut] = useMutation<SignOutMutation, SignOutMutationVariables>(SignOutDocument)
 
+
   useEffect(()=>{
 
-      if(user?.id === null && user?.isEmailVerified) {
-        window.location.href = '/dashboard'
+      if(!user?.isEmailVerified)    {
+          window.location.href = '/activate/invalidlogin'
+      } else if(user?.isMemberForm === false) {
+          window.location.href = '/membershipform'
+      }  else if(user?.isProfile === false) {
+          window.location.href = `/complete-profile/${user?.id}`
+      
+      } else if(true) {
+          window.location.href = '/dashboard'
       }
+      
   },[user?.id])
       
 const handleLogin = async (e: React.FormEvent) => {
@@ -50,7 +59,7 @@ const handleLogin = async (e: React.FormEvent) => {
 
            await logIn({variables: {email, password}}).then(({data}) => {
 
-            console.log(data)
+           
             //@ts-ignore
         if(data?.authenticateUserWithPassword.item?.__typename === "User") {
                //@ts-ignore

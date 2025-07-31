@@ -127,11 +127,11 @@ const {data:count} = useQuery<GetUnreadNotificationCountQuery, GetUnreadNotifica
       aria-label="Notifications"
     >
      <Bell className="w-5 h-5 cursor-pointer" />
-      {count?.notificationsCount > 0 && (
+      {count?.notificationsCount > 10000 && (
         <span className="absolute -top-1 -right-1 bg-rose-600 text-white text-xs font-semibold rounded-full px-1.5 py-0.5">
           {count?.notificationsCount}
         </span>
-      )}
+      )} 
     </button>
     </Link>
               

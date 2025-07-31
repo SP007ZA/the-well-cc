@@ -2,19 +2,47 @@
 'use client'
 
 import { useForm } from 'react-hook-form'
-import { use, useRef, useState } from 'react'
-import { useMutation } from '@apollo/client'
-import { CompleteProfileDocument, CompleteProfileMutation, CompleteProfileMutationVariables } from '@/data/gql/graphql'
+import { use, useEffect, useRef, useState } from 'react'
+import { useMutation, useQuery } from '@apollo/client'
+import { CompleteProfileDocument, CompleteProfileMutation, CompleteProfileMutationVariables, FindUserProfileIdDocument, FindUserProfileIdQuery, FindUserProfileIdQueryVariables, UpdateUserIsProfileDocument, UpdateUserIsProfileMutation, UpdateUserIsProfileMutationVariables } from '@/data/gql/graphql'
 import LoadingSpinner from '@/app/_components/LoadingSpinner'
 import ProtectedRoute from '@/app/(members)/dashboard/_components/ProtectedRoute'
+import { useUser } from '@/lib/utils'
 
 
 
 
 export default function CompleteProfileForm({ params }: { params: Promise<{ id: string }> }) {
     const { id } = use(params) 
+ const user = useUser()
 
     const [completeProfile] = useMutation<CompleteProfileMutation, CompleteProfileMutationVariables>(CompleteProfileDocument)
+    const [updateisProfile] = useMutation<UpdateUserIsProfileMutation, UpdateUserIsProfileMutationVariables>(UpdateUserIsProfileDocument)
+
+  const {data} = useQuery<FindUserProfileIdQuery, FindUserProfileIdQueryVariables>(FindUserProfileIdDocument, {variables: {where:{user:{id: {equals:id}}}}})
+
+ const [profileId, setProfileId] = useState<any>()
+
+
+
+     useEffect(()=>{
+            
+           if(user?.isMemberForm === true && user?.isProfile === true) {
+               window.location.href = `/dashboard`
+          }  else if(user?.isMemberForm === false) {
+              window.location.href = '/membershipform'
+          
+          }
+ if (data?.profiles.length > 0 ) {
+
+    setProfileId(data?.profiles[0].id)
+
+ }
+
+      },[user?.id, data])
+
+ 
+
   const {
     register,
     handleSubmit,
@@ -64,9 +92,7 @@ export default function CompleteProfileForm({ params }: { params: Promise<{ id: 
       const {bio, age, gender, education, occupation, interests, lookingFor, photos} = data
  setSubmitting(true)
       
-    //console.log('Files:', selectedFiles)
-
-    console.log(selectedFiles)
+   
 
     const images = photos.map((item) => {
       return {
@@ -79,10 +105,12 @@ export default function CompleteProfileForm({ params }: { params: Promise<{ id: 
 
     // TODO: Replace this with your API or Keystone mutation
     //await new Promise((r) => setTimeout(r, 1000))
-
-    completeProfile({variables: {where: {id: id},data:{bio, age: Number(age), gender, education, occupation, interests, lookingFor:lookingFor[0], photos: {create: images}}}}).then((response) => {
+      
+  
+   await completeProfile({variables: {where: {id: profileId},data:{bio, age: Number(age), gender, education, occupation, interests, lookingFor:lookingFor[0], photos: {create: images}}}}).then(async (response) => {
   console.log('Mutation successful:', response.data);
- 
+  await updateisProfile({variables:{where: {id: user.id}, data:{isProfile:true}}})
+
   // You can also redirect or show a success message here
 setRedirectTimer(true)
  setTimeout(() => { 
@@ -97,7 +125,10 @@ setRedirectTimer(true)
   console.error('Mutation failed:', error);
   setSubmitting(false)
   // Handle error — e.g., show error message to user
-}); 
+});
+    
+   
+    
 
     //alert('Profile submitted!')
     

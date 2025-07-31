@@ -1,0 +1,5 @@
+query findUserProfileId($where: ProfileWhereInput!) {
+  profiles(where: $where) {
+    id
+  }
+}

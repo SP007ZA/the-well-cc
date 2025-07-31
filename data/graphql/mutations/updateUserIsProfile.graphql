@@ -1,0 +1,5 @@
+mutation UpdateUserIsProfile($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {
+  updateUser(where: $where, data: $data) {
+    isProfile
+  }
+}

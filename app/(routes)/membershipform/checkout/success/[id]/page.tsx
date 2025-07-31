@@ -12,6 +12,7 @@ import {
   UpdateMembershipMutationVariables,
 } from "@/data/gql/graphql";
 
+
 export default function MembershipSuccessPage() {
   const params = useParams();
   const searchParams = useSearchParams();
@@ -66,7 +67,7 @@ export default function MembershipSuccessPage() {
         </p>
       )}
       <Link
-        href={`/complete-profile/${data?.updateMembership.user.profile.id}`}
+        href={`/complete-profile/${data?.updateMembership.user.id}`}
         className="mt-4 inline-block bg-rose-600 text-white px-6 py-3 rounded-xl shadow hover:bg-rose-700 transition"
       >
         Go To Member Dashboard

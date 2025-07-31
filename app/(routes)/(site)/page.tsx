@@ -10,7 +10,7 @@ export default function Home() {
     <div className="bg-gray-50  text-gray-800">
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-rose-100 to-rose-200 py-20 px-6 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">Find Love. Build Faith. Grow Together.</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">Find Companionship. Build Faith. Grow Together.</h1>
         <p className="text-lg md:text-xl max-w-2xl mx-auto">
           Welcome to The Well Christian Club – where like-minded singles connect through shared beliefs, spiritual growth, and meaningful relationships.
         </p>
