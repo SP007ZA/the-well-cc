@@ -14,16 +14,9 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
   useEffect(() => {
     if (data?.authenticatedItem === null) {
        window.location.href = '/login'
-    }  else if(!user?.isEmailVerified)    {
-          window.location.href = '/activate/invalidlogin'
-      } else if(user?.isMemberForm === false) {
-          window.location.href = '/membershipform'
-      }  else if(user?.isProfile === false) {
-          window.location.href = `/complete-profile/${user?.id}`
-      
-      } 
+    }  
 
-  }, [user?.id,data]);
+  }, [data]);
 
   if (loading) return <LoadingSpinner message={"Checking authentication..."} />
 
