@@ -29,19 +29,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 const [signOut] = useMutation<SignOutMutation, SignOutMutationVariables>(SignOutDocument)
 
 
-  useEffect(()=>{
 
-    
-if(user?.isMemberForm === false) {
-          window.location.href = '/membershipform'
-      }  else if(user?.isProfile === false) {
-          window.location.href = `/complete-profile/${user?.id}`
-      
-      } else if(true) {
-          window.location.href = '/dashboard'
-      }
-      
-  },[user?.id])
       
 const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();

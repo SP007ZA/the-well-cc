@@ -28,19 +28,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [wait, setWait] = useState(false)
   const [emailSent, setEmailSent] = useState(false);
 
-  useEffect(() => {
-         if(!user?.isEmailVerified)    {
-          window.location.href = '/activate/invalidlogin'
-      } else if(user?.isMemberForm === false) {
-          window.location.href = '/membershipform'
-      }  else if(user?.isProfile === false) {
-          window.location.href = `/complete-profile/${user?.id}`
-      
-      } else if(true) {
-          window.location.href = '/dashboard'
-      }
-      
-  }, [user?.id]);
+
 
   const validatePassword = (pwd: string) => {
     return {
