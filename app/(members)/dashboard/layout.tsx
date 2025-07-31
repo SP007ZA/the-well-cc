@@ -68,11 +68,14 @@ const {data:count} = useQuery<GetUnreadNotificationCountQuery, GetUnreadNotifica
     localStorage.setItem("theme", nextMode ? "dark" : "light");
   };
 
-  const breadcrumbs = pathname
-    .replace("/dashboard/", "")
-    .split("/")
-    .filter(Boolean)
-    .map((seg) => seg.charAt(0).toUpperCase() + seg.slice(1));
+  const firstSegment = pathname
+  .replace("/dashboard/", "")
+  .split("/")
+  .filter(Boolean)[0] || "";
+
+const breadcrumbs = [
+  firstSegment.charAt(0).toUpperCase() + firstSegment.slice(1)
+];
 
   return (
     <ProtectedRoute>
