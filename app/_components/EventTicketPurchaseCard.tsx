@@ -35,8 +35,8 @@ const sessionId = crypto.randomUUID();
       const [UpdateGuestCreateTicket] = useMutation<UpdateGuestCreateTicketMutation, UpdateGuestCreateTicketMutationVariables>(UpdateGuestCreateTicketDocument)
 const myData = [];
 // Merchant details
-myData["merchant_id"] = "30391073";
-myData["merchant_key"] = "6x4meqntny3of";
+myData["merchant_id"] = "10023375";  //10023375 prod=> 0391073
+myData["merchant_key"] = "04afueikmam8r";  // 04afueikmam8r prod=> 6x4meqntny3of
 myData["return_url"] =  member ? ` https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/dashboard/events/${id}/purchase/success?sessionId=${sessionID}&firstName=${firstName}&email=${email}` :` https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/${id}/purchase/success?sessionId=${sessionID}&firstName=${guestNameFirst}&email=${guestEmail}`;
 myData["cancel_url"] = member ? `https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/dashboard/events/${id}/purchase/cancel` : `https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/${id}/purchase/cancel`;
 
@@ -150,7 +150,7 @@ myData["item_description"] = {description};
       </p>
       <p className="text-sm text-gray-500 mb-4">📍 {fullAddress}</p>
       <p className="text-gray-800 mb-4">{description}</p>
-      <form action="https://www.payfast.co.za/eng/process" method="post"  onSubmit={handlePurchase}>
+      <form action="https://sandbox.payfast.co.za/eng/process" method="post"  onSubmit={handlePurchase}>
             <input type="hidden" name="merchant_id" value={myData["merchant_id"]}/>
             <input type="hidden" name="merchant_key" value={myData["merchant_key"]}/>
             <input type="hidden" name="return_url" value={myData["return_url"]}/>
