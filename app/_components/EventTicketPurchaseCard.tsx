@@ -53,7 +53,9 @@ myData["item_description"] = {description};
 
  useEffect(() => {
  setSessionID(sessionId)
-},[])
+},[guestEmail])
+
+
 
   const handlePurchase = async (e: React.FormEvent) => {
   e.preventDefault(); // Prevent form submission
