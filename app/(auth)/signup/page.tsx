@@ -28,7 +28,13 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [wait, setWait] = useState(false)
   const [emailSent, setEmailSent] = useState(false);
 
+useEffect(() => {
 
+    if (user?.isEmailVerified && user?.isProfile && user?.isMemberForm) {
+       window.location.href = '/dashboard'
+    }  
+
+  }, [user?.id]);
 
   const validatePassword = (pwd: string) => {
     return {

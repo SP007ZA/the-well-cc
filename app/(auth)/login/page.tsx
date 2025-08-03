@@ -1,7 +1,7 @@
 /* eslint-disable */
 "use client"
 import { signIn } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,7 +29,12 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 const [signOut] = useMutation<SignOutMutation, SignOutMutationVariables>(SignOutDocument)
 
 
+useEffect(() => {
+    if (user?.isEmailVerified && user?.isProfile && user?.isMemberForm) {
+       window.location.href = '/dashboard'
+    }  
 
+  }, [user?.id]);
       
 const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();

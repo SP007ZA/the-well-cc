@@ -99,12 +99,12 @@ export default function MembershipCheckout() {
         </div>
 
         <form
-          action="https://sandbox.payfast.co.za/eng/process"
+          action="https://www.payfast.co.za/eng/process"
           method="post"
           onSubmit={() => setIsLoading(true)}
         >
-          <input type="hidden" name="merchant_id" value="10023375" />
-          <input type="hidden" name="merchant_key" value="04afueikmam8r" />
+          <input type="hidden" name="merchant_id" value={30391073} />
+          <input type="hidden" name="merchant_key" value="6x4meqntny3of" />
           <input
             type="hidden"
             name="return_url"

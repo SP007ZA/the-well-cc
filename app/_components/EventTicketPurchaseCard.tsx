@@ -25,7 +25,7 @@ export default function EventPruchaseCard ({firstName, lastName, email, cellNumb
      const [loading, setLoading] = useState(false)
 
 
-const sessionId = crypto.randomUUID();
+const sessionId = crypto.randomUUID().slice(0, 8);
       const total = quantity * price;
       const phrase = "the_well_cc_payment_testing"
 
@@ -37,8 +37,8 @@ const myData = [];
 // Merchant details
 myData["merchant_id"] = 30391073;  //10023375 prod=> 30391073
 myData["merchant_key"] = "6x4meqntny3of";  // 04afueikmam8r prod=> 6x4meqntny3of
-myData["return_url"] =  member ? ` https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/dashboard/events/${id}/purchase/success?sessionId=${sessionID}&firstName=${firstName}&email=${email}` :` https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/${id}/purchase/success?sessionId=${sessionID}&firstName=${guestNameFirst}&email=${guestEmail}`;
-myData["cancel_url"] = member ? `https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/dashboard/events/${id}/purchase/cancel` : `https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/${id}/purchase/cancel`;
+const return_url =  member ? `https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/dashboard/events/${id}/purchase/success?sessionId=${sessionID}&firstName=${firstName}&email=${email}` :`https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/${id}/purchase/success?sessionId=${sessionID}&firstName=${guestNameFirst}&email=${guestEmail}`;
+const cancel_url = member ? `https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/dashboard/events/${id}/purchase/cancel` : `https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/${id}/purchase/cancel`;
 
 // Buyer details
 myData["name_first"] = member ? firstName : guestNameFirst;
@@ -153,16 +153,20 @@ myData["item_description"] = {description};
       <form action="https://www.payfast.co.za/eng/process" method="post"  onSubmit={handlePurchase}>
             <input type="hidden" name="merchant_id" value={myData["merchant_id"]}/>
             <input type="hidden" name="merchant_key" value={myData["merchant_key"]}/>
-            <input type="hidden" name="return_url" value={myData["return_url"]}/>
-            <input type="hidden" name="cancel_url" value={myData["cancel_url"]}/>
+            <input type="hidden" name="return_url" value={return_url}/>
+            <input type="hidden" name="cancel_url" value={cancel_url}/>
             <input type="hidden" name="name_first" value={myData["name_first"]}/>
             <input type="hidden" name="name_last" value={myData["name_last"]}/>
             <input type="hidden" name="email_address" value={myData["email_address"]}/>
             <input type="hidden" name="cell_number" value={myData["cell_number"]}/>
-            <input type="hidden" name="m_payment_id" value={myData["m_payment_id"]}/>
+            <input type="hidden" name="m_payment_id" value={sessionId}/>
             <input type="hidden" name="amount" value={myData["amount"]}/>
-            <input type="hidden" name="item_name" value={myData["item_name"]}/>
-            <input type="hidden" name="item_description" value={myData["item_description"]}/>
+            <input
+            type="hidden"
+            name="item_name"
+            value={title}
+          />
+            <input type="hidden" name="item_description" value={description}/>
 
       {/* Ticket Section */}
         <Card className="overflow-hidden border shadow-sm  p-4 mb-6">
