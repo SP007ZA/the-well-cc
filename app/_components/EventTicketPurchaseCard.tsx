@@ -55,7 +55,7 @@ myData["item_description"] = {description};
  setSessionID(sessionId)
 },[])
 
-console.log(guestEmail)
+
 
   const handlePurchase = async (e: React.FormEvent) => {
   e.preventDefault(); // Prevent form submission
@@ -155,7 +155,7 @@ console.log(guestEmail)
       <form action="https://www.payfast.co.za/eng/process" method="post"  onSubmit={handlePurchase}>
             <input type="hidden" name="merchant_id" value={myData["merchant_id"]}/>
             <input type="hidden" name="merchant_key" value={myData["merchant_key"]}/>
-            <input type="hidden" name="return_url" value={return_url}/>
+            <input type="hidden" name="return_url" value={member ? `https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/dashboard/events/${id}/purchase/success?sessionId=${sessionID}&firstName=${firstName}&email=${email}` :`https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/${id}/purchase/success?sessionId=${sessionID}&firstName=${guestNameFirst}&email=${guestEmail}`}/>
             <input type="hidden" name="cancel_url" value={cancel_url}/>
             <input type="hidden" name="name_first" value={myData["name_first"]}/>
             <input type="hidden" name="name_last" value={myData["name_last"]}/>
