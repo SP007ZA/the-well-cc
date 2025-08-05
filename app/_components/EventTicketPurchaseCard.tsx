@@ -37,8 +37,13 @@ const myData = [];
 // Merchant details
 myData["merchant_id"] = 30391073;  //10023375 prod=> 30391073
 myData["merchant_key"] = "6x4meqntny3of";  // 04afueikmam8r prod=> 6x4meqntny3of
-const return_url =  member ? `https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/dashboard/events/${id}/purchase/success?sessionId=${sessionID}&firstName=${firstName}&email=${email}` :`https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/${id}/purchase/success?sessionId=${sessionID}&firstName=${guestNameFirst}&email=${guestEmail}`;
-const cancel_url = member ? `https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/dashboard/events/${id}/purchase/cancel` : `https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/${id}/purchase/cancel`;
+const returnURL = member
+  ? `https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/dashboard/events/${id}/purchase/success?sessionId=${sessionID}&firstName=${encodeURIComponent(firstName)}&email=${encodeURIComponent(email)}`
+  : `https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/${id}/purchase/success?sessionId=${sessionID}&firstName=${encodeURIComponent(guestNameFirst)}&email=${encodeURIComponent(guestEmail)}`;
+
+const cancelURL = member
+  ? `https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/dashboard/events/${id}/purchase/cancel`
+  : `https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/${id}/purchase/cancel`;
 
 // Buyer details
 myData["name_first"] = member ? firstName : guestNameFirst;
@@ -155,8 +160,8 @@ myData["item_description"] = {description};
       <form action="https://www.payfast.co.za/eng/process" method="post"  onSubmit={handlePurchase}>
             <input type="hidden" name="merchant_id" value={myData["merchant_id"]}/>
             <input type="hidden" name="merchant_key" value={myData["merchant_key"]}/>
-            <input type="hidden" name="return_url" value={member ? `https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/dashboard/events/${id}/purchase/success?sessionId=${sessionID}&firstName=${firstName}&email=${email}` :`https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/events/${id}/purchase/success?sessionId=${sessionID}&firstName=${guestNameFirst}&email=${guestEmail}`}/>
-            <input type="hidden" name="cancel_url" value={cancel_url}/>
+            <input type="hidden" name="return_url" value={returnURL}/>
+            <input type="hidden" name="cancel_url" value={cancelURL}/>
             <input type="hidden" name="name_first" value={myData["name_first"]}/>
             <input type="hidden" name="name_last" value={myData["name_last"]}/>
             <input type="hidden" name="email_address" value={myData["email_address"]}/>
