@@ -14,9 +14,9 @@ export default function TicketSuccessPage() {
   //const params = useParams();
 
     
-  const sessionId = searchParams.get('sessionId');
-  const firstName = searchParams.get('firstName');
-  const email = searchParams.get('email');
+ const sessionId = decodeURIComponent(searchParams.get('sessionId') || '');
+const firstName = decodeURIComponent(searchParams.get('firstName') || '');
+const email = decodeURIComponent(searchParams.get('email') || '');
 
 const {data} = useQuery<FindTicketBySessionIdQuery,FindTicketBySessionIdQueryVariables>(FindTicketBySessionIdDocument, {variables: {where: {sessionID: {equals: sessionId}}}})
 const [updateTicketStatus] = useMutation<UpdateTicketStatusMutation, UpdateTicketStatusMutationVariables>(UpdateTicketStatusDocument)
