@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import React, { useState } from "react"
@@ -142,6 +143,10 @@ export function AgreementSection({
             <p>Chairperson: Lindie Lankalebalelo</p>
           </section>
 
+           <Button   onClick={closeModal} type="submit" className="w-full bg-rose-700 text-white hover:bg-rose-800">
+          ⬅ Go Back
+          </Button>
+
         </div>
       </div>
     </div>
@@ -212,6 +217,9 @@ export function AgreementSection({
               Email: admin@thewellcc.co.za
             </p>
           </section>
+          <Button   onClick={closeModal} type="submit" className="w-full bg-rose-700 text-white hover:bg-rose-800">
+          ⬅ Go Back
+          </Button>
 
         </div>
       </div>

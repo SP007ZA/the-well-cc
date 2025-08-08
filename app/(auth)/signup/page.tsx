@@ -38,7 +38,7 @@ useEffect(() => {
 
   const validatePassword = (pwd: string) => {
     return {
-      length: pwd.length >= 12,
+      length: pwd.length >= 10,
       upper: /[A-Z]/.test(pwd),
       lower: /[a-z]/.test(pwd),
       number: /[0-9]/.test(pwd),
