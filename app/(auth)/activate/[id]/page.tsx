@@ -79,7 +79,17 @@ console.log(tokenId)
 
     reset({ email: "" });
   }; 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-rose-50 flex items-center justify-center">
 
+           <div className="text-center bg-white p-8 rounded-xl shadow-md border border-rose-200">
+          <p className="text-gray-600">Please wait to be authenticated...</p>
+        </div>
+      </div>
+
+      )
+    }
   return (
     <div className="min-h-screen bg-rose-50 flex flex-col items-center justify-center px-4 py-10">
       {isVerified ? (
