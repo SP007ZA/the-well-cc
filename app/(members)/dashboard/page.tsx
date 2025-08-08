@@ -31,7 +31,7 @@ const features = [
     title: "Join WhatsApp Group",
   icon: <MessageCircle className="text-rose-700 w-6 h-6" />,
   description: "Connect instantly with The Well CC Christian Dating App community on WhatsApp.",
-  link: "https://chat.whatsapp.com/your-group-invite-link", // Replace with your real group link
+  link: "https://chat.whatsapp.com/C3IC7oaARM3EnPaB9YPOWU?mode=ac_t", // Replace with your real group link
   },
  /* {
     title: 'Chats',
