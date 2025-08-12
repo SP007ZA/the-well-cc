@@ -3,7 +3,7 @@
 import { SendUserPasswordResetLinkDocument, SendUserPasswordResetLinkMutation, SendUserPasswordResetLinkMutationVariables } from "@/data/gql/graphql";
 import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");

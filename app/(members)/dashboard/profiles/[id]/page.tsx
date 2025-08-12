@@ -11,49 +11,6 @@ import { useState } from "react"
 import { useQuery } from "@apollo/client"
 import { GetMemberProfileDocument, GetMemberProfileQuery, GetMemberProfileQueryVariables } from "@/data/gql/graphql"
 
-/*const mockMembers:any = {
-  u1: {
-    id:1,
-    name: "Lerato Molefe",
-    photo: "/members/lerato.jpg",
-    gallery: [
-      "/members/lerato.jpg",
-      "/members/lerato2.jpg",
-      "/members/lerato3.jpg"
-    ],
-    location: "Soweto, Gauteng",
-    bio: "Worship leader with a love for serving.",
-    interests: ["Gospel music", "Youth ministry", "Cooking"],
-  },
-  u2: {
-    id:2,
-    name: "Sipho Dlamini",
-    photo: "/members/sipho.jpg",
-    gallery: [
-      "/members/sipho.jpg",
-      "/members/sipho2.jpg",
-      "/members/sipho3.jpg"
-    ],
-    location: "Durban, KZN",
-    bio: "Tech enthusiast and Sunday school volunteer.",
-    interests: ["Coding", "Volunteering", "Basketball"],
-  },
-  u3: {
-    id:3,
-    name: "Nokuthula Mthembu",
-    photo: "/members/nokuthula.jpg",
-    gallery: [
-      "/members/nokuthula.jpg",
-      "/members/nokuthula2.jpg",
-      "/members/nokuthula3.jpg"
-    ],
-    location: "Johannesburg, Gauteng",
-    bio: "Tech enthusiast and Sunday school volunteer.",
-    interests: ["Coding", "Volunteering", "Basketball"],
-  },
-} */
-
-
 
 export default function ProfilePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params) // unwrap the async params
@@ -62,6 +19,7 @@ export default function ProfilePage({ params }: { params: Promise<{ id: string }
    const [open, setOpen] = useState(false)
   const [index, setIndex] = useState(0)
 
+ 
   const {data, loading} = useQuery<GetMemberProfileQuery, GetMemberProfileQueryVariables>(GetMemberProfileDocument, {variables: {where:{id}}})
   const [memberProfile, setMemberProfile] = useState<any>()
   
@@ -86,7 +44,7 @@ export default function ProfilePage({ params }: { params: Promise<{ id: string }
 
   }, [data, loading])
 
-  console.log()
+
 
   if (data?.profile === null) {
     return <div className="p-6 text-center text-gray-500">Member not found.</div>

@@ -22,6 +22,8 @@ export default function MembershipCheckout() {
   const planParam = searchParams.get("membershipType") || "Premium";
     const user = useUser()
 
+    console.log("ID",id)
+
   const { data, loading, error, refetch } = useQuery<
     ProfileQuery,
     ProfileQueryVariables
@@ -49,7 +51,7 @@ export default function MembershipCheckout() {
     const newPlan = e.target.value.trim() as keyof typeof planDetails; // trim spaces!
   setSelectedPlan(planDetails[newPlan]);
 
-   /* try {
+  /*  try {
       await updateMembership({
         //@ts-ignore
         variables: { where: {user: {id: data?.profile.user.id}}, data: {memberShipType: newPlan} },
@@ -59,13 +61,13 @@ export default function MembershipCheckout() {
     } catch (err) {
       console.error("Failed to update membership plan:", err);
     } */
-  }; 
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
       <div className="bg-white shadow-lg rounded-2xl max-w-md w-full p-6 border border-rose-700">
         <h1 className="text-2xl font-bold text-rose-700 mb-2">
-          Confirm Your Membership
+          Upgrade Your Membership
         </h1>
         <p className="text-gray-600 mb-2">You're subscribing to:</p>
 
@@ -100,14 +102,14 @@ export default function MembershipCheckout() {
           <input
             type="hidden"
             name="return_url"
-            value={`https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/membershipform/checkout/success/${data?.profile?.user?.membership?.id}?membershipType=${selectedPlan.name}`}
+            value={`https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/dashboard/upgrade/success/${data?.profile?.user?.membership?.id}?membershipType=${selectedPlan.name}`}
           />
           <input
             type="hidden"
             name="cancel_url"
-            value={`https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/membershipform/checkout/cancel/${id}?membershipType=${selectedPlan.name}`}
+            value={`https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/dashboard/upgrade/cancel/${id}?membershipType=${selectedPlan.name}`}
           />
-          <input
+          <input 
             type="hidden"
             name="name_first"
             value={data?.profile?.firstName || ""}
@@ -161,14 +163,7 @@ export default function MembershipCheckout() {
             name="subscription_notify_buyer"
             value="true"
           />
-          {selectedPlan.name === "Basic" ? (<button
-            disabled={isLoading || loading || !data}
-            type='button'
-            onClick={() => window.location.href = `/complete-profile/${user?.id}`}
-            className="w-full bg-rose-700 hover:bg-rose-800 text-white font-semibold py-2 rounded-xl transition-all"
-          >
-            {isLoading ? "Loading..." : "Proceed to complete your profile"}
-          </button>) : (<button
+          {selectedPlan.name === "Basic" ? (<p>You are currenly on the Basic Membership.</p>) : (<button
             disabled={isLoading || loading || !data}
             type="submit"
             className="w-full bg-rose-700 hover:bg-rose-800 text-white font-semibold py-2 rounded-xl transition-all"
@@ -180,7 +175,7 @@ export default function MembershipCheckout() {
         </form>
 
         <p className="text-xs text-center text-gray-400 mt-4">
-          You can cancel anytime from your dashboard.
+          You can cancel anytime.
         </p>
       </div>
     </div>

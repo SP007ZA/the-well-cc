@@ -1,0 +1,10 @@
+query GetUserMembershipType($where: UserWhereUniqueInput!) {
+  user(where: $where) {
+    profile {
+      id
+    }
+    membership {
+      memberShipType
+    }
+  }
+}

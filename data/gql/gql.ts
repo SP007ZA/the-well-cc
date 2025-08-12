@@ -39,6 +39,7 @@ const documents = {
     "query FindGuestByEmail($where: GuestWhereInput!) {\n  guests(where: $where) {\n    id\n  }\n}": types.FindGuestByEmailDocument,
     "query findTicketBySessionID($where: TicketWhereInput!) {\n  tickets(where: $where) {\n    id\n  }\n}": types.FindTicketBySessionIdDocument,
     "query FindUserByEmail($email: String) {\n  user(where: {email: $email}) {\n    id\n  }\n}": types.FindUserByEmailDocument,
+    "query FindUsernameOrEmail($where: UserWhereInput!) {\n  users(where: $where) {\n    userName\n    email\n  }\n}": types.FindUsernameOrEmailDocument,
     "query findUserProfileId($where: ProfileWhereInput!) {\n  profiles(where: $where) {\n    id\n  }\n}": types.FindUserProfileIdDocument,
     "query Profile($where: ProfileWhereUniqueInput!) {\n  profile(where: $where) {\n    id\n    firstName\n    lastName\n    user {\n      id\n      email\n      membership {\n        id\n        cellNumber\n      }\n    }\n  }\n}": types.ProfileDocument,
     "query GetUserProfilePicture($where: UserWhereUniqueInput!) {\n  user(where: $where) {\n    profile {\n      id\n      profilePicture {\n        publicUrlTransformed\n      }\n    }\n  }\n}": types.GetUserProfilePictureDocument,
@@ -47,13 +48,15 @@ const documents = {
     "query EventHistories {\n  eventHistories {\n    id\n    display\n    comments {\n      comment\n      id\n      likeCount\n      user {\n        userName\n      }\n    }\n    event {\n      title\n    }\n    galleryImages {\n      id\n      image {\n        publicUrlTransformed\n      }\n      title\n    }\n    youtubeLink {\n      title\n      id\n      url\n      description\n    }\n  }\n}": types.EventHistoriesDocument,
     "query GetGalleryImages {\n  galleryImages {\n    id\n    image {\n      publicUrlTransformed\n    }\n    title\n  }\n}": types.GetGalleryImagesDocument,
     "query GetMemberProfile($where: ProfileWhereUniqueInput!) {\n  profile(where: $where) {\n    id\n    firstName\n    lastName\n    bio\n    interests\n    profilePicture {\n      publicUrlTransformed\n    }\n    photos {\n      image {\n        publicUrlTransformed\n      }\n    }\n    address {\n      city\n      province\n    }\n  }\n}": types.GetMemberProfileDocument,
-    "query GetMemberUsers($where: UserWhereInput!) {\n  users(where: $where) {\n    id\n    profile {\n      id\n      firstName\n      lastName\n      bio\n      interests\n      profilePicture {\n        publicUrlTransformed\n      }\n      photos {\n        image {\n          publicUrlTransformed\n        }\n      }\n      address {\n        city\n        province\n      }\n    }\n  }\n}": types.GetMemberUsersDocument,
+    "query GetMemberUsers($where: UserWhereInput!, $take: Int, $skip: Int) {\n  users(where: $where, take: $take, skip: $skip) {\n    id\n    profile {\n      id\n      firstName\n      lastName\n      bio\n      interests\n      profilePicture {\n        publicUrlTransformed\n      }\n      photos {\n        image {\n          publicUrlTransformed\n        }\n      }\n      address {\n        city\n        province\n      }\n    }\n    membership {\n      memberShipType\n    }\n  }\n}": types.GetMemberUsersDocument,
     "query GetUnreadNotificationCount($where: NotificationWhereInput!) {\n  notificationsCount(where: $where)\n}": types.GetUnreadNotificationCountDocument,
     "query GetUnreadNotifications($where: NotificationWhereInput!) {\n  notifications(where: $where) {\n    id\n    type\n    icon\n    title\n    content\n    createdAt\n    actionText\n    actionHref\n  }\n}": types.GetUnreadNotificationsDocument,
     "query getUserAuth {\n  authenticatedItem {\n    ... on User {\n      id\n      userName\n      email\n      isProfile\n      isEmailVerified\n      isMemberForm\n    }\n  }\n}": types.GetUserAuthDocument,
+    "query GetUserMembershipType($where: UserWhereUniqueInput!) {\n  user(where: $where) {\n    profile {\n      id\n    }\n    membership {\n      memberShipType\n    }\n  }\n}": types.GetUserMembershipTypeDocument,
     "query GetUserPaymentInput($where: UserWhereUniqueInput!) {\n  user(where: $where) {\n    profile {\n      firstName\n      lastName\n    }\n    email\n    membership {\n      cellNumber\n    }\n  }\n}": types.GetUserPaymentInputDocument,
     "query GetUserProfile($where: UserWhereUniqueInput!) {\n  user(where: $where) {\n    profile {\n      id\n      bio\n      age\n      gender\n      education\n      occupation\n      interests\n      lookingFor\n      profilePicture {\n        publicUrlTransformed\n      }\n      photos {\n        image {\n          publicUrlTransformed\n        }\n      }\n    }\n  }\n}": types.GetUserProfileDocument,
     "query SearchUsersByUserName($where: UserWhereInput!) {\n  users(where: $where, take: 10) {\n    id\n    userName\n  }\n}": types.SearchUsersByUserNameDocument,
+    "query UsersCount($where: UserWhereInput!) {\n  usersCount(where: $where)\n}": types.UsersCountDocument,
     "query VerifyTicket($where: TicketWhereInput!) {\n  tickets(where: $where) {\n    id\n    ticketCode\n    event {\n      title\n      startDate\n      address {\n        streetName\n        town\n        city\n        province\n      }\n    }\n    user {\n      email\n      profile {\n        firstName\n        lastName\n      }\n    }\n    guest {\n      firstName\n      lastName\n      email\n    }\n    isCheckedIn\n  }\n}": types.VerifyTicketDocument,
 };
 
@@ -178,6 +181,10 @@ export function graphql(source: "query FindUserByEmail($email: String) {\n  user
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "query FindUsernameOrEmail($where: UserWhereInput!) {\n  users(where: $where) {\n    userName\n    email\n  }\n}"): (typeof documents)["query FindUsernameOrEmail($where: UserWhereInput!) {\n  users(where: $where) {\n    userName\n    email\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "query findUserProfileId($where: ProfileWhereInput!) {\n  profiles(where: $where) {\n    id\n  }\n}"): (typeof documents)["query findUserProfileId($where: ProfileWhereInput!) {\n  profiles(where: $where) {\n    id\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -210,7 +217,7 @@ export function graphql(source: "query GetMemberProfile($where: ProfileWhereUniq
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query GetMemberUsers($where: UserWhereInput!) {\n  users(where: $where) {\n    id\n    profile {\n      id\n      firstName\n      lastName\n      bio\n      interests\n      profilePicture {\n        publicUrlTransformed\n      }\n      photos {\n        image {\n          publicUrlTransformed\n        }\n      }\n      address {\n        city\n        province\n      }\n    }\n  }\n}"): (typeof documents)["query GetMemberUsers($where: UserWhereInput!) {\n  users(where: $where) {\n    id\n    profile {\n      id\n      firstName\n      lastName\n      bio\n      interests\n      profilePicture {\n        publicUrlTransformed\n      }\n      photos {\n        image {\n          publicUrlTransformed\n        }\n      }\n      address {\n        city\n        province\n      }\n    }\n  }\n}"];
+export function graphql(source: "query GetMemberUsers($where: UserWhereInput!, $take: Int, $skip: Int) {\n  users(where: $where, take: $take, skip: $skip) {\n    id\n    profile {\n      id\n      firstName\n      lastName\n      bio\n      interests\n      profilePicture {\n        publicUrlTransformed\n      }\n      photos {\n        image {\n          publicUrlTransformed\n        }\n      }\n      address {\n        city\n        province\n      }\n    }\n    membership {\n      memberShipType\n    }\n  }\n}"): (typeof documents)["query GetMemberUsers($where: UserWhereInput!, $take: Int, $skip: Int) {\n  users(where: $where, take: $take, skip: $skip) {\n    id\n    profile {\n      id\n      firstName\n      lastName\n      bio\n      interests\n      profilePicture {\n        publicUrlTransformed\n      }\n      photos {\n        image {\n          publicUrlTransformed\n        }\n      }\n      address {\n        city\n        province\n      }\n    }\n    membership {\n      memberShipType\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -226,6 +233,10 @@ export function graphql(source: "query getUserAuth {\n  authenticatedItem {\n   
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "query GetUserMembershipType($where: UserWhereUniqueInput!) {\n  user(where: $where) {\n    profile {\n      id\n    }\n    membership {\n      memberShipType\n    }\n  }\n}"): (typeof documents)["query GetUserMembershipType($where: UserWhereUniqueInput!) {\n  user(where: $where) {\n    profile {\n      id\n    }\n    membership {\n      memberShipType\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "query GetUserPaymentInput($where: UserWhereUniqueInput!) {\n  user(where: $where) {\n    profile {\n      firstName\n      lastName\n    }\n    email\n    membership {\n      cellNumber\n    }\n  }\n}"): (typeof documents)["query GetUserPaymentInput($where: UserWhereUniqueInput!) {\n  user(where: $where) {\n    profile {\n      firstName\n      lastName\n    }\n    email\n    membership {\n      cellNumber\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -235,6 +246,10 @@ export function graphql(source: "query GetUserProfile($where: UserWhereUniqueInp
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query SearchUsersByUserName($where: UserWhereInput!) {\n  users(where: $where, take: 10) {\n    id\n    userName\n  }\n}"): (typeof documents)["query SearchUsersByUserName($where: UserWhereInput!) {\n  users(where: $where, take: 10) {\n    id\n    userName\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query UsersCount($where: UserWhereInput!) {\n  usersCount(where: $where)\n}"): (typeof documents)["query UsersCount($where: UserWhereInput!) {\n  usersCount(where: $where)\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

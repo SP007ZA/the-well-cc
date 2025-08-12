@@ -1,6 +1,8 @@
-query GetMemberUsers($where: UserWhereInput!) {
-  users(where: $where) {
+query GetMemberUsers($where: UserWhereInput!  $take: Int
+  $skip: Int) {
+  users(where: $where, take:$take, skip:$skip)  {
     id
+    
     profile {
       id
       firstName
@@ -19,6 +21,8 @@ query GetMemberUsers($where: UserWhereInput!) {
         city
         province
       }
+    } membership {
+      memberShipType
     }
   }
 }

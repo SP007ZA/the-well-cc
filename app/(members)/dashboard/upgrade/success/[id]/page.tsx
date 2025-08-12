@@ -67,10 +67,10 @@ export default function MembershipSuccessPage() {
         </p>
       )}
       <Link
-        href={`/complete-profile/${data?.updateMembership.user.id}`}
+        href={`/dashboard/profiles`}
         className="mt-4 inline-block bg-rose-600 text-white px-6 py-3 rounded-xl shadow hover:bg-rose-700 transition"
       >
-        Go To Member Dashboard
+        Go To Member Profiles
       </Link>
     </div>
   );

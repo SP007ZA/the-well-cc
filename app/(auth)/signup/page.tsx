@@ -5,11 +5,13 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from 'next/image';
-import { useMutation } from "@apollo/client";
-import { CreateUserDocument, CreateUserMutation, CreateUserMutationVariables } from "@/data/gql/graphql";
+import { useMutation, useQuery } from "@apollo/client";
+import { CreateUserDocument, CreateUserMutation, CreateUserMutationVariables, FindUsernameOrEmailDocument, FindUsernameOrEmailQuery, FindUsernameOrEmailQueryVariables } from "@/data/gql/graphql";
 import { Eye, EyeOff, CheckCircle } from "lucide-react";
 import LoadingSpinner from "@/app/_components/LoadingSpinner";
 import { useUser } from "@/lib/utils";
+import { useLazyQuery } from "@apollo/client";
+
 
 export default function SignUpPage() {
   const [email, setEmail] = useState("");
@@ -21,6 +23,10 @@ const [showPassword, setShowPassword] = useState(false);
 const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const user = useUser();
   const [showPasswordRules, setShowPasswordRules] = useState(false);
+
+// ...
+
+const [findUserNameOrEmail, { data: foundUserRes, loading: findLoading, error: findError }] = useLazyQuery<FindUsernameOrEmailQuery, FindUsernameOrEmailQueryVariables>(FindUsernameOrEmailDocument);
 
   const [errors, setErrors] = useState<{ email?: string; password?: string; confirm?: string; userName?: string }>({});
   const [signUp] = useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument);
@@ -60,8 +66,31 @@ useEffect(() => {
 
     setErrors(newErrors);
 
+      // 🔎 check username/email availability
+  const { data } = await findUserNameOrEmail({
+    variables: {
+      where: { OR: [{ userName: { equals: userName } }, { email: { equals: email } }] }
+    }
+  });
+
+  const exists = (data?.users?.length ?? 0) > 0;
+
+  console.log("User found:", data?.users[0]);
+  if (exists) {
+
+    const emailErr = data?.users[0].email;
+    const userNameErr = data?.users[0].userName;
+
+    console.log("Email:", emailErr, "UserName:", userNameErr);
+
+    if(email ==emailErr) setErrors((prev) => ({...prev, email: "Email already registered" })) 
+    if(userName == userNameErr) setErrors((prev) => ({...prev, userName: "User name already exists" }))  
+    return;
+  }
+
     if (Object.keys(newErrors).length === 0) {
       setWait(true);
+
       await signUp({
         variables: {
           data: { userName: userName, email: email, password: password }
@@ -79,7 +108,7 @@ useEffect(() => {
         if (err.message.includes("userName")) newErrors.userName = 'User name already exists';
         setErrors({ ...newErrors });
       });
-    }
+    } 
   };
 
   const pwdRules = validatePassword(password);
@@ -219,9 +248,15 @@ useEffect(() => {
             </p>
           </>
         ) : (
-          <div className="mt-6 bg-green-100 border border-green-300 text-green-700 px-4 py-3 rounded-lg">
-            ✅ An email has been sent to <strong>{email}</strong>. Please click the activation link to verify your account.
-          </div>
+         <div className="mt-6 bg-green-100 border border-green-300 text-green-700 px-4 py-3 rounded-lg">
+  ✅ An email has been sent to <strong>{email}</strong>. Please click the activation link to verify your account.
+  <br />
+  <span className="text-sm">
+    If you don’t see it in a few minutes, check your <strong>Spam/Junk</strong> folder
+    (and <strong>Promotions</strong> on Gmail), or resend the email.
+  </span>
+</div>
+
         )}
       </div>
     </div>
