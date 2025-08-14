@@ -1,0 +1,15 @@
+mutation createChatRequest($data: ChatRequestCreateInput!) {createChatRequest(data: $data) {
+    id
+    message
+    requesterWhatsApp
+    read
+    sender {
+      id
+    
+    }
+    receiver {
+    id  
+    }
+  }
+  
+}

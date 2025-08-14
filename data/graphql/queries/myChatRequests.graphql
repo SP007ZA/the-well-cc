@@ -1,0 +1,13 @@
+query MyChatRequests($where: ChatRequestWhereInput!) {
+  chatRequests(where: $where) {
+ id
+ read
+ sender {
+  id
+ }
+ receiver {
+  id
+ }
+ requesterWhatsApp
+  }
+}

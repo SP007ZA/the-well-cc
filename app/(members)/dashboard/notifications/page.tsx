@@ -6,6 +6,7 @@ import { useQuery } from "@apollo/client";
 import { GetUnreadNotificationsDocument, GetUnreadNotificationsQuery, GetUnreadNotificationsQueryVariables } from "@/data/gql/graphql";
 import { useEffect } from "react";
 import ProtectedRoute from "../_components/ProtectedRoute";
+import { useUser } from "@/lib/utils";
 
 /*const notifications = [
   {
@@ -61,8 +62,9 @@ import ProtectedRoute from "../_components/ProtectedRoute";
 ]; */
 
 export default function NotificationsPage() {
+  const {id} = useUser()
 
- const {data, loading} = useQuery<GetUnreadNotificationsQuery, GetUnreadNotificationsQueryVariables>(GetUnreadNotificationsDocument, {variables: {where: {isRead: {equals: false}, AND: [{user:{id: {equals:"cmbbmfjf3000032ztrz1zyk3b" }}}]}}})
+ const {data, loading} = useQuery<GetUnreadNotificationsQuery, GetUnreadNotificationsQueryVariables>(GetUnreadNotificationsDocument, {variables: {where: {isRead: {equals: false}, AND: [{user:{id: {equals: id}}}]}}})
 
   
 

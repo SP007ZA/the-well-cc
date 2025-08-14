@@ -212,12 +212,12 @@ setRedirectTimer(true)
         <label className="block font-medium text-gray-700">Looking For</label>
         <div className="flex gap-4 mt-2">
           <label className="inline-flex items-center">
-            <input type="checkbox" value="Friendship" {...register('lookingFor')} />
-            <span className="ml-2">Friendship</span>
-          </label>
-          <label className="inline-flex items-center">
             <input type="checkbox" value="Dating" {...register('lookingFor')} />
             <span className="ml-2">Dating</span>
+          </label>
+          <label className="inline-flex items-center">
+            <input type="checkbox" value="Courtship" {...register('lookingFor')} />
+            <span className="ml-2">Courtship</span>
           </label>
           <label className="inline-flex items-center">
             <input type="checkbox" value="Marriage" {...register('lookingFor')} />

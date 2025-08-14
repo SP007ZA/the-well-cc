@@ -5,6 +5,9 @@ query GetMemberProfile($where: ProfileWhereUniqueInput!) {
       lastName
       bio
       interests
+      user {
+        id
+      }
       profilePicture {
         publicUrlTransformed
       }

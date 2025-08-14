@@ -41,7 +41,7 @@ const dropdownRef = useRef<HTMLDivElement>(null);
 const [signOut] = useMutation<SignOutMutation, SignOutMutationVariables>(SignOutDocument)
 const {data} = useQuery<GetUserProfilePictureQuery, GetUserProfilePictureQueryVariables>(GetUserProfilePictureDocument, {variables: {where: {id: user?.id}}})
 
-const {data:count} = useQuery<GetUnreadNotificationCountQuery, GetUnreadNotificationCountQueryVariables>(GetUnreadNotificationCountDocument, {variables:{where: {isRead: {equals: false}, AND: [{user: {id: {equals:user?.id}}}]}}, pollInterval:30000})
+const {data:count} = useQuery<GetUnreadNotificationCountQuery, GetUnreadNotificationCountQueryVariables>(GetUnreadNotificationCountDocument, {variables:{where: {isRead: {equals: false}, AND: [{user: {id: {equals:user?.id}}}]}}, pollInterval:10000})
 
 
 
@@ -130,7 +130,7 @@ const breadcrumbs = [
       aria-label="Notifications"
     >
      <Bell className="w-5 h-5 cursor-pointer" />
-      {count?.notificationsCount > 10000 && (
+      {count?.notificationsCount > 0 && (
         <span className="absolute -top-1 -right-1 bg-rose-600 text-white text-xs font-semibold rounded-full px-1.5 py-0.5">
           {count?.notificationsCount}
         </span>

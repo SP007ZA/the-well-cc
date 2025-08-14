@@ -16,7 +16,7 @@ export default function NotificationsCard({ id, Icon, title, message, date, acti
 
     const LucideIcon = Icons[Icon] 
 
-    const [updateIsRead] = useMutation<UpdateIsReadNotificationMutation,UpdateIsReadNotificationMutationVariables>(UpdateIsReadNotificationDocument, {variables:{where: {id: "cmbgmos3700011371rwirxmbq"}, data: {isRead: true}}})
+    const [updateIsRead] = useMutation<UpdateIsReadNotificationMutation,UpdateIsReadNotificationMutationVariables>(UpdateIsReadNotificationDocument, {variables:{where: {id}, data: {isRead: true}}})
     return(
          <Card key={id} className="p-4 shadow-sm border border-rose-100">
           <div className="flex items-start gap-4">
