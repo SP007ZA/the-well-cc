@@ -131,17 +131,17 @@ const currentUserId = useUser()?.id
          fetchOutgoing({ variables: {where:{AND:[{sender:{id:{equals:currentUserId}}, receiver:{id:{equals: profile.userId}}}]}} }).then((res) => {
            //console.log("Chat requests:", res.data.chatRequests)
            const request = res.data.chatRequests[0]
-           console.log("Request:", request)
+           //console.log("Request:", request)
            if (request && !request.read)  setRequestSent(true)
             if (request && request.receiver.id === currentUserId) {
-              console.log("You have a chat request from this member")
+             // console.log("You have a chat request from this member")
             }
           
          })
          fetchIncoming({ variables: {where:{AND:[{sender:{id:{equals: profile.userId}}, receiver:{id:{equals: currentUserId }}}]}} }).then((res) => {
            //console.log("Chat requests:", res.data.chatRequests)
            const request = res.data.chatRequests[0]
-           console.log("Request:", request)
+           //console.log("Request:", request)
             if (request && request.receiver.id === currentUserId) {
               //console.log("You have a chat request from this member")
               setRequestReceived(true)
@@ -245,7 +245,7 @@ const currentUserId = useUser()?.id
               <Label htmlFor="wa">WhatsApp number</Label>
               <Input
                 id="wa"
-                placeholder="+27 82 123 4567 or 082 123 4567"
+                placeholder="082 123 4567"
                 value={waNumber}
                 onChange={(e) => setWaNumber(e.target.value.replace(/\D/g, ""))}
                 className="focus-visible:ring-rose-600"

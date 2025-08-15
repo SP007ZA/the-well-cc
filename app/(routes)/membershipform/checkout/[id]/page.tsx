@@ -49,7 +49,7 @@ export default function MembershipCheckout() {
     const newPlan = e.target.value.trim() as keyof typeof planDetails; // trim spaces!
   setSelectedPlan(planDetails[newPlan]);
 
-   /* try {
+   try {
       await updateMembership({
         //@ts-ignore
         variables: { where: {user: {id: data?.profile.user.id}}, data: {memberShipType: newPlan} },
@@ -58,8 +58,10 @@ export default function MembershipCheckout() {
       await refetch();
     } catch (err) {
       console.error("Failed to update membership plan:", err);
-    } */
-  }; 
+    } 
+
+    if(selectedPlan.name === "Basic") return window.location.href = `/complete-profile/${user?.id}`
+  };  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
@@ -161,14 +163,14 @@ export default function MembershipCheckout() {
             name="subscription_notify_buyer"
             value="true"
           />
-          {selectedPlan.name === "Basic" ? (<button
+          {selectedPlan.name === "Basic" ? (<button 
             disabled={isLoading || loading || !data}
             type='button'
-            onClick={() => window.location.href = `/complete-profile/${user?.id}`}
+            onClick={() => handlePlanChange}
             className="w-full bg-rose-700 hover:bg-rose-800 text-white font-semibold py-2 rounded-xl transition-all"
           >
             {isLoading ? "Loading..." : "Proceed to complete your profile"}
-          </button>) : (<button
+          </button>) : (<button 
             disabled={isLoading || loading || !data}
             type="submit"
             className="w-full bg-rose-700 hover:bg-rose-800 text-white font-semibold py-2 rounded-xl transition-all"

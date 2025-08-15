@@ -75,13 +75,10 @@ const file =   base64ToFile(signature, "signature")
        // console.log(data.updateUser.profile.id)
       //  console.log(data.updateUser.membership.memberShipType)
       //console.log(form?.memberShipType)
-
-        if(form?.membershipType == 'Basic') {
-         return   window.location.href = `/complete-profile/${user?.id}`
-        } else{
+   
             // Go To Membership Subscription Page
-          return   window.location.href = `/membershipform/checkout/${data?.updateUser.profile.id}?membershipType=${data.updateUser.membership.memberShipType}`
-        } 
+          return   window.location.href = `/membershipform/checkout/${data?.updateUser.profile.id}?membershipType=${form.membershipType}`
+      
 
       
        }).catch(error => console.log(error)) 
