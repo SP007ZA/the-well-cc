@@ -102,12 +102,12 @@ export default function MembershipCheckout() {
           <input
             type="hidden"
             name="return_url"
-            value={`https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/membershipform/checkout/success/${data?.profile?.user?.membership?.id}?membershipType=${selectedPlan.name}`}
+            value={`https://thewellcc.co.za/membershipform/checkout/success/${data?.profile?.user?.membership?.id}?membershipType=${selectedPlan.name}`}
           />
           <input
             type="hidden"
             name="cancel_url"
-            value={`https://the-well-cc-x5jv-mzansionlinecvgmailcoms-projects.vercel.app/membershipform/checkout/cancel/${id}?membershipType=${selectedPlan.name}`}
+            value={`https://thewellcc.co.za/membershipform/checkout/cancel/${id}?membershipType=${selectedPlan.name}`}
           />
           <input
             type="hidden"
