@@ -216,14 +216,23 @@ const currentUserId = useUser()?.id
 
         {requestReceived ? (<WhatsAppButton phone={waNumber}/>) 
         : ( <Button
-          onClick={handleOpenModal}
-          disabled={requestSent}
-          className={`bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-md ${
-            requestSent ? "opacity-60 cursor-not-allowed" : ""
-          }`}
-        >
-          {requestSent ? "Chat Request Sent" : `Request private WhatsApp chat with ${memberProfile?.name ?? "member"}`}
-        </Button>)}
+  onClick={handleOpenModal}
+  disabled={requestSent}
+  className={`bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-full flex items-center justify-center gap-2 shadow-md text-sm sm:text-base whitespace-normal break-words max-w-full sm:max-w-xs ${
+    requestSent ? "opacity-60 cursor-not-allowed" : ""
+  }`}
+>
+  {requestSent
+    ? "Chat Request Sent"
+    : (
+      <span className="text-center">
+        Request private WhatsApp chat<br className="sm:hidden"/> 
+        with {memberProfile?.name ?? "member"}
+      </span>
+    )
+  }
+</Button>
+)}
        
       </div>
 
