@@ -169,13 +169,13 @@ export default function MembershipCheckout() {
             onClick={() => handlePlanChange}
             className="w-full bg-rose-700 hover:bg-rose-800 text-white font-semibold py-2 rounded-xl transition-all"
           >
-            {isLoading ? "Loading..." : "Proceed to complete your profile"}
+            {loading ? "Loading..." : "Proceed to complete your profile"}
           </button>) : (<button 
             disabled={isLoading || loading || !data}
             type="submit"
             className="w-full bg-rose-700 hover:bg-rose-800 text-white font-semibold py-2 rounded-xl transition-all"
           >
-            {isLoading ? "Processing..." : "Proceed to Payment"}
+            {loading ? "Processing..." : "Proceed to Payment"}
           </button>) } 
 
           
