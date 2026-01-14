@@ -54,6 +54,7 @@ export default function MembershipCheckout() {
         //@ts-ignore
         variables: { where: {user: {id: data?.profile.user.id}}, data: {memberShipType: newPlan} },
       });
+       if(selectedPlan.name === "Basic") return window.location.href = `/complete-profile/${user?.id}`
       // 🔃 Optionally refetch user profile
       await refetch();
     } catch (err) {
