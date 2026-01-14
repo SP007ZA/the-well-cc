@@ -18,6 +18,7 @@ import {
   // If you have it, import a UsersCountDocument (optional)
 } from '@/data/gql/graphql'
 import { useUser } from '@/lib/utils'
+import ProtectedRoute from '../_components/ProtectedRoute'
 
 const PAGE_SIZE = 5
 
@@ -102,6 +103,7 @@ const Profiles = () => {
   }, [membershipTypeData])
 
   return (
+     <ProtectedRoute>
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between gap-3">
         <h1 className="text-2xl font-bold text-rose-700">Member Profiles</h1>
@@ -248,6 +250,7 @@ const Profiles = () => {
         </button>
       </div>
     </div>
+    </ProtectedRoute>
   )
 }
 
