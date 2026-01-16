@@ -25,6 +25,7 @@ const PersonalInformation = ({ form, setForm, errors, validateField, setErrors, 
     !errors.idNumber &&
     !errors.cell;
 
+
   return (
     <>
       <div>
@@ -56,11 +57,11 @@ const PersonalInformation = ({ form, setForm, errors, validateField, setErrors, 
       <div className="mb-2">
         <label className="block font-medium mb-1">Select Document Type</label>
         <select
-          value={form.documentType || "id"}
+          value={form.documentType || "idNumber"}
           onChange={(e) => handleChange("documentType", e.target.value)}
           className="w-full border px-3 py-2 rounded border-gray-300"
         >
-          <option value="id">South African ID</option>
+          <option value="idNumber">South African ID</option>
           <option value="passport">Passport</option>
         </select>
       </div>
@@ -77,12 +78,7 @@ const PersonalInformation = ({ form, setForm, errors, validateField, setErrors, 
           maxLength={form.documentType === "passport" ? 9 : 13}
           className={`w-full border px-3 py-2 rounded ${errors.idNumber ? "border-red-500" : "border-gray-300"}`}
         />
-        {errors.idNumber && <p className="text-red-500 text-sm">{errors.idNumber}</p>}
-        {form.documentType === "passport" && (
-          <p className="text-gray-500 text-xs mt-1">
-            Format: Must be 6–12 letters/numbers, with at least one number
-          </p>
-        )}
+        {errors.idNumber && <p className="text-red-500 text-xs mt-1">{errors.idNumber}</p>}
       </div>
 
       <div>

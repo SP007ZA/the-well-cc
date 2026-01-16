@@ -49,7 +49,7 @@ export default function MembershipCheckout() {
     const newPlan = e.target.value.trim() as keyof typeof planDetails; // trim spaces!
   setSelectedPlan(planDetails[newPlan]);
 
-   try {
+  /* try {
       await updateMembership({
         //@ts-ignore
         variables: { where: {user: {id: data?.profile.user.id}}, data: {memberShipType: newPlan} },
@@ -61,8 +61,24 @@ export default function MembershipCheckout() {
       console.error("Failed to update membership plan:", err);
     } 
 
-    if(selectedPlan.name === "Basic") return window.location.href = `/complete-profile/${user?.id}`
+    if(selectedPlan.name === "Basic") return window.location.href = `/complete-profile/${user?.id}` */
   };  
+
+  const hanldeBasicMembership = async () => {
+
+try {
+      await updateMembership({
+        //@ts-ignore
+        variables: { where: {user: {id: data?.profile.user.id}}, data: {memberShipType: selectedPlan.name} },
+      });
+        return window.location.href = `/complete-profile/${user?.id}`
+      // 🔃 Optionally refetch user profile
+      await refetch();
+    } catch (err) {
+      console.error("Failed to update membership plan:", err);
+    }  
+
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
@@ -167,14 +183,14 @@ export default function MembershipCheckout() {
           {selectedPlan.name === "Basic" ? (<button 
             disabled={isLoading || loading || !data}
             type='button'
-            onClick={() => handlePlanChange}
+            onClick={ hanldeBasicMembership}
             className="w-full bg-rose-700 hover:bg-rose-800 text-white font-semibold py-2 rounded-xl transition-all"
           >
             {loading ? "Loading..." : "Proceed to complete your profile"}
           </button>) : (<button 
             disabled={isLoading || loading || !data}
             type="submit"
-            className="w-full bg-rose-700 hover:bg-rose-800 text-white font-semibold py-2 rounded-xl transition-all"
+            className="w-full bg-rose-700 hover:bg-rose-800  text-white font-semibold py-2 rounded-xl transition-all"
           >
             {loading ? "Processing..." : "Proceed to Payment"}
           </button>) } 

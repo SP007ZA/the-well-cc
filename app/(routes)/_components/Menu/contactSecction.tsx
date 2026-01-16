@@ -1,9 +1,13 @@
+"use client";
 import {
   Mail,
   Phone,
   Globe,
   MapPin,
+  Facebook,
+  X
 } from 'lucide-react'
+
 
 export default function ContactSection() {
   return (
@@ -34,6 +38,35 @@ export default function ContactSection() {
           <span>8th Floor TBE, 96 Rivonia Road, Sandton, 2196</span>
         </li>
       </ul>
+      {/* Contact & Social */}
+<div>
+
+
+  {/* Social Media Icons */}
+  <div className="flex justify-center md:justify-start gap-4 mt-4">
+    <a
+      href="https://www.facebook.com/DWAP947"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Facebook"
+      className="text-gray-600 hover:text-blue-600 transition"
+    >
+      <Facebook size={22} />
+    </a>
+
+   <a
+  href="https://x.com/dwap595?t=jknLK_lvGlXnuq0iYc8QVQ&s=09"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="X (formerly Twitter)"
+  className="text-gray-600 hover:text-black transition"
+>
+  <X size={22} />
+</a>
+
+  </div>
+</div>
+
 
      {false &&  <div className="mt-6">
         <label htmlFor="newsletter" className="block text-sm font-medium text-gray-700 mb-1">

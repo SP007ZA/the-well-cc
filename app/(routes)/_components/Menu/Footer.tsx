@@ -1,32 +1,26 @@
 /* eslint-disable */
 "use client";
 
-import RandomScriptures from '@/app/_components/RandonScripture'
-import Link from 'next/link'
-import React from 'react'
-import ContactSection from './contactSecction'
-import { usePathname } from 'next/navigation'
+import RandomScriptures from '@/app/_components/RandonScripture';
+import Link from 'next/link';
+import ContactSection from './contactSecction';
+import { usePathname, useRouter } from 'next/navigation';
 
 const Footer = () => {
-
   const pathname = usePathname();
-
+  const router = useRouter();
 
   const handleNavClick = (targetId: string) => {
-  if (pathname === "/") {
-    // Already on homepage
-    const el = document.getElementById(targetId);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
+    if (pathname === "/") {
+      const el = document.getElementById(targetId);
+      el?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      router.push(`/#${targetId}`);
     }
-  } else {
+  };
 
-    // Navigate to homepage with hash
-    window.location.href = `/#${targetId}`;
-  }
-};
   return (
-    <footer  className="bg-gray-100 text-gray-700 py-10 mt-20 border-t">
+    <footer className="bg-gray-100 text-gray-700 py-10 mt-20 border-t">
       <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-4 gap-10 text-sm">
 
         {/* About Section */}
@@ -41,12 +35,19 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-bold mb-2 text-rose-700">Quick Links</h3>
           <ul className="space-y-1">
-            <li><Link href="/" className="hover:underline">Home</Link></li>
-            <li><Link href="/about" className="hover:underline">About Us</Link></li>
-            <li><Link href="#how-it-works" className="hover:underline" onClick={() => handleNavClick('how-it-works')}>How It Works</Link></li>
-            <li><Link href="/#membership-plans" className="hover:underline">Membership Plans</Link></li>
-            <li><Link href="/events" className="hover:underline">Events</Link></li>
-            <li><Link href="/login" className="hover:underline">Sign In</Link></li>
+            <li><Link href="/">Home</Link></li>
+            <li><Link href="/about">About Us</Link></li>
+            <li>
+              <button
+                onClick={() => handleNavClick('how-it-works')}
+                className="hover:underline text-left"
+              >
+                How It Works
+              </button>
+            </li>
+            <li><Link href="/#membership-plans">Membership Plans</Link></li>
+            <li><Link href="/events">Events</Link></li>
+            <li><Link href="/login">Sign In</Link></li>
           </ul>
         </div>
 
@@ -54,24 +55,22 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-bold mb-2 text-rose-700">Trust & Safety</h3>
           <ul className="space-y-1">
-            <li><a href="/terms" className="hover:underline">Terms of Service</a></li>
-            <li><a href="/safety" className="hover:underline">Online Dating Safety Tips</a></li>
-         {false &&  <li><a href="/report" className="hover:underline">Report a Concern</a></li>}
+            <li><Link href="/terms">Terms of Service</Link></li>
+            <li><Link href="/safety">Online Dating Safety Tips</Link></li>
           </ul>
         </div>
 
-
         {/* Contact & Social */}
-        <ContactSection/>
+        <ContactSection />
       </div>
 
       {/* Bottom Section */}
       <div className="mt-10 text-center text-xs text-gray-500">
-        <RandomScriptures/>
+        <RandomScriptures />
         <p>&copy; {new Date().getFullYear()} The Well Christian Club. All rights reserved.</p>
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

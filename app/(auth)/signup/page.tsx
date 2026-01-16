@@ -11,6 +11,7 @@ import { Eye, EyeOff, CheckCircle } from "lucide-react";
 import LoadingSpinner from "@/app/_components/LoadingSpinner";
 import { useUser } from "@/lib/utils";
 import { useLazyQuery } from "@apollo/client";
+import LoggedinRedirect from "../components/loggedinRedirect";
 
 
 export default function SignUpPage() {
@@ -116,6 +117,7 @@ useEffect(() => {
   if (loading) return <LoadingSpinner message={"You have successfully signed up!"} />;
 
   return (
+    <LoggedinRedirect>
     <div className="min-h-screen flex items-center justify-center bg-rose-50 p-6">
       <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
         <Link href="/" className="flex items-center space-x-2">
@@ -260,5 +262,6 @@ useEffect(() => {
         )}
       </div>
     </div>
+    </LoggedinRedirect>
   );
 }

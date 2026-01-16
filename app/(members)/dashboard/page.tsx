@@ -7,6 +7,9 @@ import { Card, CardContent } from '@/components/ui/card'
 import {  Bell, CalendarCheck, MessageCircle, User } from 'lucide-react'
 import RandomScriptures from '@/app/_components/RandonScripture'
 import ProtectedRoute from './_components/ProtectedRoute'
+import { useUser } from '@/lib/utils'
+import { useQuery } from '@apollo/client'
+import { GetUserMembershipTypeDocument, GetUserMembershipTypeQuery, GetUserMembershipTypeQueryVariables } from '@/data/gql/graphql'
 
 const features = [
   {
@@ -31,7 +34,7 @@ const features = [
     title: "Join WhatsApp Group",
   icon: <MessageCircle className="text-rose-700 w-6 h-6" />,
   description: "Connect instantly with The Well CC Christian Dating App community on WhatsApp.",
-  link: "https://chat.whatsapp.com/C3IC7oaARM3EnPaB9YPOWU?mode=ac_t", // Replace with your real group link
+  link: "https://chat.whatsapp.com/LdChqvZuLXILM9tx1Zke2K", // Replace with your real group link
   },
  /* {
     title: 'Chats',
@@ -45,9 +48,32 @@ const features = [
 
 const Dashboard = () => {
 
+  const user = useUser()
+
+const {data}= useQuery<GetUserMembershipTypeQuery, GetUserMembershipTypeQueryVariables>(GetUserMembershipTypeDocument, {
+  variables: { where: { id: user?.id } }
+});
+
 
   return (
     <ProtectedRoute>
+       {/* Upgrade banner */}
+      {data?.user.membership.memberShipType === 'Basic' &&  (
+        <div className="rounded-lg border border-amber-300 bg-amber-50 p-4 text-amber-900">
+          <p className="text-sm">
+            🔒 You’re on a <b>Basic</b> plan. Profile photos are blurred and you
+            can’t view details. Upgrade to view member profiles clearly and chat
+            privately with members on WhatsApp.{' '}
+            <Link
+              href={`/dashboard/upgrade/${data?.user?.profile?.id ?? ''}`}
+              className="font-semibold underline text-amber-900 hover:text-amber-700"
+            >
+              Upgrade your subscription
+            </Link>
+            .
+          </p>
+        </div>
+      )}
     <div className="p-6 space-y-6">
       <h1 className="text-3xl font-bold text-rose-700">Welcome to Your Dashboard</h1>
       <p className="text-muted-foreground text-sm max-w-lg">
@@ -56,7 +82,8 @@ const Dashboard = () => {
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-6">
         {features.map((feature) => (
-          <Link href={feature.link} key={feature.title} className="transition hover:scale-[1.02]">
+         data?.user.membership.memberShipType === 'Basic' && feature.title === 'Join WhatsApp Group' ? null : (
+           <Link href={feature.link} key={feature.title} className="transition hover:scale-[1.02]">
             <Card className="p-4 border border-rose-200 shadow-md">
               <CardContent className="flex gap-4 items-center">
                 <div className="p-2 bg-rose-100 rounded-full">
@@ -69,6 +96,7 @@ const Dashboard = () => {
               </CardContent>
             </Card>
           </Link>
+         )
         ))}
       </div>
 

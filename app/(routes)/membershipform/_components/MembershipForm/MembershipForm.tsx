@@ -18,6 +18,7 @@ export default function SignupForm() {
  const [form, setForm] = useState<any>({
   fullName: "",
   surname: "",
+  documentType: "idNumber",
   idNumber: "",
   cell: "",
   kinName:"",
@@ -82,7 +83,7 @@ export default function SignupForm() {
         if (!value.trim()) return "This field is required.";
         break;
       case "idNumber":
-  if (form.documentType === "id") {
+  if (form.documentType === "idNumber") {
     if (!/^[0-9]{13}$/.test(value)) return "ID number must be exactly 13 digits.";
   } else if (form.documentType === "passport") {
     if (!/^(?=.*\d)[A-Z0-9]{6,12}$/i.test(value)) return "Invalid passport number. Must be 6–12 letters/numbers, with at least one number.";
