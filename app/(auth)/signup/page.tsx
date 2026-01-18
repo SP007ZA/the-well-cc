@@ -117,7 +117,7 @@ useEffect(() => {
   if (loading) return <LoadingSpinner message={"You have successfully signed up!"} />;
 
   return (
-    <LoggedinRedirect>
+
     <div className="min-h-screen flex items-center justify-center bg-rose-50 p-6">
       <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
         <Link href="/" className="flex items-center space-x-2">
@@ -262,6 +262,6 @@ useEffect(() => {
         )}
       </div>
     </div>
-    </LoggedinRedirect>
+   
   );
 }
