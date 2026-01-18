@@ -212,7 +212,7 @@ export function AgreementSection({
             <p>If you have any questions about these Terms, please contact us at:</p>
             <p className="text-gray-600">
               The Well Christian Club<br />
-             8th Floor TBE, 96 Rivonia Road,<br />
+             4th Floor TBE, 96 Rivonia Road,<br />
               Sandton, 2196<br />
               Email: admin@thewellcc.co.za
             </p>
