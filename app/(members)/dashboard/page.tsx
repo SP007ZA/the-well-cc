@@ -58,7 +58,7 @@ const {data}= useQuery<GetUserMembershipTypeQuery, GetUserMembershipTypeQueryVar
   return (
     <ProtectedRoute>
        {/* Upgrade banner */}
-      {data?.user.membership.memberShipType === 'Basic' &&  (
+      {data?.user?.membership?.memberShipType === 'Basic' &&  (
         <div className="rounded-lg border border-amber-300 bg-amber-50 p-4 text-amber-900">
           <p className="text-sm">
             🔒 You’re on a <b>Basic</b> plan. Profile photos are blurred and you

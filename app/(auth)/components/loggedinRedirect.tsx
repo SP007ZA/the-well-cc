@@ -7,19 +7,15 @@ import { GetUserAuthDocument, GetUserAuthQuery, GetUserAuthQueryVariables } from
 import LoadingSpinner from '@/app/_components/LoadingSpinner';
 import { useUser } from '@/lib/utils';
 
-export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
+export default function LoggedinRedirect({ children }: { children: React.ReactNode }) {
    const { data, loading } = useQuery<GetUserAuthQuery, GetUserAuthQueryVariables>(GetUserAuthDocument)
  const  user =  useUser()
 
   useEffect(() => {
-    if (data?.authenticatedItem === null) {
-       window.location.href = '/login'
+    if (data?.authenticatedItem !== null) {
+       window.location.href = '/dashboard'
     }  
-    else {
-      
-        window.location.href = '/dashboard'
-      
-    }
+    
   }, [data]);
 
   if (loading) return <LoadingSpinner message={"Checking authentication..."} />

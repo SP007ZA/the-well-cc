@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import KeystoneApolloProvider from "@/data/apollo";
+import { WhatsAppFloat } from "./_components/WhatsAppFloat";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "The Well CC",
-  description: "The Well Christian Club is a faith-based platform helping singles grow spiritually and find meaningful relationships grounded in shared beliefs.",
+  title: "The Well: A Christian Dating Platform for Singles",
+  description: "Join The Well Christian Club, a Christian dating platform for born-again singles seeking meaningful relationships and faith-based connections.",
 };
 
 export default function RootLayout({
@@ -32,6 +33,11 @@ export default function RootLayout({
       >
         <KeystoneApolloProvider>
         {children}
+         <WhatsAppFloat 
+          phone="+27691432863"
+          message="Hi 👋 I’m interested in joining The Well Christian Club and would like more information about membership and upcoming events.
+"
+        />
         </KeystoneApolloProvider>
       </body>
       

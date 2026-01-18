@@ -12,7 +12,7 @@ export default function Home() {
       <section className="bg-gradient-to-r from-rose-100 to-rose-200 py-20 px-6 text-center">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">Find Companionship. Build Faith. Grow Together.</h1>
         <p className="text-lg md:text-xl max-w-2xl mx-auto">
-          Welcome to The Well Christian Club – where like-minded singles connect through shared beliefs, spiritual growth, and meaningful relationships.
+          Welcome to The Well Christian Club, a faith-based dating platform where Christian singles connect through shared beliefs, spiritual growth, and Christ-centered relationships.
         </p>
         <Link href={"/signup"}>
         <Button className="mt-6 text-white bg-rose-700 hover:bg-rose-800 px-6 py-3 rounded-full text-lg">
@@ -37,12 +37,12 @@ export default function Home() {
           </div>
           <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg text-center">
             <Users className="mx-auto mb-4 text-rose-700" size={32} />
-            <h3 className="text-xl font-semibold mb-2">Premarital Counseling</h3>
+            <h3 className="text-xl font-semibold mb-2">Premarital Counseling for Christian Relationships</h3>
             <p>Access spiritual and practical guidance to prepare for a healthy, God-honoring marriage.</p>
           </div>
           <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg text-center">
             <Calendar className="mx-auto mb-4 text-rose-700" size={32} />
-            <h3 className="text-xl font-semibold mb-2">Face to face Social Events</h3>
+            <h3 className="text-xl font-semibold mb-2">Face to Face Social Events</h3>
             <p>Join group activities and gatherings designed to foster community and organic connections.</p>
           </div>
           <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg text-center">
