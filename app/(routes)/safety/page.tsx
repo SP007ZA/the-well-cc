@@ -48,10 +48,11 @@ export default function SafetyTipsPage() {
             <strong className="text-rose-600">Stay Sober & Alert:</strong> Avoid alcohol or anything that could
             impair your judgment when meeting someone for the first time.
           </li>
+         
         </ul>
 
         <div className="mt-8 p-4 bg-rose-100 border border-rose-300 rounded-lg text-sm text-gray-700">
-          When in danger report to SAPS - Dial 112 / 116 from your Mobile phone - Toll free - 0800222777
+          If you ever feel unsafe or threatened, contact your local authorities / SAPS Dial 112 / 116 from your Mobile Phone / Toll Free: 0800222777
         </div>
 
         <div className="mt-10 text-center">
