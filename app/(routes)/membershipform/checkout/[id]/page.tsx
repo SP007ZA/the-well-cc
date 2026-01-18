@@ -32,8 +32,8 @@ export default function MembershipCheckout() {
 
   const planDetails = {
     Basic: { name: "Basic", price:  0 },
-    Premium: { name: "Premium", price: 80 },
-    Platinum: { name: "Platinum", price: 600 },
+    Premium: { name: "Premium", price: 10 },
+    Platinum: { name: "Platinum", price: 10 },
   };
 
   const [selectedPlan, setSelectedPlan] = useState(
