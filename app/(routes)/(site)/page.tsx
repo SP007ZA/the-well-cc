@@ -32,7 +32,7 @@ export default function Home() {
           </div>
           <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg text-center">
             <Church className="mx-auto mb-4 text-rose-700" size={32} />
-            <h3 className="text-xl font-semibold mb-2">Faith-Based Dating</h3>
+            <h3 className="text-xl font-semibold mb-2">Faith-Based Courting</h3>
             <p>Connect with Christians who share your love for God and your desire to build a Christ-centered relationship.</p>
           </div>
           <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg text-center">
@@ -42,7 +42,7 @@ export default function Home() {
           </div>
           <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg text-center">
             <Calendar className="mx-auto mb-4 text-rose-700" size={32} />
-            <h3 className="text-xl font-semibold mb-2">Social Events</h3>
+            <h3 className="text-xl font-semibold mb-2">Face to face Social Events</h3>
             <p>Join group activities and gatherings designed to foster community and organic connections.</p>
           </div>
           <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg text-center">
@@ -83,7 +83,7 @@ export default function Home() {
 
           <div className="p-6 bg-rose-50 rounded-xl shadow text-center">
             <Star className="mx-auto text-rose-700 mb-4" size={36} />
-            <h3 className="text-xl font-semibold mb-2">4. Build Lasting Love</h3>
+            <h3 className="text-xl font-semibold mb-2">4. Building Lasting Companionship</h3>
             <p>Whether its friendship or forever, we guide you to build strong, faith-driven relationships that glorify God.</p>
           </div>
         </div>

@@ -123,7 +123,7 @@ if(loading) return <><LoadingSpinner message="Please wait to be redirected..."/>
           </div>
         )}
       </div>
-     <span className=" italic text-md  text-rose-700">By signing this form I declare with my mouth that Jesus Christ is the Son of the living God, who died on the cross for my sins and the sins of the world, and that GOD raised Him from the dead on the third day. Romans 10:9-10</span>
+     <span className=" italic text-md  text-rose-700">By signing this form I declare with my mouth and believe in my heart that Jesus Christ is the Son of the living God, who died on the cross for my sins and the sins of the world, and that GOD raised Him from the dead on the third day. Romans 10:9-10</span>
  
       {/* Signature Canvas */}
       <div className="space-y-2">

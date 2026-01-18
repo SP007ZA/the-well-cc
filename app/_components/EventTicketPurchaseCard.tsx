@@ -270,7 +270,7 @@ myData["item_description"] = {description};
       <div className="text-xs text-gray-500 border-t pt-4">
         <h2 className="font-semibold text-sm mb-2">Disclaimer</h2>
         <p>
-          By purchasing a ticket, you agree to our event policy. Tickets are non-refundable except if the event is canceled.
+          By purchasing a ticket, you agree to our event policy. Tickets are non-refundable except if the event is canceled, unless otherwise stated.
           Please ensure your contact details are correct to receive your digital ticket.
         </p>
       </div>

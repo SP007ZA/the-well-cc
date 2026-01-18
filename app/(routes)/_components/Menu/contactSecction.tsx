@@ -35,7 +35,7 @@ export default function ContactSection() {
         </li>
         <li className="flex items-start">
           <MapPin className="w-5 h-5 text-rose-600 mt-1 mr-3" />
-          <span>8th Floor TBE, 96 Rivonia Road, Sandton, 2196</span>
+          <span>4th Floor TBE, 96 Rivonia Road, Sandton, 2196</span>
         </li>
       </ul>
       {/* Contact & Social */}

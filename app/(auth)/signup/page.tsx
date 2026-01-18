@@ -45,7 +45,7 @@ useEffect(() => {
 
   const validatePassword = (pwd: string) => {
     return {
-      length: pwd.length >= 10,
+      length: pwd.length >= 8,
       upper: /[A-Z]/.test(pwd),
       lower: /[a-z]/.test(pwd),
       number: /[0-9]/.test(pwd),
@@ -191,7 +191,7 @@ useEffect(() => {
 {showPasswordRules && (
   <ul className="text-xs mt-2 text-gray-600 list-disc pl-5">
     <li className={pwdRules.length ? "text-green-600" : "text-red-500"}>
-      At least 12 characters
+      At least 8 characters
     </li>
     <li className={pwdRules.upper ? "text-green-600" : "text-red-500"}>
       At least one uppercase letter
