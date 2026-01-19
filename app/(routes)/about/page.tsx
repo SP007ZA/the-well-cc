@@ -4,10 +4,12 @@
 import { HeartHandshake, Users, CalendarHeart, BookOpenText } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import ScrollToTop from '../_components/Menu/ScrollToTop'
 
 export default function AboutPage() {
   return (
     <div className="max-w-5xl mx-auto px-4 py-12">
+        <ScrollToTop />
       <h1 className="text-4xl font-bold text-rose-700 mb-4">About Us</h1>
       <p className="text-lg text-muted-foreground mb-6">
         Welcome to <strong className="text-rose-700">The Well CC</strong> — a community where faith, love, and meaningful connection flourish.

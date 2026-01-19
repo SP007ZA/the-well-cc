@@ -5,11 +5,13 @@ import UpcomingEvents from "@/app/(members)/dashboard/events/_components/Upcomin
 import { Button } from "@/components/ui/button";
 import { Heart, Users, Calendar, MessageCircle, Church, Star, HeartHandshake } from "lucide-react";
 import Link from "next/link";
+import ScrollToTop from "../_components/Menu/ScrollToTop";
 export default function Home() {
   return (
-    <div className="bg-gray-50  text-gray-800">
+    <div  className="bg-gray-50  text-gray-800">
+      
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-rose-100 to-rose-200 py-20 px-6 text-center">
+      <section id="Home" className="bg-gradient-to-r from-rose-100 to-rose-200 py-20 px-6 text-center">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">Find Companionship. Build Faith. Grow Together.</h1>
         <p className="text-lg md:text-xl max-w-2xl mx-auto">
           Welcome to The Well Christian Club, a faith-based dating platform where Christian singles connect through shared beliefs, spiritual growth, and Christ-centered relationships.

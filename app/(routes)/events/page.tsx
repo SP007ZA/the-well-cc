@@ -6,6 +6,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { EventGallery } from "./_components/EventGallery";
 
 import UpcomingEvents from "@/app/(members)/dashboard/events/_components/UpcomingEvents";
+import { Scroll } from "lucide-react";
+import ScrollToTop from "../_components/Menu/ScrollToTop";
 
 
 export default function EventsPage() {
@@ -23,7 +25,9 @@ export default function EventsPage() {
   
 
   return (
+   
     <div className="px-6 py-16 bg-white">
+       <ScrollToTop />
       <div className="max-w-7xl mx-auto">
         <h1 className="text-4xl font-bold text-center text-rose-700 mb-10">Events</h1>
 

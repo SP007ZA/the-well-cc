@@ -5,17 +5,20 @@ import RandomScriptures from '@/app/_components/RandonScripture';
 import Link from 'next/link';
 import ContactSection from './contactSecction';
 import { usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const Footer = () => {
   const pathname = usePathname();
   const router = useRouter();
+
 
   const handleNavClick = (targetId: string) => {
     if (pathname === "/") {
       const el = document.getElementById(targetId);
       el?.scrollIntoView({ behavior: "smooth" });
     } else {
-      router.push(`/#${targetId}`);
+      //router.push(`/#${targetId}`);
+      //window.scrollTo(0, 0);
     }
   };
 
@@ -35,16 +38,9 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-bold mb-2 text-rose-700">Quick Links</h3>
           <ul className="space-y-1">
-            <li><Link href="/">Home</Link></li>
+            <li><Link href="/#home">Home</Link></li>
             <li><Link href="/about">About Us</Link></li>
-            <li>
-              <button
-                onClick={() => handleNavClick('how-it-works')}
-                className="hover:underline text-left"
-              >
-                How It Works
-              </button>
-            </li>
+            <li><Link href="/#how-it-works">How It Works</Link></li>
             <li><Link href="/#membership-plans">Membership Plans</Link></li>
             <li><Link href="/events">Events</Link></li>
             <li><Link href="/login">Sign In</Link></li>

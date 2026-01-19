@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import KeystoneApolloProvider from "@/data/apollo";
 import { WhatsAppFloat } from "./_components/WhatsAppFloat";
+import ScrollToTop from "./(routes)/_components/Menu/ScrollToTop";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +32,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased scroll-smooth`} 
       >
+       
         <KeystoneApolloProvider>
         {children}
          <WhatsAppFloat 
