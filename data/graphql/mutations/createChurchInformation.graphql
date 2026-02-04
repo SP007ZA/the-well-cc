@@ -1,0 +1,5 @@
+mutation CreateChurchInfomation($data: ChurchInfomationCreateInput!) {
+  createChurchInfomation(data: $data) {
+    id
+  }
+}

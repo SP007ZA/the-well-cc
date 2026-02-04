@@ -1,9 +1,16 @@
 /* eslint-disable */
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import React from 'react'
+import { UpdateNextOfKinDocument, UpdateNextOfKinMutation, UpdateNextOfKinMutationVariables } from '@/data/gql/graphql';
+import { useUser } from '@/lib/utils';
+import { useMutation } from '@apollo/client';
+
 
 const NextOfKin = ({form, setForm,errors, validateField, setErrors, setSection}:any) => {
+
+   const user = useUser();
+
+  const [updateNextOfKin] = useMutation<UpdateNextOfKinMutation, UpdateNextOfKinMutationVariables>(UpdateNextOfKinDocument);
 
          const handleChange = (field: string, value: string) => {
     setForm({ ...form, [field]: value });
@@ -17,8 +24,27 @@ const NextOfKin = ({form, setForm,errors, validateField, setErrors, setSection}:
 
   };
 
+       const handleNext = () => {
+    //Update NextOfKin Information
+    updateNextOfKin({variables: {where:{member:{user:{id: user?.id}}}, data:{name: form.kinName, relationship: form.kinRelation, email: form.kinEmail, cellNumber: parseInt(form.kinCell || "0")}}}).then((response) => {
+      //console.log("Membership Information Updated:", response.data);
+
+      setForm({ ...form,
+        name: response.data?.updateNextOfKin?.name || "",
+        relationship: response.data?.updateNextOfKin?.relationship || "",      
+        email : response.data?.updateNextOfKin?.email || "",
+        cellNumber: response.data?.updateNextOfKin?.cellNumber || ""
+      });
+
+    }).catch((error) => {
+      //console.error("Error updating Membership Information:", error);
+    } );   
+    
+     setSection((prev:any) => prev + 1)
+
+  }
+
  
-const next:any = () => setSection((prev:any) => prev + 1);
 const prev:any = () => {setSection((prev:any) => prev - 1); setErrors({})};
 
   return (
@@ -54,7 +80,7 @@ const prev:any = () => {setSection((prev:any) => prev - 1); setErrors({})};
            
             <div className="flex justify-between">
               <Button className="bg-rose-700 hover:bg-rose-800 text-white" type="button" onClick={prev}>Back</Button>
-               <Button  className="bg-rose-700 hover:bg-rose-800 text-white" type="button" onClick={next}>Next</Button>
+               <Button  className="bg-rose-700 hover:bg-rose-800 text-white" type="button" onClick={handleNext}>Next</Button>
             
             </div>
           </>

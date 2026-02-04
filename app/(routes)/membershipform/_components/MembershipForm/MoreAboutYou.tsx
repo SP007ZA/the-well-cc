@@ -1,8 +1,12 @@
 /* eslint-disable */
 import { Button } from '@/components/ui/button'
-import React from 'react'
+import { UpdateUserMembershipDocument, UpdateUserMembershipMutation, UpdateUserMembershipMutationVariables } from '@/data/gql/graphql';
+import { useUser } from '@/lib/utils';
+import { useMutation } from '@apollo/client';
 
 const MoreAboutYou = ({form, setForm, setErrors, setSection}:any) => {
+  const user = useUser();
+    const [updateMembership] = useMutation<UpdateUserMembershipMutation, UpdateUserMembershipMutationVariables>(UpdateUserMembershipDocument);
 
   const handleChange = (field: string, value: string | boolean) => {
     setForm({ ...form, [field]: value });
@@ -10,29 +14,48 @@ const MoreAboutYou = ({form, setForm, setErrors, setSection}:any) => {
 
   };
 
+     const handleNext = () => {
+    //Update Church Information
+    updateMembership({variables: {where:{user:{id: user?.id}}, data:{kids: form.kids, race: form.race, wouldYouDateOutSideOfYourRace: form.dateOutsideRace ==="yes" ? true : false, maritalStatus: form.maritalStatus}}}).then((response) => {
+      //console.log("Membership Information Updated:", response.data);
+
+      setForm({ ...form,
+        kids: response.data?.updateMembership?.kids || "",
+        race: response.data?.updateMembership?.race || "",      
+        dateOutsideRace: response.data?.updateMembership?.wouldYouDateOutSideOfYourRace || "",
+        maritalStatus: response.data?.updateMembership?.maritalStatus || ""
+      });
+
+    }).catch((error) => {
+      //console.error("Error updating Membership Information:", error);
+    } );   
+    
+     setSection((prev:any) => prev + 1)
+
+  }
+
  
-const next:any = () => setSection((prev:any) => prev + 1);
 const prev:any = () => setSection((prev:any) => prev - 1);
 
 const isFormValid =
-  form.maritialStatus?.trim() &&
-  form.kids?.trim() &&
-  form.race?.trim() &&
- form.dateOutsideRace?.trim();
+  form?.maritalStatus?.trim() &&
+  form?.kids?.trim() &&
+  form?.race?.trim() &&
+ form?.dateOutsideRace?.trim();
 
 
   return (
       <>
             <label className="block">Marital Status:</label>
       <div className="flex gap-4 flex-wrap">
-        {["single", "divorced", "widowed"].map((status) => (
+        {["single", "single/never married", "divorced", "widowed"].map((status) => (
           <label key={status}>
             <input
               type="radio"
-              name="maritialStatus"
+              name="maritalStatus"
               value={status}
-              checked={form.maritialStatus === status}
-              onChange={(e) => handleChange("maritialStatus", e.target.value)}
+              checked={form.maritalStatus === status}
+              onChange={(e) => handleChange("maritalStatus", e.target.value)}
             />{" "}
             {status.charAt(0).toUpperCase() + status.slice(1)}
           </label>
@@ -40,7 +63,7 @@ const isFormValid =
       </div>
               <label className="block mt-4">Kids:</label>
       <div className="flex gap-4 flex-wrap">
-        {["have kids", "do not have", "do not want"].map((option) => (
+        {["have kids", "do not have", "do not want", "maybe have"].map((option) => (
           <label key={option}>
             <input
               type="radio"
@@ -49,7 +72,7 @@ const isFormValid =
               checked={form.kids === option}
               onChange={(e) => handleChange("kids", e.target.value)}
             />{" "}
-            {option}
+            {option.charAt(0).toUpperCase() + option.slice(1)}
           </label>
         ))}
       </div>
@@ -82,7 +105,7 @@ const isFormValid =
               <Button
                 className="bg-rose-700 hover:bg-rose-800 text-white disabled:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-70"
                 type="button"
-                onClick={next}
+                onClick={handleNext}
                 disabled={!isFormValid}
               >
                 Next

@@ -1,8 +1,26 @@
 /* eslint-disable */
+import LoadingSpinner from '@/app/_components/LoadingSpinner';
 import { Button } from '@/components/ui/button';
-import React from 'react'
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { CreateChurchInfomationDocument, CreateChurchInfomationMutation, CreateChurchInfomationMutationVariables, CreateMembershipDocument, CreateMembershipMutation, CreateMembershipMutationVariables, CreateNextOfKinDocument, CreateNextOfKinMutation, CreateNextOfKinMutationVariables, CreateUserProfileDocument, CreateUserProfileMutation, CreateUserProfileMutationVariables, UpdateUserPersonalInformationDocument, UpdateUserPersonalInformationMutation, UpdateUserPersonalInformationMutationVariables } from '@/data/gql/graphql';
+import { getAgeFromId, getGender, useUser } from '@/lib/utils';
+import { useMutation } from '@apollo/client';
+import { ImageIcon } from 'lucide-react';
+import { useState } from 'react';
 
-const PersonalInformation = ({ form, setForm, errors, validateField, setErrors, setSection }: any) => {
+const PersonalInformation = ({ form, setForm, previewUrl, setProfileID, setPreviewUrl, errors, validateField, setErrors, setSection, profileID }: any) => {
+const user = useUser();
+const [photo, setPhoto] = useState<File | null>(null)
+const [createProfile, {loading: createProfileLoading}] = useMutation<CreateUserProfileMutation, CreateUserProfileMutationVariables>(CreateUserProfileDocument) 
+const [createMembership, {loading: createMembershipLoading}] = useMutation<CreateMembershipMutation, CreateMembershipMutationVariables>(CreateMembershipDocument);
+const [createChurchInfomation, {loading: createChurchLoading}] = useMutation<CreateChurchInfomationMutation, CreateChurchInfomationMutationVariables>(CreateChurchInfomationDocument);  
+const [createNextOfKin, {loading: createNextOfKinLoading}] = useMutation<CreateNextOfKinMutation, CreateNextOfKinMutationVariables>(CreateNextOfKinDocument);
+const [updateProfile] = useMutation<UpdateUserPersonalInformationMutation, UpdateUserPersonalInformationMutationVariables>(UpdateUserPersonalInformationDocument);
+
+//console.log("Is Profile ID:", profileID);
+
+
   const handleChange = (field: string, value: string) => {
     setForm({ ...form, [field]: value });
     setErrors((prev: any) => ({ ...prev, [field]: "" }));
@@ -13,18 +31,103 @@ const PersonalInformation = ({ form, setForm, errors, validateField, setErrors, 
     setErrors((prev: any) => ({ ...prev, [field]: error }));
   };
 
-  const next: any = () => setSection((prev: any) => prev + 1);
+   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setPhoto(file)
+      setPreviewUrl(URL.createObjectURL(file))
+      
+    }
+  }
+
+  const handleNext = () => {
+
+    if(!!profileID) {
+      //console.log("Profile exists");
+        // Update Profile
+        updateProfile({
+        variables: { where:{ user:{ id:user?.id!}}, 
+          data: {firstName: form.fullName, lastName: form.surname, documentType: form.documentType, age: form.documentType === "South African ID" ? getAgeFromId(form.idNumber) : 0, idNumber: parseFloat(form.idNumber), gender: form.documentType === "South African ID" ? getGender(form.idNumber) : "Male", cellNumber: parseInt(form.cell), user: {connect: {id: user?.id}}}, }
+        }).then((response) => {
+          //console.log("Profile Updated:", response.data);
+        }).catch((error) => {
+          //console.error("Error updating profile:", error); 
+        });
+    }
+
+    // Update ID-Image => revisted later
+    
+
+    if(!!profileID === false) {
+      //console.log("No Profile"); 
+       // Create Profile 
+      createProfile({
+        variables: {
+          data: {firstName: form.fullName, lastName: form.surname, documentType: form.documentType, age: form.documentType === "South African ID" ? getAgeFromId(form.idNumber) : 0, idNumber: parseFloat(form.idNumber), gender: form.documentType === "South African ID" ? getGender(form.idNumber) : "Male", cellNumber: parseInt(form.cell), idPhoto:{create:{image: photo}}, address:{create:{fullAddress: form.fullAddress}}, user: {connect: {id: user?.id}}}, }
+        }).then((response) => {
+          //onsole.log("Profile Created:", response.data);
+            setProfileID(response.data?.createProfile?.id);
+        // CreateMembership
+        createMembership({
+          variables:{
+            data: {user: {connect: {id: user?.id}}}
+          }
+        }).then((response) => {
+          //console.log("Membership Created:", response.data);
+          //Create Church Information with Membership ID
+          createChurchInfomation({
+            variables:{
+              data:{member:{connect:{id: response.data?.createMembership?.id}}}   
+            }
+            
+          }).then((response) => {
+            //console.log("Church Information Created:", response.data);    
+
+          });
+
+        //Create Next Of Kin with Membership ID
+        createNextOfKin({
+            variables:{
+              data:{member:{connect:{id: response.data?.createMembership?.id}}}   
+            }
+            
+          }).then((response) => {
+            //console.log("Next Of Kin Created:", response.data);    
+
+          });
+
+          
+        }).catch((error) => {
+          //console.error("Error creating membership:", error); 
+        });
+
+
+        }).catch((error) => {
+          //console.error("Error creating profile:", error); 
+        }); 
+
+
+    } 
+  setSection((prev: any) => prev + 1);
+  }
+
+  
 
   const isFormValid =
     form.fullName &&
     form.surname &&
     form.idNumber &&
     form.cell &&
+    previewUrl !== null &&
     !errors.fullName &&
     !errors.surname &&
     !errors.idNumber &&
     !errors.cell;
 
+
+    if(createChurchLoading || createProfileLoading || createMembershipLoading || createNextOfKinLoading) {
+      return <LoadingSpinner message="Loading..." />;
+    } 
 
   return (
     <>
@@ -57,25 +160,25 @@ const PersonalInformation = ({ form, setForm, errors, validateField, setErrors, 
       <div className="mb-2">
         <label className="block font-medium mb-1">Select Document Type</label>
         <select
-          value={form.documentType || "idNumber"}
+          value={form.documentType || "South African ID"}
           onChange={(e) => handleChange("documentType", e.target.value)}
           className="w-full border px-3 py-2 rounded border-gray-300"
         >
-          <option value="idNumber">South African ID</option>
-          <option value="passport">Passport</option>
+          <option value="South African ID">South African ID</option>
+          <option value="Passport ID">Passport ID</option>
         </select>
       </div>
 
       <div>
         <label className="block font-medium mb-1">
-          {form.documentType === "passport" ? "Passport Number" : "ID Number"}
+          {form.documentType === "Passport ID" ? "Passport ID" : "South African ID"}
         </label>
         <input
           type="text"
           value={form.idNumber}
           onChange={(e) => handleChange("idNumber", e.target.value.toUpperCase())}
           onBlur={() => handleBlur("idNumber")}
-          maxLength={form.documentType === "passport" ? 9 : 13}
+          maxLength={form.documentType === "Passport ID" ? 9 : 13}
           className={`w-full border px-3 py-2 rounded ${errors.idNumber ? "border-red-500" : "border-gray-300"}`}
         />
         {errors.idNumber && <p className="text-red-500 text-xs mt-1">{errors.idNumber}</p>}
@@ -97,13 +200,38 @@ const PersonalInformation = ({ form, setForm, errors, validateField, setErrors, 
         </div>
         {errors.cell && <p className="text-red-500 text-sm mt-1">{errors.cell}</p>}
       </div>
+       {/* Photo Upload */}
+      <div className="space-y-2">
+        {form.documentType === "South African ID" ? (
+          <Label className="font-medium">Upload South African ID Photo</Label>
+        ) : (
+          <Label className="font-medium"> Passport ID Photo</Label>
+        ) }
+        <div className="flex items-center space-x-4">
+          <Input id="photo" type="file" accept="image/*" onChange={handlePhotoChange} />
+        </div>
+        {previewUrl ? (
+          <div className="mt-4">
+            <img
+              src={previewUrl}
+              alt="Preview"
+              className="rounded-lg border w-40 h-40 object-cover"
+            />
+          </div>
+        ) : (
+          <div className="mt-2 text-sm text-muted-foreground flex items-center gap-2">
+            <ImageIcon className="w-4 h-4" />
+            No image selected
+          </div>
+        )}
+      </div>
 
       <div className="flex justify-between mt-4">
         <Button
           className="bg-rose-700 hover:bg-rose-800 text-white disabled:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-70"
           type="button"
-          onClick={next}
-          disabled={!isFormValid}
+          onClick={handleNext}
+          disabled={!isFormValid || createProfileLoading || createMembershipLoading || createChurchLoading || createNextOfKinLoading}
         >
           Next
         </Button>

@@ -2,22 +2,16 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import React, { useEffect, useState } from 'react'
-import { format } from "date-fns"
-import { Calendar as CalendarIcon } from "lucide-react"
-import { Calendar } from "@/components/ui/calendar"
-import {
-Popover,
-PopoverContent,
-PopoverTrigger,
-} from "@/components/ui/popover"
+import  { useState } from 'react'
+import { UpdateChurchInfomationDocument, UpdateChurchInfomationMutation, UpdateChurchInfomationMutationVariables } from '@/data/gql/graphql'
+import { useMutation } from '@apollo/client'
+import { useUser } from '@/lib/utils'
 
 
-const ChurchInfomation = ({form, setForm,errors, validateField, setErrors, setSection, date, setDate}:any) => {
+const ChurchInfomation = ({form, setForm,errors, validateField, setErrors, setSection,}:any) => {
+const user = useUser();
+  const [updateChurchInfo, {loading}] = useMutation<UpdateChurchInfomationMutation, UpdateChurchInfomationMutationVariables>(UpdateChurchInfomationDocument );
 
-  
-
-    const [month, setMonth] = useState<Date>(new Date())
 
            const handleChange = (field: string, value: string | boolean) => {
            
@@ -32,70 +26,37 @@ const ChurchInfomation = ({form, setForm,errors, validateField, setErrors, setSe
 
   };
 
- useEffect(() => {
-setForm({ ...form, dateOfSalvation: `${date}` });
- },[date])
+ const handleNext = () => {
+    //Update Church Information
+    updateChurchInfo({variables: {where:{member:{user:{id: user?.id}}}, data:{pastorsName: form.pastorsName, churchNameAndAddress: form.churchNameAddress, churchContactNumber: parseInt(form.churchContact), salvationTestimony: form.salvationTestimony}}}).then((response) => {
+      console.log("Church Information Updated:", response.data);
+
+      setForm({ ...form,
+        pastorsName: response.data?.updateChurchInfomation?.pastorsName || "",
+        churchNameAddress: response.data?.updateChurchInfomation?.churchNameAndAddress || "",
+        churchContact: response.data?.updateChurchInfomation?.churchContactNumber ? response.data?.updateChurchInfomation?.churchContactNumber.toString() : "",
+        salvationTestimony: response.data?.updateChurchInfomation?.salvationTestimony || ""
+      });
+
+    }).catch((error) => {
+      console.error("Error updating Church Information:", error);
+    } );   
+    
+     setSection((prev:any) => prev + 1)
+
+  }
 
 
-
- function CustomCaption({
-  displayMonth,
-  onChange,
-}: {
-  displayMonth: Date
-  onChange: (newMonth: Date) => void
-}) {
-  const currentYear = new Date().getFullYear()
-  const years = Array.from({ length: 100 }, (_, i) => currentYear - i)
-  const months = Array.from({ length: 12 }, (_, i) =>
-    new Date(0, i).toLocaleString("default", { month: "long" })
-  )
-
-  return (
-    <div className="flex justify-between px-2 py-1">
-      <select
-        className="text-sm bg-transparent"
-        value={displayMonth.getFullYear()}
-        onChange={(e) => {
-          const newMonth = new Date(displayMonth)
-          newMonth.setFullYear(Number(e.target.value))
-          onChange(newMonth)
-        }}
-      >
-        {years.map((year) => (
-          <option key={year}>{year}</option>
-        ))}
-      </select>
-      <select
-        className="text-sm bg-transparent"
-        value={displayMonth.getMonth()}
-        onChange={(e) => {
-          const newMonth = new Date(displayMonth)
-          newMonth.setMonth(Number(e.target.value))
-          onChange(newMonth)
-        }}
-      >
-        {months.map((month, index) => (
-          <option key={month} value={index}>
-            {month}
-          </option>
-        ))}
-      </select>
-    </div>
-  )
-}
-
-const next:any = () => setSection((prev:any) => prev + 1);
 const prev:any = () => {setSection((prev:any) => prev - 1); setErrors({})};
 
   return (
      <>
      <label className="block font-semibold text-center mb-2">Church Information</label>
        <label className="block font-medium mb-1">Pastor's Name</label>
-            <Input placeholder="Pastor's Name" name="pastorsName" className={errors.pastorsName ? "border-red-500" : ""} onChange={(e) => handleChange("pastorsName", e.target.value)} onBlur={() => handleBlur("pastorsName")}  />
+            <Input placeholder="Pastor's Name" name="pastorsName" className={errors.pastorsName ? "border-red-500" : ""} value={form.pastorsName} onChange={(e) => handleChange("pastorsName", e.target.value)} onBlur={() => handleBlur("pastorsName")}  />
               {errors.pastorsName && <p className="text-red-500 text-sm mt-1">{errors.pastorsName}</p>}
             <label className="block font-medium mb-1">Church Name & Address</label>
-            <Textarea placeholder="Church Name & Address" name="churchNameAddress" className={errors.churchNameAddress ? "border-red-500" : ""} onChange={(e) => handleChange("churchNameAddress", e.target.value)} onBlur={() => handleBlur("churchNameAddress")}  />
+            <Textarea placeholder="Church Name & Address" name="churchNameAddress" className={errors.churchNameAddress ? "border-red-500" : ""} value={form.churchNameAddress} onChange={(e) => handleChange("churchNameAddress", e.target.value)} onBlur={() => handleBlur("churchNameAddress")}  />
                 {errors.churchNameAddress && <p className="text-red-500 text-sm mt-1">{errors.churchNameAddress}</p>}
             <label className="block font-medium mb-1">Church Contact Number</label>
               <div className="relative">
@@ -113,43 +74,13 @@ const prev:any = () => {setSection((prev:any) => prev - 1); setErrors({})};
           />
         </div>
         {errors.churchContact && <p className="text-red-500 text-sm mt-1">{errors.churchContact}</p>}
-     <label className="block font-medium mb-1">Date Of Salvation</label>
-            <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            className={`w-full justify-start text-left font-normal ${
-              !date ? "text-muted-foreground" : ""
-            }`}
-          >
-            <CalendarIcon className="mr-2 h-4 w-4" />
-            {date ? format(date, "PPP") : <span>Select a date</span>}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
-          <Calendar
-            mode="single"
-            selected={date}
-            onSelect={(selectedDate) => {
-                if (selectedDate) {
-            setDate(selectedDate);
-            }
-            }}
-            month={month}
-            onMonthChange={setMonth}
-            components={{
-              Caption: () => (
-                <CustomCaption displayMonth={month} onChange={setMonth} />
-              ),
-            }}
-          />
-        </PopoverContent>
-      </Popover>
-    
-          
+   <label className="block font-medium mb-1"> Salvation testimony: How did you get saved?</label>
+            <Textarea placeholder="Salvation testimony" name="salvationTestimony" className={errors.salvationTestimony ? "border-red-500" : ""} value={form.salvationTestimony} onChange={(e) => handleChange("salvationTestimony", e.target.value)} onBlur={() => handleBlur("salvationTestimony")}  />
+                {errors.salvationTestimony && <p className="text-red-500 text-sm mt-1">{errors.salvationTestimony}</p>}
+
             <div className="flex justify-between">
               <Button className="bg-rose-700 hover:bg-rose-800 text-white" type="button" onClick={prev}>Back</Button>
-              <Button className="bg-rose-700 hover:bg-rose-800 text-white" type="button" onClick={next}>Next</Button>
+              <Button className="bg-rose-700 hover:bg-rose-800 text-white" type="button" onClick={handleNext}>Next</Button>
             </div>
           </>
   )

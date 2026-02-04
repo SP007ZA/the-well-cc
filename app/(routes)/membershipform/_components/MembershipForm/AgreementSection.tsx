@@ -6,7 +6,9 @@ import React, { useState } from "react";
 
 export function AgreementSection({
   agreed,
-  onChange,
+  onChangeAgreed,
+  popiAgreed,
+  onChangePopiAgreed,
   isOpen,
   setIsOpen,
 }: any) {
@@ -50,9 +52,15 @@ export function AgreementSection({
       </ul>
 
       <div className="flex items-center space-x-2">
-        <Checkbox id="agreement" checked={agreed} onCheckedChange={onChange} />
+        <Checkbox id="agreement" checked={agreed} onCheckedChange={onChangeAgreed} />
         <Label htmlFor="agreement" className="text-sm">
           I have read and understood the Constitution and Terms and Conditions
+        </Label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox id="agreement" checked={popiAgreed} onCheckedChange={onChangePopiAgreed} />
+        <Label htmlFor="agreement" className="text-sm">
+          I hereby consent in terms of section 18 of POPIA to the processing of my personal information
         </Label>
       </div>
 

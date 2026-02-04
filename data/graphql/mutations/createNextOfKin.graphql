@@ -1,0 +1,5 @@
+mutation CreateNextOfKin($data: NextOfKinCreateInput!) {
+  createNextOfKin(data: $data) {
+  id  
+  }
+}

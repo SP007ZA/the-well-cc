@@ -3,12 +3,13 @@ query Profile($where: ProfileWhereUniqueInput!) {
     id
     firstName
     lastName
+     cellNumber
     user {
       id
       email
       membership {
         id
-        cellNumber
+       
       }
     }
   }

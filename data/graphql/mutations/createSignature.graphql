@@ -1,0 +1,5 @@
+mutation CreateSignature($data: SignatureCreateInput!) {
+  createSignature(data: $data) {
+  id  
+  }
+}

@@ -3,10 +3,8 @@ query GetUserPaymentInput($where: UserWhereUniqueInput!) {
     profile {
       firstName
       lastName
-    }
-    email
-    membership {
       cellNumber
     }
+    email
   }
 }

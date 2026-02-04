@@ -18,8 +18,7 @@ query GetMemberUsers($where: UserWhereInput!  $take: Int
         }
       }
       address {
-        city
-        province
+        fullAddress
       }
     } membership {
       memberShipType

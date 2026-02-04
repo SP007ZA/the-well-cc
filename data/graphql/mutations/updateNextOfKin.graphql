@@ -1,0 +1,9 @@
+mutation UpdateNextOfKin($where: NextOfKinWhereUniqueInput!, $data: NextOfKinUpdateInput!) {
+  updateNextOfKin(where: $where, data: $data) {
+  id  
+  name
+  cellNumber
+  relationship
+  email
+  }
+}

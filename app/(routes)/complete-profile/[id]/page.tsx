@@ -16,8 +16,8 @@ export default function CompleteProfileForm({ params }: { params: Promise<{ id: 
     const { id } = use(params) 
  const user = useUser()
 
-    const [completeProfile] = useMutation<CompleteProfileMutation, CompleteProfileMutationVariables>(CompleteProfileDocument)
-    const [updateisProfile] = useMutation<UpdateUserIsProfileMutation, UpdateUserIsProfileMutationVariables>(UpdateUserIsProfileDocument)
+    const [completeProfile, {loading: completeProfileLoading}] = useMutation<CompleteProfileMutation, CompleteProfileMutationVariables>(CompleteProfileDocument)
+    const [updateisProfile, {loading: updateIsProfileLoading}] = useMutation<UpdateUserIsProfileMutation, UpdateUserIsProfileMutationVariables>(UpdateUserIsProfileDocument)
 
   const {data} = useQuery<FindUserProfileIdQuery, FindUserProfileIdQueryVariables>(FindUserProfileIdDocument, {variables: {where:{user:{id: {equals:id}}}}})
 
@@ -89,7 +89,7 @@ export default function CompleteProfileForm({ params }: { params: Promise<{ id: 
   }
   const onSubmit = async (data: any) => {
       //console.log('Form data:', data)
-      const {bio, age, gender, education, occupation, interests, lookingFor, photos} = data
+      const {bio, education, occupation, interests, lookingFor, photos} = data
  setSubmitting(true)
       
    
@@ -107,7 +107,7 @@ export default function CompleteProfileForm({ params }: { params: Promise<{ id: 
     //await new Promise((r) => setTimeout(r, 1000))
       
   
-   await completeProfile({variables: {where: {id: profileId},data:{bio, age: Number(age), gender, education, occupation, interests, lookingFor:lookingFor[0], photos: {create: images}}}}).then(async (response) => {
+   await completeProfile({variables: {where: {id: profileId},data:{bio, education, occupation, interests, lookingFor:lookingFor[0], photos: {create: images}}}}).then(async (response) => {
   console.log('Mutation successful:', response.data);
   await updateisProfile({variables:{where: {id: user.id}, data:{isProfile:true}}})
 
@@ -128,9 +128,6 @@ setRedirectTimer(true)
 });
     
    
-    
-
-    //alert('Profile submitted!')
     
   } 
 
@@ -155,31 +152,6 @@ setRedirectTimer(true)
         {errors.bio && <p className="text-rose-700 text-sm">Bio is required.</p>}
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block font-medium text-gray-700">Age</label>
-          <input
-            type="number"
-            {...register('age', { required: true, min: 18 })}
-            className="w-full mt-1 p-2 border rounded-md"
-            placeholder="e.g. 25"
-          />
-          {errors.age && <p className="text-rose-700 text-sm">Age must be 18 or older.</p>}
-        </div>
-
-        <div>
-          <label className="block font-medium text-gray-700">Gender</label>
-          <select
-            {...register('gender', { required: true })}
-            className="w-full mt-1 p-2 border rounded-md"
-          >
-            <option value="">Select...</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </select>
-          {errors.gender && <p className="text-rose-700 text-sm">Gender is required.</p>}
-        </div>
-      </div>
 
       <div>
         <label className="block font-medium text-gray-700">Education</label>
@@ -276,7 +248,7 @@ setRedirectTimer(true)
         disabled={submitting}
         className="bg-rose-700 text-white px-6 py-2 rounded-xl hover:bg-rose-800 transition-all"
       >
-        {submitting ? 'Submitting...' : 'Submit Profile'}
+        {submitting || completeProfileLoading || updateIsProfileLoading ? 'Submitting...' : 'Submit Profile'}
       </button>
     </form>
     </ProtectedRoute>

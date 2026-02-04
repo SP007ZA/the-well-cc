@@ -127,7 +127,7 @@ export default function MembershipCheckout() {
           <input
             type="hidden"
             name="cell_number"
-            value={`0${data?.profile?.user?.membership?.cellNumber || ""}`}
+            value={`0${data?.profile?.cellNumber || ""}`}
           />
           <input type="hidden" name="amount" value={selectedPlan.price} />
           <input

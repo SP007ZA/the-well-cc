@@ -122,7 +122,7 @@ const currentUserId = useUser()?.id
             photo: data?.profile.profilePicture.publicUrlTransformed,
             gallery: data?.profile.photos.map((item) => (item.image.publicUrlTransformed)),
             interests: data?.profile.interests.split(' '),
-            location: `${data?.profile.address.city}, ${data?.profile.address.province}`,
+            location: data?.profile.address?.fullAddress ?? "Unknown",
             bio: data?.profile.bio
 
       }

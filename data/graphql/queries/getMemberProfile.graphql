@@ -17,8 +17,7 @@ query GetMemberProfile($where: ProfileWhereUniqueInput!) {
         }
       }
       address {
-        city
-        province
+         fullAddress
       }
   }
 }

@@ -69,3 +69,57 @@ export function useUser() {
     const { data } = useQuery<GetUserAuthQuery, GetUserAuthQueryVariables>(GetUserAuthDocument)
     return data?.authenticatedItem
 }
+
+export function getAgeFromId(idNumber) {
+  if (!idNumber || idNumber.length < 13) {
+    throw new Error("Invalid ID number");
+  }
+
+  const yearPart = parseInt(idNumber.substring(0, 2), 10);
+  const currentYear = new Date().getFullYear();
+  const currentYearTwoDigits = currentYear % 100;
+
+  // Determine century
+  const birthYear =
+    yearPart <= currentYearTwoDigits
+      ? 2000 + yearPart
+      : 1900 + yearPart;
+
+  return currentYear - birthYear;
+}
+
+
+export function getGender(idNumber) {
+  if (!idNumber || idNumber.length < 13) {
+    throw new Error("Invalid ID number");
+  }    
+
+const lastDigit = parseInt(idNumber[idNumber.length - 1], 10);
+  let gender;
+
+  if (lastDigit === 0) {
+    gender = "Male";
+  } else if (lastDigit === 9) {
+    gender = "Female";
+  } else {
+    throw new Error("Invalid ID number");
+  }
+
+  return gender;
+}
+
+export function extractLocation(address) {
+  const regex = /,\s*([^,]+),\s*([^,]+),\s*([^,\d]+)\s*(\d{4}),\s*South Africa/i;
+
+  const match = address.match(regex);
+
+  if (!match) return null;
+
+  return {
+    suburb: match[1].trim(),
+    city: match[2].trim(),
+    province: match[3].trim(),
+    postalCode: match[4].trim(),
+  };
+}
+

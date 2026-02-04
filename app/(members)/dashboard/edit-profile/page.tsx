@@ -48,12 +48,10 @@ export default function EditProfileForm() {
 
   useEffect(() => {
     if (userData?.user) {
-      const { id, bio, age, gender, education, occupation, interests, lookingFor, photos, profilePicture } = userData.user.profile
+      const { id, bio, education, occupation, interests, lookingFor, photos, profilePicture } = userData.user.profile
 
       setValue('id', id || '')
       setValue('bio', bio || '')
-      setValue('age', age || '')
-      setValue('gender', gender || '')
       setValue('education', education || '')
       setValue('occupation', occupation || '')
       setValue('interests', interests || '')
@@ -99,7 +97,7 @@ export default function EditProfileForm() {
 
 
   const onSubmit = async (formData: any) => {
-    const { id, bio, age, gender, education, occupation, interests, lookingFor, photos } = formData
+    const { id, bio, education, occupation, interests, lookingFor, photos } = formData
 
     setSubmitting(true)
 
@@ -114,8 +112,6 @@ export default function EditProfileForm() {
         where: { id },
         data: {
           bio,
-          age: Number(age),
-          gender,
           education,
           occupation,
           interests,
@@ -176,21 +172,6 @@ export default function EditProfileForm() {
       <div>
         <label className="block font-medium text-gray-700">Bio</label>
         <textarea {...register('bio')} className="w-full mt-1 p-2 border rounded-md" rows={4} />
-      </div>
-
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block font-medium text-gray-700">Age</label>
-          <input type="number" {...register('age')} className="w-full mt-1 p-2 border rounded-md" />
-        </div>
-        <div>
-          <label className="block font-medium text-gray-700">Gender</label>
-          <select {...register('gender')} className="w-full mt-1 p-2 border rounded-md">
-            <option value="">Select...</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </select>
-        </div>
       </div>
 
       <div>

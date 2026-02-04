@@ -58,7 +58,7 @@ const isFormValid =
               <option value="free-state">Free State</option>
               <option value="eastern-cape">Eastern Cape</option>
               <option value="Western Cape">Western Cape</option>
-              <option value="northern-cape">Northern Cape</option>
+               <option value="northern-cape">Northern Cape</option>
              
            
             </select>

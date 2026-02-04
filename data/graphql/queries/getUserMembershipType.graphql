@@ -2,9 +2,45 @@ query GetUserMembershipType($where: UserWhereUniqueInput!) {
   user(where: $where) {
     profile {
       id
+      firstName
+      lastName
+      documentType
+       address {
+      fullAddress
+    }
+      idNumber
+      cellNumber
+      idPhoto {
+        image {
+          publicUrlTransformed
+        }
+      }
+
     }
     membership {
+       id
       memberShipType
+       profileInDirectory
+  publishProfile
+  correspondencePreference
+  memberShipType
+      maritalStatus
+      kids
+      race
+      wouldYouDateOutSideOfYourRace
+      nextOfKin {
+        name
+        relationship
+        email
+        cellNumber
+      }
+      church {
+        pastorsName
+        churchNameAndAddress
+        churchContactNumber
+        salvationTestimony
+      }
+      
     }
   }
 }

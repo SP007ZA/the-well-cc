@@ -1,0 +1,7 @@
+mutation UpdateProfileAddress($where: AddressWhereUniqueInput!, $data: AddressUpdateInput!) {
+  updateAddress(where: $where, data: $data) {
+    id
+    fullAddress
+    country
+  }
+}

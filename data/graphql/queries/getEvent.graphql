@@ -12,11 +12,7 @@ query GetEvent($where: EventWhereUniqueInput!) {
       }
     },
     address {
-      streetName,
-      town,
-      city,
-      postalCode,
-      province
+       fullAddress
     }
   }
 }

@@ -1,0 +1,5 @@
+mutation CreateMembership($data: MembershipCreateInput!) {
+  createMembership(data: $data) {
+    id
+  }
+}

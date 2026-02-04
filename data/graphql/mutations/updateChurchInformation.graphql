@@ -1,0 +1,9 @@
+mutation UpdateChurchInfomation($where: ChurchInfomationWhereUniqueInput!, $data: ChurchInfomationUpdateInput!) {
+  updateChurchInfomation(where: $where, data: $data) {
+  id
+  pastorsName
+  churchContactNumber
+  churchNameAndAddress
+  salvationTestimony
+  }
+}

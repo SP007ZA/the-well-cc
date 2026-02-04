@@ -7,7 +7,7 @@ import { GetEventDocument, GetEventQuery, GetEventQueryVariables, GetUserPayment
 import { useParams } from 'next/navigation';
 import EventPruchaseCard from '@/app/_components/EventTicketPurchaseCard';
 import ProtectedRoute from '../../../_components/ProtectedRoute';
-import { useUser } from '@/lib/utils';
+import { extractLocation, useUser } from '@/lib/utils';
 // Replace with your API call
 
 /*const event = {
@@ -75,9 +75,9 @@ export default function TicketCheckoutPage() {
             price: data?.event.price,
             startDate: new Date(data?.event.startDate),
             endDate: new Date(data?.event.endDate),
-            location: data?.event.address?.city ?? "Unknown",
+            location:  data?.event.address?.fullAddress ? extractLocation(data?.event.address.fullAddress)?.city ??  "Unknown" : "Unknown",
             thumbnail: data?.event.eventThumbnail?.image?.publicUrlTransformed ?? "",
-            fullAdress: data?.event.address.streetName + " " + data?.event.address.town + " " + data?.event.address.city + ", " + data?.event.address.province
+            fullAdress: data?.event.address?.fullAddress ?? ""
           };
     
           setEvent(mappedEvent);
@@ -88,7 +88,7 @@ export default function TicketCheckoutPage() {
             firstName: userInfo?.user.profile.firstName,
             lastName: userInfo?.user.profile.lastName,
             email: userInfo?.user.email,
-            cellNumber: userInfo?.user.membership?.cellNumber
+            cellNumber: userInfo?.user.profile?.cellNumber
           }
 
           setUserData(info)

@@ -6,8 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Heart, Users, Calendar, MessageCircle, Church, Star, HeartHandshake } from "lucide-react";
 import Link from "next/link";
 import ScrollToTop from "../_components/Menu/ScrollToTop";
+import IsMembershipFormComplete from "@/app/(auth)/components/isMembershipFormComplete";
 export default function Home() {
   return (
+    <IsMembershipFormComplete>
     <div  className="bg-gray-50  text-gray-800">
       
       {/* Hero Section */}
@@ -188,5 +190,6 @@ export default function Home() {
         </Link>
       </section>
     </div>
+    </IsMembershipFormComplete>
   );
 }

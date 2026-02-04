@@ -43,7 +43,7 @@ export default function UpcomingEvents({member}) {
         description: item.description,
         startDate: new Date(item.startDate),
         endDate: new Date(item.endDate),
-        location: item.address?.city ?? "Unknown",
+        location: item.address?.fullAddress ?? "Unknown",
         thumbnail: item.eventThumbnail?.image?.publicUrlTransformed ?? "",
       }));
 
