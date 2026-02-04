@@ -6,7 +6,6 @@ import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useParams } from 'next/navigation';
 import ProtectedRoute from "../../_components/ProtectedRoute";
-import { extractLocation } from "@/lib/utils";
 
 interface Event {
   id: string;
@@ -15,21 +14,10 @@ interface Event {
   price: number,
   startDate: Date;
   endDate: Date;
-  location: string;
   thumbnail: string;
   fullAdress: string 
 }
 
- /* const event = {
-    id: "123",
-    title: "Prayer & Praise Night",
-    description: "Gather for an evening of worship, prayer, and community. Open to all members.",
-    startDate: new Date(),
-    endDate: new Date(),
-    location: "Kempton Park",
-    thumbnail: '/members/praise_worship.jpg',
-    fullAdress: "Swie Street Birch Acres Kempton Park"
-  } */
 
 
 export default function MemberEventsPage() {
@@ -60,7 +48,6 @@ export default function MemberEventsPage() {
             price: data?.event.price,
             startDate: new Date(data?.event.startDate),
             endDate: new Date(data?.event.endDate),
-            location: data?.event.address?.fullAddress ? extractLocation(data?.event.address.fullAddress)?.city ??  "Unknown" : "Unknown",
             thumbnail: data?.event.eventThumbnail?.image?.publicUrlTransformed ?? "",
             fullAdress: data?.event.address?.fullAddress ?? ""
           };
@@ -73,7 +60,7 @@ export default function MemberEventsPage() {
     <ProtectedRoute>
     <div className="p-6 space-y-10">
       <h1 className="text-3xl font-bold">Events Details </h1>  
-       { event?.id &&  <EventDetailCard id={event?.id} title={event?.title}description={event?.description} startDate={event?.startDate} endDate={event?.endDate} location={event?.location} thumbnail={event?.thumbnail} member={true} fullAddress={event?.fullAdress} />}
+       { event?.id &&  <EventDetailCard id={event?.id} title={event?.title}description={event?.description} startDate={event?.startDate} endDate={event?.endDate} thumbnail={event?.thumbnail} member={true} fullAddress={event?.fullAdress} />}
     </div>
     </ProtectedRoute>
   );

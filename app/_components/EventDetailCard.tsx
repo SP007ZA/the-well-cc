@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 
 // Mock function — replace with your actual DB/API call
 
-export default function EventDetailCard({id,thumbnail, title, startDate, endDate, location, fullAddress, description, member}) {
+export default function EventDetailCard({id,thumbnail, title, startDate, endDate, fullAddress, description, member}) {
  
 
   return (
@@ -21,10 +21,9 @@ export default function EventDetailCard({id,thumbnail, title, startDate, endDate
       <p className="text-sm text-gray-600 mb-1">
         {format(startDate, 'MMMM d, yyyy · h:mm a')} → {format(endDate, 'h:mm a')}
       </p>
-      <p className="text-sm text-gray-500 mb-2">📍 <strong>{location}</strong></p>
 
       {fullAddress && (
-        <p className="text-sm text-gray-600 mb-4">🗺️ {fullAddress}</p>
+        <p className="text-sm text-gray-600 mb-4">📍 {fullAddress}</p>
       )}
 
       <p className="mb-6 text-gray-800">{description}</p>

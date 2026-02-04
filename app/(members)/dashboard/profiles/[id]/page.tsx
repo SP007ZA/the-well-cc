@@ -10,7 +10,7 @@ import "yet-another-react-lightbox/styles.css"
 import { useState } from "react"
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client"
 import { CreateChatRequestDocument, CreateChatRequestMutation, CreateChatRequestMutationVariables, GetMemberProfileDocument, GetMemberProfileQuery, GetMemberProfileQueryVariables, MyChatRequestsDocument, MyChatRequestsQuery, MyChatRequestsQueryVariables } from "@/data/gql/graphql"
-import { extractLocation, useUser } from "@/lib/utils"
+import { useUser } from "@/lib/utils"
 /* Add these imports (shadcn/ui) */
 import {
   Dialog,
@@ -122,7 +122,6 @@ const currentUserId = useUser()?.id
             photo: data?.profile.profilePicture.publicUrlTransformed,
             gallery: data?.profile.photos.map((item) => (item.image.publicUrlTransformed)),
             interests: data?.profile.interests.split(' '),
-            location: extractLocation(data?.profile.address.fullAddress ?? null).city  ?? "Unknown",
             bio: data?.profile.bio
 
       }
@@ -174,7 +173,6 @@ const currentUserId = useUser()?.id
 
         <div className="p-6 space-y-4">
           <h2 className="text-2xl font-bold text-rose-800">{memberProfile?.name}</h2>
-          <p className="text-gray-600 text-sm">📍 {memberProfile?.location}</p>
           <p className="text-gray-700 text-base">{memberProfile?.bio}</p>
 
           <div>

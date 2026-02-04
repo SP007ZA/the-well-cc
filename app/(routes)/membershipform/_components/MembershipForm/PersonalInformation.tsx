@@ -203,7 +203,7 @@ const [updateProfile] = useMutation<UpdateUserPersonalInformationMutation, Updat
        {/* Photo Upload */}
       <div className="space-y-2">
         {form.documentType === "South African ID" ? (
-          <Label className="font-medium">Upload South African ID Photo</Label>
+          <Label className="font-medium">Upload South African ID Copy</Label>
         ) : (
           <Label className="font-medium"> Passport ID Photo</Label>
         ) }

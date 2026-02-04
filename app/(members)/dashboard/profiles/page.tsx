@@ -17,7 +17,7 @@ import {
   UsersCountDocument,
   // If you have it, import a UsersCountDocument (optional)
 } from '@/data/gql/graphql'
-import { extractLocation, useUser } from '@/lib/utils'
+import {  useUser } from '@/lib/utils'
 import ProtectedRoute from '../_components/ProtectedRoute'
 
 const PAGE_SIZE = 5
@@ -83,7 +83,6 @@ const Profiles = () => {
             id: u.profile!.id,
             name: `${u.profile?.firstName ?? ''} ${u.profile?.lastName ?? ''}`.trim(),
             photo: u.profile?.profilePicture?.publicUrlTransformed ?? '',
-            location: extractLocation(u.profile?.address.fullAddress ?? null).city ?? '',
             bio: u.profile?.bio ?? '',
           })) ?? []
       setMemberProfiles(profiles)
@@ -197,11 +196,6 @@ const Profiles = () => {
 
               <CardContent className="p-4 space-y-2">
                 <h3 className="text-lg font-semibold text-rose-800">{member.name}</h3>
-                {member.location && (
-                  <Badge variant="outline" className="text-xs">
-                    {member.location}
-                  </Badge>
-                )}
                 {member.bio && (
                   <p className="text-sm text-muted-foreground line-clamp-2">
                     {member.bio}

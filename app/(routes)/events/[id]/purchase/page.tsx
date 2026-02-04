@@ -3,7 +3,6 @@
 
 import EventPruchaseCard from "@/app/_components/EventTicketPurchaseCard";
 import { GetActiveEventsQueryVariables, GetEventDocument, GetEventQuery } from "@/data/gql/graphql";
-import { extractLocation } from "@/lib/utils";
 import { useQuery } from "@apollo/client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -17,7 +16,6 @@ interface Event {
   price: number,
   startDate: Date;
   endDate: Date;
-  location: string;
   thumbnail: string;
   fullAdress: string 
 }
@@ -52,7 +50,6 @@ export default  function TicketCheckoutPage() {
             price: data?.event.price,
             startDate: new Date(data?.event.startDate),
             endDate: new Date(data?.event.endDate),
-            location: extractLocation(data?.event.address.fullAddress ?? null).city  ?? "Unknown",
             thumbnail: data?.event.eventThumbnail?.image?.publicUrlTransformed ?? "",
             fullAdress: data?.event.address.fullAddress ?? "Unknown"
           };

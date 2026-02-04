@@ -108,18 +108,3 @@ const lastDigit = parseInt(idNumber[idNumber.length - 1], 10);
   return gender;
 }
 
-export function extractLocation(address) {
-  const regex = /,\s*([^,]+),\s*([^,]+),\s*([^,\d]+)\s*(\d{4}),\s*South Africa/i;
-
-  const match = address.match(regex);
-
-  if (!match) return null;
-
-  return {
-    suburb: match[1].trim(),
-    city: match[2].trim(),
-    province: match[3].trim(),
-    postalCode: match[4].trim(),
-  };
-}
-
