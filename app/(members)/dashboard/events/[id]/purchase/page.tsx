@@ -7,7 +7,7 @@ import { GetEventDocument, GetEventQuery, GetEventQueryVariables, GetUserPayment
 import { useParams } from 'next/navigation';
 import EventPruchaseCard from '@/app/_components/EventTicketPurchaseCard';
 import ProtectedRoute from '../../../_components/ProtectedRoute';
-import { extractLocation, useUser } from '@/lib/utils';
+import {  useUser } from '@/lib/utils';
 // Replace with your API call
 
 /*const event = {
@@ -29,7 +29,6 @@ interface Event {
   price: number,
   startDate: Date;
   endDate: Date;
-  location: string;
   thumbnail: string;
   fullAdress: string 
 }
@@ -75,7 +74,6 @@ export default function TicketCheckoutPage() {
             price: data?.event.price,
             startDate: new Date(data?.event.startDate),
             endDate: new Date(data?.event.endDate),
-            location:  data?.event.address?.fullAddress ? extractLocation(data?.event.address.fullAddress)?.city ??  "Unknown" : "Unknown",
             thumbnail: data?.event.eventThumbnail?.image?.publicUrlTransformed ?? "",
             fullAdress: data?.event.address?.fullAddress ?? ""
           };
