@@ -59,11 +59,7 @@ export default function TicketVerificationPage() {
                           event: {
                             title: ticket.event?.title ?? "No title",
                             startDate: ticket.event?.startDate ?? "",
-                            location: [
-                              ticket.event?.address?.town,
-                              ticket.event?.address?.city,
-                              ticket.event?.address?.province
-                            ].filter(Boolean).join(", ")
+                            location: ticket.event?.address?.fullAddress ?? "No location"
                           }
                         } : null;
 
