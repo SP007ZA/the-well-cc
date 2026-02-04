@@ -17,7 +17,7 @@ import {
   UsersCountDocument,
   // If you have it, import a UsersCountDocument (optional)
 } from '@/data/gql/graphql'
-import { useUser } from '@/lib/utils'
+import { extractLocation, useUser } from '@/lib/utils'
 import ProtectedRoute from '../_components/ProtectedRoute'
 
 const PAGE_SIZE = 5
@@ -83,9 +83,7 @@ const Profiles = () => {
             id: u.profile!.id,
             name: `${u.profile?.firstName ?? ''} ${u.profile?.lastName ?? ''}`.trim(),
             photo: u.profile?.profilePicture?.publicUrlTransformed ?? '',
-            location: `${u.profile?.address?.city ?? ''}${
-              u.profile?.address?.province ? `, ${u.profile?.address?.province}` : ''
-            }`,
+            location: extractLocation(u.profile?.address ?? null).city ?? '',
             bio: u.profile?.bio ?? '',
           })) ?? []
       setMemberProfiles(profiles)
