@@ -83,7 +83,7 @@ const Profiles = () => {
             id: u.profile!.id,
             name: `${u.profile?.firstName ?? ''} ${u.profile?.lastName ?? ''}`.trim(),
             photo: u.profile?.profilePicture?.publicUrlTransformed ?? '',
-            location: extractLocation(u.profile?.address ?? null).city ?? '',
+            location: extractLocation(u.profile?.address.fullAddress ?? null).city ?? '',
             bio: u.profile?.bio ?? '',
           })) ?? []
       setMemberProfiles(profiles)
