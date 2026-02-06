@@ -7,7 +7,7 @@ import { CreateChurchInfomationDocument, CreateChurchInfomationMutation, CreateC
 import { getAgeFromId, getGender, useUser } from '@/lib/utils';
 import { useMutation } from '@apollo/client';
 import { ImageIcon } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const PersonalInformation = ({ form, setForm, previewUrl, setProfileID, setPreviewUrl, errors, validateField, setErrors, setSection, profileID }: any) => {
 const user = useUser();
@@ -19,6 +19,10 @@ const [createNextOfKin, {loading: createNextOfKinLoading}] = useMutation<CreateN
 const [updateProfile] = useMutation<UpdateUserPersonalInformationMutation, UpdateUserPersonalInformationMutationVariables>(UpdateUserPersonalInformationDocument);
 
 //console.log("Is Profile ID:", profileID);
+
+useEffect(() => {}, [form.documentType]);
+
+
 
 
   const handleChange = (field: string, value: string) => {
@@ -165,20 +169,20 @@ const [updateProfile] = useMutation<UpdateUserPersonalInformationMutation, Updat
           className="w-full border px-3 py-2 rounded border-gray-300"
         >
           <option value="South African ID">South African ID</option>
-          <option value="Passport ID">Passport ID</option>
+          <option value="Passport Number">Passport Number</option>
         </select>
       </div>
 
       <div>
         <label className="block font-medium mb-1">
-          {form.documentType === "Passport ID" ? "Passport ID" : "South African ID"}
+          {form.documentType === "Passport Number" ? "Passport Number" : "South African ID"}
         </label>
         <input
           type="text"
           value={form.idNumber}
           onChange={(e) => handleChange("idNumber", e.target.value.toUpperCase())}
           onBlur={() => handleBlur("idNumber")}
-          maxLength={form.documentType === "Passport ID" ? 9 : 13}
+          maxLength={form.documentType === "Passport Number" ? 9 : 13}
           className={`w-full border px-3 py-2 rounded ${errors.idNumber ? "border-red-500" : "border-gray-300"}`}
         />
         {errors.idNumber && <p className="text-red-500 text-xs mt-1">{errors.idNumber}</p>}

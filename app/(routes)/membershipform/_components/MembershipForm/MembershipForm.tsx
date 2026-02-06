@@ -160,7 +160,7 @@ const [form, setForm] = useState<any>({
     return "You must be 25 years or older to register.";
   }
 }
- else if (form.documentType === "Passport ID") {
+ else if (form.documentType === "Passport Number") {
     if (!/^(?=.*\d)[A-Z0-9]{6,12}$/i.test(value)) return "Invalid passport number. Must be 6–12 letters/numbers, with at least one number.";
   
   }
