@@ -771,6 +771,17 @@ export type EventWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']>;
 };
 
+export type FileFieldInput = {
+  upload: Scalars['Upload'];
+};
+
+export type FileFieldOutput = {
+  __typename?: 'FileFieldOutput';
+  filename: Scalars['String'];
+  filesize: Scalars['Int'];
+  url: Scalars['String'];
+};
+
 export type FloatNullableFilter = {
   equals?: InputMaybe<Scalars['Float']>;
   gt?: InputMaybe<Scalars['Float']>;
@@ -2465,6 +2476,7 @@ export type Profile = {
   firstName?: Maybe<Scalars['String']>;
   gender?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  idAttachment?: Maybe<FileFieldOutput>;
   idNumber?: Maybe<Scalars['Float']>;
   idPhoto?: Maybe<IdPhoto>;
   interests?: Maybe<Scalars['String']>;
@@ -2519,6 +2531,7 @@ export type ProfileCreateInput = {
   education?: InputMaybe<Scalars['String']>;
   firstName?: InputMaybe<Scalars['String']>;
   gender?: InputMaybe<Scalars['String']>;
+  idAttachment?: InputMaybe<FileFieldInput>;
   idNumber?: InputMaybe<Scalars['Float']>;
   idPhoto?: InputMaybe<IdPhotoRelateToOneForCreateInput>;
   interests?: InputMaybe<Scalars['String']>;
@@ -2652,6 +2665,7 @@ export type ProfileUpdateInput = {
   education?: InputMaybe<Scalars['String']>;
   firstName?: InputMaybe<Scalars['String']>;
   gender?: InputMaybe<Scalars['String']>;
+  idAttachment?: InputMaybe<FileFieldInput>;
   idNumber?: InputMaybe<Scalars['Float']>;
   idPhoto?: InputMaybe<IdPhotoRelateToOneForUpdateInput>;
   interests?: InputMaybe<Scalars['String']>;
@@ -3778,7 +3792,6 @@ export type UserWhereUniqueInput = {
   membership?: InputMaybe<MembershipWhereUniqueInput>;
   profile?: InputMaybe<ProfileWhereUniqueInput>;
   reportConcern?: InputMaybe<ReportConcernWhereUniqueInput>;
-  userName?: InputMaybe<Scalars['String']>;
 };
 
 export type ValidateUserPasswordResetTokenResult = {

@@ -61,7 +61,7 @@ const {data:count} = useQuery<GetUnreadNotificationCountQuery, GetUnreadNotifica
   }, [data, count]);
 
 
-
+console.log(profilePicture)
   const toggleDark = () => {
     const nextMode = !darkMode;
     setDarkMode(nextMode);

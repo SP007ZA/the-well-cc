@@ -28,7 +28,7 @@ const user = useUser();
  const handleNext = () => {
     //Update Church Information
     updateChurchInfo({variables: {where:{member:{user:{id: user?.id}}}, data:{pastorsName: form.pastorsName, churchNameAndAddress: form.churchNameAddress, churchContactNumber: parseInt(form.churchContact), salvationTestimony: form.salvationTestimony}}}).then((response) => {
-      console.log("Church Information Updated:", response.data);
+     
 
       setForm({ ...form,
         pastorsName: response.data?.updateChurchInfomation?.pastorsName || "",

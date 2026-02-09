@@ -16,7 +16,7 @@ const MembershipType = ({setForm, setErrors, form, setSection}:any) => {
     setForm({ ...form, [field]: value });
     setErrors((prev:any) => ({ ...prev, [field]: "" }));
 
-    console.log("Membership Type Change:", field, value)
+
 
   };
 
@@ -32,9 +32,9 @@ const MembershipType = ({setForm, setErrors, form, setSection}:any) => {
 
    const handleNext = () => {
     //Update Church Information
-    console.log(form.correspondencePreference, form.publishProfile, form.profileInDirectory, form.membershipType);  
+   
     updateMembership({variables: {where:{user:{id: user?.id}}, data:{memberShipType: form.membershipType, correspondencePreference: form.correspondencePreference, publishProfile: form.publishProfile, profileInDirectory: form.profileInDirectory}}}).then((response) => {
-    console.log("Membership Information Updated:", response.data);
+   
 
       setForm({ ...form,
         correspondencePreference: response.data?.updateMembership?.correspondencePreference || "",

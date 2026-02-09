@@ -6,11 +6,7 @@ import { UpdateProfileAddressDocument, UpdateProfileAddressMutation } from "@/da
 import { useMutation } from "@apollo/client";
 import { useRef, useState } from "react";
 
-type AddressValue = {
-  fullAddress: string;
-  country?: string;
-  postalCode?: string;
-};
+
 
 type MapboxFeature = {
   id: string;
@@ -61,7 +57,7 @@ const handleNext = () => {
     //@ts-ignore
     variables:{ where:{profile:{id: profileID}},
      data:{fullAddress: input, country: country, }}}).then((response) => {
-    console.log("Address Updated:", response.data);
+    
   }).catch((error) => {
     console.error("Error updating address:", error); 
   } );

@@ -8,6 +8,9 @@ import { CompleteProfileDocument, CompleteProfileMutation, CompleteProfileMutati
 import LoadingSpinner from '@/app/_components/LoadingSpinner'
 import ProtectedRoute from '@/app/(members)/dashboard/_components/ProtectedRoute'
 import { useUser } from '@/lib/utils'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { ImageIcon } from 'lucide-react'
 
 
 
@@ -15,14 +18,23 @@ import { useUser } from '@/lib/utils'
 export default function CompleteProfileForm({ params }: { params: Promise<{ id: string }> }) {
     const { id } = use(params) 
  const user = useUser()
-
+const [profilePicture, setProfilePicture] = useState<any>()
     const [completeProfile, {loading: completeProfileLoading}] = useMutation<CompleteProfileMutation, CompleteProfileMutationVariables>(CompleteProfileDocument)
     const [updateisProfile, {loading: updateIsProfileLoading}] = useMutation<UpdateUserIsProfileMutation, UpdateUserIsProfileMutationVariables>(UpdateUserIsProfileDocument)
-
+const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const {data} = useQuery<FindUserProfileIdQuery, FindUserProfileIdQueryVariables>(FindUserProfileIdDocument, {variables: {where:{user:{id: {equals:id}}}}})
+
 
  const [profileId, setProfileId] = useState<any>()
 
+   const handleProfilePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setProfilePicture(file)
+      setPreviewUrl(URL.createObjectURL(file))
+      
+    }
+  }
 
 
      useEffect(()=>{
@@ -107,7 +119,7 @@ export default function CompleteProfileForm({ params }: { params: Promise<{ id: 
     //await new Promise((r) => setTimeout(r, 1000))
       
   
-   await completeProfile({variables: {where: {id: profileId},data:{bio, education, occupation, interests, lookingFor:lookingFor[0], photos: {create: images}}}}).then(async (response) => {
+   await completeProfile({variables: {where: {id: profileId},data:{bio, education, occupation, interests, lookingFor:lookingFor[0], profilePicture: profilePicture, photos: {create: images}}}}).then(async (response) => {
   console.log('Mutation successful:', response.data);
   await updateisProfile({variables:{where: {id: user.id}, data:{isProfile:true}}})
 
@@ -142,6 +154,29 @@ setRedirectTimer(true)
       <h2 className="text-2xl font-semibold text-rose-700">Complete Your Profile</h2>
 
       <div>
+         {/* Photo Upload */}
+      <div className="space-y-2">
+  
+          <Label className="font-medium">Upload Profile Photo</Label>
+       
+        <div className="flex items-center space-x-4">
+          <Input id="photo" type="file" accept="image/*" onChange={handleProfilePhotoChange} />
+        </div>
+        {previewUrl ? (
+          <div className="mt-4">
+            <img
+              src={previewUrl}
+              alt="Preview"
+              className="rounded-lg border w-40 h-40 object-cover"
+            />
+          </div>
+        ) : (
+          <div className="mt-2 text-sm text-muted-foreground flex items-center gap-2">
+            <ImageIcon className="w-4 h-4" />
+            No image selected
+          </div>
+        )}
+      </div>
         <label className="block font-medium text-gray-700">Bio</label>
         <textarea
           {...register('bio', { required: true })}

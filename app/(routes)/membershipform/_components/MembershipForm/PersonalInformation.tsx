@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 
 const PersonalInformation = ({ form, setForm, previewUrl, setProfileID, setPreviewUrl, errors, validateField, setErrors, setSection, profileID }: any) => {
 const user = useUser();
-const [photo, setPhoto] = useState<File | null>(null)
+const [file, setFile] = useState<File | null>(null)
 const [createProfile, {loading: createProfileLoading}] = useMutation<CreateUserProfileMutation, CreateUserProfileMutationVariables>(CreateUserProfileDocument) 
 const [createMembership, {loading: createMembershipLoading}] = useMutation<CreateMembershipMutation, CreateMembershipMutationVariables>(CreateMembershipDocument);
 const [createChurchInfomation, {loading: createChurchLoading}] = useMutation<CreateChurchInfomationMutation, CreateChurchInfomationMutationVariables>(CreateChurchInfomationDocument);  
@@ -35,13 +35,34 @@ useEffect(() => {}, [form.documentType]);
     setErrors((prev: any) => ({ ...prev, [field]: error }));
   };
 
-   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+   const handleDocumentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
-    if (file) {
-      setPhoto(file)
+     if (!file) return;
+
+     // Validate file type
+  const allowedTypes = [
+    'application/pdf',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'text/plain',
+  ];
+  if (!allowedTypes.includes(file.type)) {
+    alert('Only document files are allowed (PDF, Word, Excel, TXT).');
+    return;
+  }
+
+  // Optional: validate size
+  if (file.size > 10 * 1024 * 1024) {
+    alert('File too large. Maximum 10MB.');
+    return;
+  }
+
+      setFile(file)
       setPreviewUrl(URL.createObjectURL(file))
       
-    }
+  
   }
 
   const handleNext = () => {
@@ -67,7 +88,7 @@ useEffect(() => {}, [form.documentType]);
        // Create Profile 
       createProfile({
         variables: {
-          data: {firstName: form.fullName, lastName: form.surname, documentType: form.documentType, age: form.documentType === "South African ID" ? getAgeFromId(form.idNumber) : 0, idNumber: parseFloat(form.idNumber), gender: form.documentType === "South African ID" ? getGender(form.idNumber) : "Male", cellNumber: parseInt(form.cell), idPhoto:{create:{image: photo}}, address:{create:{fullAddress: form.fullAddress}}, user: {connect: {id: user?.id}}}, }
+          data: {firstName: form.fullName, lastName: form.surname, documentType: form.documentType, age: form.documentType === "South African ID" ? getAgeFromId(form.idNumber) : 0, idNumber: parseFloat(form.idNumber), gender: form.documentType === "South African ID" ? getGender(form.idNumber) : "Male", cellNumber: parseInt(form.cell), address:{create:{fullAddress: form.fullAddress}}, idAttachment:{upload: file}, user: {connect: {id: user?.id}}}, }
         }).then((response) => {
           //onsole.log("Profile Created:", response.data);
             setProfileID(response.data?.createProfile?.id);
@@ -207,27 +228,17 @@ useEffect(() => {}, [form.documentType]);
        {/* Photo Upload */}
       <div className="space-y-2">
         {form.documentType === "South African ID" ? (
-          <Label className="font-medium">Upload South African ID Copy</Label>
+          <Label className="font-medium">Upload Copy Of South African ID Document</Label>
         ) : (
-          <Label className="font-medium"> Passport ID Photo</Label>
+          <Label className="font-medium">Upload Copy Of Passport Document</Label>
         ) }
-        <div className="flex items-center space-x-4">
-          <Input id="photo" type="file" accept="image/*" onChange={handlePhotoChange} />
-        </div>
-        {previewUrl ? (
-          <div className="mt-4">
-            <img
-              src={previewUrl}
-              alt="Preview"
-              className="rounded-lg border w-40 h-40 object-cover"
-            />
-          </div>
-        ) : (
-          <div className="mt-2 text-sm text-muted-foreground flex items-center gap-2">
-            <ImageIcon className="w-4 h-4" />
-            No image selected
-          </div>
-        )}
+       <Input
+  id="document"
+  type="file"
+  accept=".pdf,.doc,.docx,.xls,.xlsx,.txt" // <-- documents only
+  onChange={handleDocumentChange}
+/>
+       
       </div>
 
       <div className="flex justify-between mt-4">

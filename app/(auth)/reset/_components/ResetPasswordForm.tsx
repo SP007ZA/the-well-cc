@@ -10,7 +10,7 @@ import {
   RedeemUserPasswordResetTokenMutationVariables,
 } from "@/data/gql/graphql";
 import LoadingSpinner from "@/app/_components/LoadingSpinner";
-import { Eye, EyeOff } from "lucide-react";
+import { CheckCircle, Eye, EyeOff } from "lucide-react";
 
 export default function ResetPasswordForm() {
   const router = useRouter();
@@ -27,7 +27,7 @@ export default function ResetPasswordForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const [redeemUserPasswordToken] = useMutation<
+  const [redeemUserPasswordToken, { loading: redeemLoading }] = useMutation<
     RedeemUserPasswordResetTokenMutation,
     RedeemUserPasswordResetTokenMutationVariables
   >(RedeemUserPasswordResetTokenDocument);
@@ -61,11 +61,17 @@ export default function ResetPasswordForm() {
       .then(({ data }) => {
 
        const response = data?.redeemUserPasswordResetToken;
+       console.log("Reset response:", response);
 
   if (!response) {
     setError("Invalid or expired token.");
     return;
   }
+
+  if(response === null) {
+    setError("Something went wrong. Please try again.");
+    return;
+  }             
 
   if (response.code === "FAILURE") {
     setError(response.message);
@@ -166,10 +172,15 @@ export default function ResetPasswordForm() {
                 </button>
               </div>
 
-              {error && (
+              {password !== confirm && error && (
                 <p className="text-sm text-red-600">{error}</p>
               )}
-
+  {/* ✅ OUTSIDE of the relative div! */}
+{password && confirm && password === confirm && (
+  <div className="flex items-center gap-1 text-green-600 text-sm mt-1">
+    <CheckCircle size={16} /> Passwords match
+  </div>
+)}
               <button
                 type="submit"
                 disabled={loading}
