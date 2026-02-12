@@ -15,7 +15,7 @@ import { useUser } from "@/lib/utils";
 
 
 
-export default function LoginPage() {
+export default function LoginPage({isGoogleLogin, googleEmail, googlePassword}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{ email?: string; password?: string, loginError?: string }>({});
@@ -34,7 +34,59 @@ useEffect(() => {
        window.location.href = '/dashboard'
     }  
 
+    if(isGoogleLogin) {
+      handleGoogleLogin()
+
+    }
+
   }, [user?.id]);
+
+  const handleGoogleLogin = async  () => {
+    await logIn({variables: {email:googleEmail, password:googlePassword}}).then(({data}) => {
+
+           
+            //@ts-ignore
+        if(data?.authenticateUserWithPassword.item?.__typename === "User") {
+               //@ts-ignore
+             if(data?.authenticateUserWithPassword.item.isEmailVerified !== true) {
+                setLoading(true)
+                 
+                 setTimeout(() =>{   
+                   return signOut().then(() => {return  window.location.href = '/activate/invalidlogin'}).catch(() => {return  window.location.href = '/activate/invalidlogin'})
+                 },5000)
+             }
+               //@ts-ignore
+           else  if(data?.authenticateUserWithPassword.item.isProfile === true )   {
+                  setLoading(true)
+                 setTimeout(() =>{   
+                   return  window.location.href = '/dashboard'
+                 },5000)
+                  
+                  //@ts-ignore
+             }  else if(data?.authenticateUserWithPassword.item.isMemberForm === false) {
+           
+                 setLoading(true)
+                 setTimeout(() =>{
+                    return  window.location.href = '/membershipform'
+                 },5000)
+             }
+              //@ts-ignore
+             else if(data?.authenticateUserWithPassword?.item?.isProfile === false) { 
+                  
+              
+               setLoading(true)
+                 setTimeout(() =>{
+                    //@ts-ignore
+                    return  window.location.href =`/complete-profile/${data?.authenticateUserWithPassword.item.id }`
+                 },5000)  
+               
+          
+          } 
+        } 
+     
+      
+      }).catch(err =>  console.log(err)) 
+  }
       
 const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -134,14 +186,15 @@ if(loading) return <LoadingSpinner message={"Please wait while we redirect you..
         
         <h2 className="text-2xl font-bold text-center mb-6 text-rose-700">Welcome Back</h2>
         {/* Google Login */}
-       {false &&  
-        <Button
-          onClick={() => signIn("google", { callbackUrl: "/" })}
-          className="w-full flex items-center justify-center gap-2 border mb-6"
-          variant="outline"
-        >
-          <FcGoogle size={22} /> Sign in with Google
-        </Button>}
+ 
+       <Button
+  onClick={() => signIn("google", { callbackUrl: "/auth/google-callback" })}
+  className="w-full flex items-center justify-center gap-2 border mb-6"
+  variant="outline"
+>
+  <FcGoogle size={22} /> Login with Google
+</Button>
+    
 
         {/* Divider */}
      {false &&    <div className="flex items-center my-4">

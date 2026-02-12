@@ -4,6 +4,8 @@ import { useQuery } from "@apollo/client";
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
+
+
 const crypto = require("crypto");
 
 export function cn(...inputs: ClassValue[]) {
@@ -108,3 +110,17 @@ const lastDigit = parseInt(idNumber[idNumber.length - 1], 10);
   return gender;
 }
 
+
+export function generatePassword(userName, password) {
+  // Combine inputs
+  const combined = `${userName}:${password}`;
+
+  // Create hash
+  const hash = crypto
+    .createHash("sha256")
+    .update(combined)
+    .digest("hex");
+
+  // Add 2 fixed characters (for example: "X9")
+  return hash + "X9";
+}

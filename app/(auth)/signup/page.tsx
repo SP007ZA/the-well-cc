@@ -12,6 +12,8 @@ import LoadingSpinner from "@/app/_components/LoadingSpinner";
 import { useUser } from "@/lib/utils";
 import { useLazyQuery } from "@apollo/client";
 import LoggedinRedirect from "../components/loggedinRedirect";
+import { signIn } from "next-auth/react";
+import { FcGoogle } from "react-icons/fc";
 
 
 export default function SignUpPage() {
@@ -137,6 +139,14 @@ useEffect(() => {
         {!emailSent ? (
           <>
             <h2 className="text-2xl font-bold text-center mb-6 text-rose-700">Create Your Account</h2>
+
+                   <Button
+              onClick={() => signIn("google", { callbackUrl: "/auth/google-callback" })}
+              className="w-full flex items-center justify-center gap-2 border mb-6"
+              variant="outline"
+            >
+              <FcGoogle size={22} /> Sign-up with Google
+            </Button>
 
             <form onSubmit={handleEmailSignup} className="space-y-4">
               <div>
