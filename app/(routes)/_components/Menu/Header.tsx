@@ -27,7 +27,7 @@ useEffect(() => {
 
     const handleSignOut =  () => {
         
-       return signOut().then(() => {return  window.location.href = '/'}).catch(() => {return  window.location.href = '/'})
+       return signOut({fetchPolicy: "no-cache"}).then(() => {return  window.location.href = '/'}).catch(() => {return  window.location.href = '/'})
         
     }
 
