@@ -1,7 +1,7 @@
 /* eslint-disable */
 'use client';
 
-import { useEffect } from 'react';
+import { use, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { GetUserAuthDocument, GetUserAuthQuery, GetUserAuthQueryVariables } from '@/data/gql/graphql';
 import LoadingSpinner from '@/app/_components/LoadingSpinner';
@@ -16,7 +16,7 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
        window.location.href = '/login'
     }  
 
-  }, [data]);
+  }, [data, user?.id]);
 
   if (loading) return <LoadingSpinner message={"Checking authentication..."} />
 
