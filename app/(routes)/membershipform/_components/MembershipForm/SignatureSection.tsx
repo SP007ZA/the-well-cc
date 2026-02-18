@@ -63,14 +63,13 @@ const file =   base64ToFile(signature, "signature")
             console.log("Other Membership")
         } */
 
-    await  createMember({variables: {where:{id:user?.id}, data:{isMemberForm:isMember }}}).then(({data}) => {
+    await  createMember({variables: {where:{id:user?.id}, data:{isMemberForm:isMember }}}).then(async ({data}) => {
     
 const profileId = data?.updateUser.profile.id
 const membershipType = data?.updateUser.membership.memberShipType
 const membershipID = data?.updateUser.membership.id
 
-
-createSignature({variables:{data:{image:signature, member:{connect:{id:membershipID}}}}}).then(({data}) => {
+  await  createSignature({variables:{data:{image:signature, member:{connect:{id:membershipID}}}}}).then(({data}) => {
 
       
     }).catch(error => console.log(error))

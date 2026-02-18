@@ -90,7 +90,7 @@ const [form, setForm] = useState<any>({
   correspondencePreference:"",
   publishProfile: "yes",
   profileInDirectory: "yes",
-  membershipType:"",
+  membershipType:"Basic",
   maritalStatus:"",
   kids:"",
   race:"",

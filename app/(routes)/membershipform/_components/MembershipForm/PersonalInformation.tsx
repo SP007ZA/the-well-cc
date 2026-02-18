@@ -40,16 +40,18 @@ useEffect(() => {}, [form.documentType]);
      if (!file) return;
 
      // Validate file type
-  const allowedTypes = [
-    'application/pdf',
-    'application/msword',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-    'application/vnd.ms-excel',
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    'text/plain',
-  ];
+const allowedTypes = [
+  // Documents
+  'application/pdf',
+  // Images
+  'image/jpeg',
+  'image/png',
+  'image/jpg',
+  'image/webp',
+  'image/gif',
+];
   if (!allowedTypes.includes(file.type)) {
-    alert('Only document files are allowed (PDF, Word, Excel, TXT).');
+    alert('Only document files are allowed (PDF, Word, Png, Jpeg).');
     return;
   }
 
@@ -235,7 +237,7 @@ useEffect(() => {}, [form.documentType]);
        <Input
   id="document"
   type="file"
-  accept=".pdf,.doc,.docx,.xls,.xlsx,.txt" // <-- documents only
+  accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png,.webp,.gif"
   onChange={handleDocumentChange}
 />
        

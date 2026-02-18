@@ -10,7 +10,7 @@ import LoginPage from "../../login/page";
 export default async function GoogleCallback() {
   const session = await getServerSession();
 
-  console.log("Google callback session:", session);
+
 
   if (!session?.user) {
     //redirect("/login");
@@ -27,7 +27,7 @@ const { data } = await serverClient.query({
   
 });
 
-  console.log("User query result:", data);
+ 
   if (data?.users.length === 0) {
    // console.log("No user found with email:", email);
     // Optionally, you could create a new user here or redirect to a registration page
@@ -42,7 +42,7 @@ const { data } = await serverClient.query({
       // Optionally, you could log the user in immediately or redirect to a welcome page
       //redirect("/welcome");
 
-      const { data: loginData } = await serverClient.mutate({ mutation: LOGIN_USER_MUTATION, variables: { email, password }, }); //console.log("Login user result:", loginData);
+  
 
       return (
   <LoginPage isGoogleLogin={true} googleEmail={email} googlePassword={generateSignature( email, name.split(" ")[0] )} />
