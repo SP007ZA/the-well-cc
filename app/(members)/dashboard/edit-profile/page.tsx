@@ -12,11 +12,15 @@ import {
   CompleteProfileMutation,
   CompleteProfileMutationVariables,
   CompleteProfileDocument,
+  DeleteProfilePhotosMutation,
+  DeleteProfilePhotosMutationVariables,
+  DeleteProfilePhotosDocument,
 } from '@/data/gql/graphql'
 import LoadingSpinner from '@/app/_components/LoadingSpinner'
 import { Card } from '@/components/ui/card'
 import { useUser } from '@/lib/utils'
 import ProtectedRoute from '../_components/ProtectedRoute'
+import { set } from 'date-fns'
 
 export default function EditProfileForm() {
   const [submitting, setSubmitting] = useState(false)
@@ -25,8 +29,16 @@ export default function EditProfileForm() {
   const [profileFile, setProfileFile] = useState<File | null>(null)
     const profileInputRef = useRef<HTMLInputElement>(null)
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
+  const [photoIdsTodelete, setPhotoIdsToDelete] = useState<{ id: string }[]>([])
   const fileInputRef = useRef<HTMLInputElement>(null)
   const user = useUser()
+
+
+ const isFormValid = previews.length > 0 && profilePreview !== null
+   
+
+
+
 
   const {
     register,
@@ -39,12 +51,13 @@ export default function EditProfileForm() {
   const { data: userData, loading: loadingUser } = useQuery<GetUserProfileQuery, GetUserProfileQueryVariables>(
     GetUserProfileDocument,
     {
-      variables:{ where: { id: user?.id}},
+      variables:{ where: { id: user?.id}}, fetchPolicy: 'network-only'
     }
   )
 
   //const [updateProfile] = useMutation<UpdateProfileMutation, UpdateProfileMutationVariables>(UpdateProfileDocument)
    const [updateProfile] = useMutation<CompleteProfileMutation, CompleteProfileMutationVariables>(CompleteProfileDocument)
+   const [deletePhotos] = useMutation<DeleteProfilePhotosMutation, DeleteProfilePhotosMutationVariables>(DeleteProfilePhotosDocument)
 
   useEffect(() => {
     if (userData?.user) {
@@ -56,14 +69,17 @@ export default function EditProfileForm() {
       setValue('occupation', occupation || '')
       setValue('interests', interests || '')
       setValue('lookingFor', [lookingFor])
-      setProfilePreview(profilePicture.publicUrlTransformed)
-      setPreviews((photos || []).map((p) => p.image.publicUrlTransformed))
+      setProfilePreview(profilePicture?.publicUrlTransformed)
+      setPreviews((photos || []).map((p) => p.image?.publicUrlTransformed))
+      setPhotoIdsToDelete((photos || [{}]).map((p) => ({ id: p.id })))
     }
-  }, [userData, setValue])
-
+  }, [userData, setValue, submitting])
+ 
   const handleProfileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   const file = e.target.files?.[0]
-  if (file) {
+
+ 
+  if (file !== undefined) {
     setProfileFile(file)
     setProfilePreview(URL.createObjectURL(file))
   }
@@ -82,14 +98,36 @@ export default function EditProfileForm() {
     e.target.value = ''
   }
 
-  const removePhoto = (index: number) => {
+  const removePhoto = async (index: number) => {
     const updatedFiles = [...selectedFiles]
     const updatedPreviews = [...previews]
+    const removedPhotoId = photoIdsTodelete[index]
+    
 
+    console.log('Photo ID to delete:', removedPhotoId)
     updatedFiles.splice(index, 1)
     updatedPreviews.splice(index, 1)
 
+    if (photoIdsTodelete.length > 0) {
+
+      try {
+        await deletePhotos({
+          variables: {
+            where: [...removedPhotoId ? [removedPhotoId] : []],
+          
+          },
+        })
+      } catch (error) {
+        console.error('Failed to delete photos:', error)
+        setSubmitting(false)
+        return
+      }
+     }
+
+    console.log('Removing photo at index:', index)
+    console.log('udatedfile', updatedFiles) 
     setSelectedFiles(updatedFiles)
+    setPhotoIdsToDelete((prev) => prev.filter((_, i) => i !== index)) 
     setPreviews(updatedPreviews)
     setValue('photos', updatedFiles)
   }
@@ -100,19 +138,21 @@ export default function EditProfileForm() {
     const { id, bio, education, occupation, interests, lookingFor, photos } = formData
 
     setSubmitting(true)
+     console.log('SelectedFile', selectedFiles) 
 
     const newImages = selectedFiles.map((file) => ({ image: file }))
 
-  
+  console.log('New images to add:', newImages)
 
-      //console.log({profileFile})
+   
 
-    updateProfile({
+      if (profileFile) {
+           updateProfile({
       variables: {
         where: { id },
         data: {
           bio,
-          education,
+          education,  
           occupation,
           interests,
           lookingFor: lookingFor[0],
@@ -122,14 +162,67 @@ export default function EditProfileForm() {
         },
       },
     })
-      .then(() => {
+      .then(({data}) => {
         alert('Profile updated!')
+        
+        const  { id, bio, education, occupation, interests, lookingFor, photos, profilePicture } = data.updateProfile.user.profile  
+
+          setValue('id', id || '')
+      setValue('bio', bio || '')
+      setValue('education', education || '')
+      setValue('occupation', occupation || '')
+      setValue('interests', interests || '')
+      setValue('lookingFor', [lookingFor])
+      setProfilePreview(profilePicture?.publicUrlTransformed)
+      setPreviews((photos || []).map((p) => p.image?.publicUrlTransformed))
+      setPhotoIdsToDelete((photos || [{}]).map((p) => ({ id: p.id })))
         setSubmitting(false)
+      })
+      .catch((error) => {
+      
+        setSubmitting(false)
+      }) 
+
+      } else {
+        updateProfile({
+      variables: {
+        where: { id },
+        data: {
+          bio,
+          education,  
+          occupation,
+          interests,
+          lookingFor: lookingFor[0],
+          photos: { create: newImages }
+          
+        
+        },
+      },
+    })
+      .then(({data}) => {
+        alert('Profile updated!')
+
+            const  { id, bio, education, occupation, interests, lookingFor, photos, profilePicture } = data.updateProfile.user.profile  
+
+          setValue('id', id || '')
+      setValue('bio', bio || '')
+      setValue('education', education || '')
+      setValue('occupation', occupation || '')
+      setValue('interests', interests || '')
+      setValue('lookingFor', [lookingFor])
+      setProfilePreview(profilePicture?.publicUrlTransformed)
+      setPreviews((photos || []).map((p) => p.image?.publicUrlTransformed))
+      setPhotoIdsToDelete((photos || [{}]).map((p) => ({ id: p.id })))
+        setSubmitting(false)
+
       })
       .catch((error) => {
         console.error('Update failed:', error)
         setSubmitting(false)
       }) 
+      }
+
+   
   } 
 
   if (loadingUser) return <LoadingSpinner message="Loading profile..." />
@@ -246,14 +339,19 @@ export default function EditProfileForm() {
           </div>
         )}
       </div>
-
-      <button
-        type="submit"
-        disabled={submitting}
-        className="bg-rose-700 text-white px-6 py-2 rounded-xl hover:bg-rose-800 transition-all"
-      >
-        {submitting ? 'Saving...' : 'Save Changes'}
-      </button>
+<button
+  type="submit"
+  disabled={submitting || !isFormValid}
+  className="
+    bg-rose-700 text-white px-6 py-2 rounded-xl transition-all
+    hover:bg-rose-800
+    disabled:bg-gray-400
+    disabled:cursor-not-allowed
+    disabled:hover:bg-gray-400
+  "
+>
+  {submitting ? 'Saving...' : 'Save Changes'}
+</button>
       </Card>
     </form>
     </ProtectedRoute>

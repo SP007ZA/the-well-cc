@@ -1,7 +1,7 @@
 /* eslint-disable */
 "use client"
 import { signIn } from "next-auth/react";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,7 +21,6 @@ export default function LoginPage({isGoogleLogin, googleEmail, googlePassword}) 
   const [errors, setErrors] = useState<{ email?: string; password?: string, loginError?: string }>({});
     // Add state for toggling
 const [showPassword, setShowPassword] = useState(false);
-const [showConfirmPassword, setShowConfirmPassword] = useState(false);
  const [loading, setLoading] = useState(false)
  const user = useUser()
   const [logIn] = useMutation<Signin_MutationMutation, Signin_MutationMutationVariables>(Signin_MutationDocument)

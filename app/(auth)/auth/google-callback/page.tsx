@@ -13,7 +13,7 @@ export default async function GoogleCallback() {
 
 
   if (!session?.user) {
-    //redirect("/login");
+    return  window.location.href = '/login'
   }
 
   const { name, email } = session.user;

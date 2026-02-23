@@ -25,10 +25,10 @@ export default function SignupForm() {
      const {data, error, loading} = useQuery<GetUserMembershipTypeQuery, GetUserMembershipTypeQueryVariables>(GetUserMembershipTypeDocument, {variables: {where: {id: user?.id}}});
 
 
-
      useEffect(() => {  
       if(!!data?.user?.profile?.id) {
         setProfileID(data?.user?.profile?.id);
+
 
         //Set User Data
         setForm((prev: any) => ({

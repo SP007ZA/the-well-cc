@@ -2,7 +2,27 @@ mutation CompleteProfile($where: ProfileWhereUniqueInput!, $data: ProfileUpdateI
   updateProfile(where: $where, data: $data) {
   id
   user {
+    id
     isProfile
+     profile {
+      id
+      bio,
+      age,
+      gender,
+      education,
+      occupation,
+      interests,
+      lookingFor,
+      profilePicture {
+        publicUrlTransformed
+      }
+      photos {
+        id
+        image {
+          publicUrlTransformed
+        }
+      }
+    }
   }
    
   }

@@ -2,16 +2,14 @@
 /* eslint-disable */
 import { useRef, useState } from "react"
 import SignatureCanvas from "react-signature-canvas"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
-import {  ImageIcon, Eraser } from "lucide-react"
+import {   Eraser } from "lucide-react"
 import { AgreementSection } from "./AgreementSection"
 import { useMutation } from "@apollo/client"
 import { CreateSignatureDocument, CreateSignatureMutation, CreateSignatureMutationVariables, UpdateUserDocument, UpdateUserMutation, UpdateUserMutationVariables } from "@/data/gql/graphql"
 import LoadingSpinner from "@/app/_components/LoadingSpinner"
 import { base64ToFile, useUser } from "@/lib/utils"
-import { create } from "domain"
 
 export function SignatureSection({form, isOpen, setIsOpen, setSection}:any) {
      const [agreed, setAgreed] = useState(false)

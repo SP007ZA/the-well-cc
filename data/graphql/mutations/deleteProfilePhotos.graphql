@@ -1,0 +1,5 @@
+mutation DeleteProfilePhotos($where: [ProfilePhotoWhereUniqueInput!]!) {
+  deleteProfilePhotos(where: $where) {
+    id
+  }
+}
