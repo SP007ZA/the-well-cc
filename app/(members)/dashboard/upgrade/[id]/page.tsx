@@ -102,12 +102,12 @@ export default function MembershipCheckout() {
           <input
             type="hidden"
             name="return_url"
-            value={`https://thewellcc.co.za/dashboard/upgrade/success/${data?.profile?.user?.membership?.id}?membershipType=${selectedPlan.name}`}
+            value={`https://wellcc.co.za/dashboard/upgrade/success/${data?.profile?.user?.membership?.id}?membershipType=${selectedPlan.name}`}
           />
           <input
             type="hidden"
             name="cancel_url"
-            value={`https://thewellcc.co.za/dashboard/upgrade/cancel/${id}?membershipType=${selectedPlan.name}`}
+            value={`https://wellcc.co.za/dashboard/upgrade/cancel/${id}?membershipType=${selectedPlan.name}`}
           />
           <input 
             type="hidden"

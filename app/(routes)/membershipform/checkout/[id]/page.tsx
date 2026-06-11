@@ -119,12 +119,12 @@ try {
           <input
             type="hidden"
             name="return_url"
-            value={`https://thewellcc.co.za/membershipform/checkout/success/${data?.profile?.user?.membership?.id}?membershipType=${selectedPlan.name}`}
+            value={`https://wellcc.co.za/membershipform/checkout/success/${data?.profile?.user?.membership?.id}?membershipType=${selectedPlan.name}`}
           />
           <input
             type="hidden"
             name="cancel_url"
-            value={`https://thewellcc.co.za/membershipform/checkout/cancel/${id}?membershipType=${selectedPlan.name}`}
+            value={`https://wellcc.co.za/membershipform/checkout/cancel/${id}?membershipType=${selectedPlan.name}`}
           />
           <input
             type="hidden"

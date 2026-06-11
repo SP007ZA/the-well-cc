@@ -38,12 +38,12 @@ const myData = [];
 myData["merchant_id"] = 30391073;  //10023375 prod=> 30391073
 myData["merchant_key"] = "6x4meqntny3of";  // 04afueikmam8r prod=> 6x4meqntny3of
 const returnURL = member
-  ? `https://thewellcc.co.za/dashboard/events/${id}/purchase/success?sessionId=${sessionID}&firstName=${encodeURIComponent(firstName)}&email=${encodeURIComponent(email)}`
-  : `https://thewellcc.co.za/events/${id}/purchase/success?sessionId=${sessionID}&firstName=${encodeURIComponent(guestNameFirst)}&email=${encodeURIComponent(guestEmail)}`;
+  ? `https://wellcc.co.za/dashboard/events/${id}/purchase/success?sessionId=${sessionID}&firstName=${encodeURIComponent(firstName)}&email=${encodeURIComponent(email)}`
+  : `https://wellcc.co.za/events/${id}/purchase/success?sessionId=${sessionID}&firstName=${encodeURIComponent(guestNameFirst)}&email=${encodeURIComponent(guestEmail)}`;
 
 const cancelURL = member
-  ? `https://thewellcc.co.za/dashboard/events/${id}/purchase/cancel`
-  : `https://thewellcc.co.za/events/${id}/purchase/cancel`;
+  ? `https://wellcc.co.za/dashboard/events/${id}/purchase/cancel`
+  : `https://wellcc.co.za/events/${id}/purchase/cancel`;
 
 // Buyer details
 myData["name_first"] = member ? firstName : guestNameFirst;

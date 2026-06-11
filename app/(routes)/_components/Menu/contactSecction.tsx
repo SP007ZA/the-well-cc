@@ -29,7 +29,7 @@ export default function ContactSection() {
         </li>
         <li className="flex items-start">
           <Globe className="w-5 h-5 text-rose-600 mt-1 mr-3" />
-          <a href="https://www.thewellcc.co.za" className="hover:underline" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.wellcc.co.za" className="hover:underline" target="_blank" rel="noopener noreferrer">
             www.thewellcc.co.za
           </a>
         </li>
