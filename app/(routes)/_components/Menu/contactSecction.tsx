@@ -18,7 +18,7 @@ export default function ContactSection() {
         <li className="flex items-start">
           <Mail className="w-5 h-5 text-rose-600 mt-1 mr-3" />
           <a href="mailto:admin@thewellcc.co.za" className="hover:underline">
-            admin@thewellcc.co.za
+            admin@wellcc.co.za
           </a>
         </li>
         <li className="flex items-start">
@@ -30,7 +30,7 @@ export default function ContactSection() {
         <li className="flex items-start">
           <Globe className="w-5 h-5 text-rose-600 mt-1 mr-3" />
           <a href="https://www.wellcc.co.za" className="hover:underline" target="_blank" rel="noopener noreferrer">
-            www.thewellcc.co.za
+            www.wellcc.co.za
           </a>
         </li>
         <li className="flex items-start">
